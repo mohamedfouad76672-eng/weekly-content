@@ -1,481 +1,325 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl" class="dark">
+<html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>دليل المحتوى الأكاديمي | Faculty of Physical Therapy</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Tajawal', 'system-ui', 'sans-serif'],
-            mono: ['JetBrains Mono', 'monospace'],
-          }
-        }
-      }
-    }
-  </script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;600&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Tajawal', sans-serif; }
-    .no-scrollbar::-webkit-scrollbar { display: none; }
-    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f2f4f5">
+<title>دليل المحاضرات والمحتوى | كلية العلاج الطبيعي</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+(function(){try{var l=localStorage.getItem('PT_LANG')||'ar',t=localStorage.getItem('PT_THEME');
+if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+var d=document.documentElement;d.lang=l;d.dir=l==='ar'?'rtl':'ltr';d.dataset.theme=t;}catch(e){}})();
+</script>
+<style>
+:root{--bg:#f2f4f5;--card:#fff;--ink:#1a2024;--mute:#5f6b73;--line:#dde2e5;--acc:#0e6e6a;--on:#fff;--soft:#e8f1f0;--L:#3b62a8;--C:#b0620f;--B:#7b4a8f;--pad:16px}
+[data-theme=dark]{--bg:#0e1113;--card:#161a1d;--ink:#e8eaeb;--mute:#8b969c;--line:#252b2f;--acc:#4db3aa;--on:#08201e;--soft:#14262a;--L:#7c9fe0;--C:#e0964a;--B:#b98ad0}
+*{box-sizing:border-box;margin:0}
+[hidden]{display:none!important}
+body{font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;min-height:100dvh;-webkit-text-size-adjust:100%}
+.wrap{max-width:720px;margin:0 auto;padding-inline:var(--pad)}
+.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+button,a{-webkit-tap-highlight-color:transparent}
+button:focus-visible,a:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+
+.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:14px 10px}
+h1{font-size:1.125rem;font-weight:600;line-height:1.4}
+.sub{font-size:.8125rem;color:var(--mute)}
+.tools{display:flex;gap:2px;flex:none}
+.ib{min-width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;background:none;color:var(--mute);border-radius:10px;font:inherit;font-size:.8125rem;font-weight:500;cursor:pointer}
+.ib:hover{background:var(--soft);color:var(--ink)}
+.ib.txt{padding:0 12px;color:var(--acc)}
+.admin{display:none;align-items:center;justify-content:space-between;border-top:1px solid var(--line);font-size:.8125rem}
+.admin.on{display:flex}
+.admin a,.admin button{color:var(--acc);font:inherit;font-weight:500;background:none;border:0;cursor:pointer;text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
+
+.nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
+.wk-h{display:flex;justify-content:space-between;align-items:baseline;font-size:.8125rem;color:var(--mute);padding-top:8px}
+.wk-h b{color:var(--ink);font-weight:600}
+.weeks{display:flex;gap:6px;overflow-x:auto;scroll-snap-type:x proximity;padding:8px var(--pad) 10px;margin-inline:calc(var(--pad)*-1);scrollbar-width:none}
+.weeks::-webkit-scrollbar{display:none}
+.wk{flex:none;width:44px;height:44px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--mute);font:inherit;font-weight:500;font-variant-numeric:tabular-nums;cursor:pointer;scroll-snap-align:center}
+.wk[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.days{display:grid;grid-template-columns:repeat(5,1fr)}
+.day{height:48px;border:0;border-bottom:2px solid transparent;margin-bottom:-1px;background:none;color:var(--mute);font:inherit;font-size:.9375rem;font-weight:500;cursor:pointer}
+.day[aria-selected=true]{color:var(--ink);font-weight:600;border-color:var(--acc)}
+.today span::after{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--acc);margin-inline-start:5px;vertical-align:middle}
+.loading .nav{border-bottom-color:var(--acc);animation:pulse 1s infinite}
+
+main{padding-block:18px 48px}
+.dh{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px;min-height:44px}
+h2{display:inline;font-size:1.0625rem;font-weight:600}
+.cnt{font-size:.8125rem;color:var(--mute);margin-inline-start:8px}
+.msg{font-size:.8125rem;color:var(--C);margin-bottom:10px}
+
+.list{display:grid;gap:10px;align-items:start}
+.lec{display:grid;grid-template-columns:68px 1fr;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.lec[data-t=L]{--c:var(--L)}.lec[data-t=C]{--c:var(--C)}.lec[data-t=B]{--c:var(--B)}
+.time{padding:14px 0;text-align:center;direction:ltr;border-inline-end:1px solid var(--line);font-variant-numeric:tabular-nums}
+.time b{display:block;font-size:1rem;font-weight:600}
+.time span{font-size:.75rem;color:var(--mute)}
+.body{padding:14px 16px;min-width:0}
+.tag{display:flex;align-items:center;gap:6px;font-size:.75rem;font-weight:500;color:var(--c)}
+.tag i{width:7px;height:7px;border-radius:50%;background:var(--c)}
+h3{font-size:1rem;font-weight:600;line-height:1.5;margin:2px 0 4px}
+.meta{display:flex;align-items:flex-start;gap:6px;font-size:.8125rem;color:var(--mute)}
+.meta .i{width:15px;height:15px;margin-top:4px}
+.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.btn{flex:1 1 120px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:0 14px;border-radius:9px;border:1px solid var(--acc);color:var(--acc);font-size:.875rem;font-weight:500;text-decoration:none}
+.btn .i{width:18px;height:18px}
+.btn.p{background:var(--acc);color:var(--on)}
+.btn.off{border:1px dashed var(--line);color:var(--mute);font-weight:400}
+.btn.wait{border-color:var(--line);color:var(--mute);animation:pulse 1.2s infinite}
+.note{margin-top:12px;padding:10px 12px;background:var(--soft);border-radius:8px;font-size:.8125rem}
+.note b{color:var(--acc);font-weight:600}
+
+.toast{position:fixed;inset-inline:16px;bottom:20px;margin:auto;max-width:360px;background:var(--ink);color:var(--bg);padding:12px 16px;border-radius:10px;font-size:.875rem;text-align:center;opacity:0;transform:translateY(8px);transition:.2s;pointer-events:none}
+.toast.on{opacity:1;transform:none}
+@keyframes pulse{50%{opacity:.35}}
+@media(min-width:640px){:root{--pad:24px}.lec{grid-template-columns:84px 1fr}}
+@media(min-width:900px){.wrap{max-width:960px}.list{grid-template-columns:1fr 1fr}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
 </head>
-<body class="bg-[#fafafa] dark:bg-[#090d16] text-slate-800 dark:text-slate-100 min-h-screen antialiased selection:bg-indigo-500 selection:text-white transition-colors duration-200">
+<body class="loading">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
+<symbol id="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
+<symbol id="moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></symbol>
+<symbol id="lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></symbol>
+<symbol id="refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 00-14.9-3M4 4v4h4M4 13a8 8 0 0014.9 3M20 20v-4h-4"/></symbol>
+<symbol id="mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3"/></symbol>
+<symbol id="file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></symbol>
+<symbol id="copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 012-2h9"/></symbol>
+<symbol id="pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+</defs></svg>
 
-  <!-- Header -->
-  <header class="border-b border-slate-200/80 dark:border-slate-800/60 bg-white/70 dark:bg-[#0d121f]/70 backdrop-blur-xl sticky top-0 z-40">
-    <div class="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
-      <div class="flex items-center gap-3.5">
-        <div class="w-10 h-10 rounded-2xl bg-gradient-to-br from-indigo-500 via-indigo-600 to-slate-900 dark:to-slate-950 flex items-center justify-center text-white shadow-md shadow-indigo-500/10 border border-white/10">
-          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-          </svg>
-        </div>
-        <div>
-          <h1 id="t-header-title" class="text-sm sm:text-base font-extrabold tracking-tight text-slate-900 dark:text-white">دليل المحاضرات والمحتوى</h1>
-          <p id="t-header-sub" class="text-[11px] text-slate-500 dark:text-slate-400 font-medium">الفرقة الرابعة • الفصل الدراسي الأول</p>
-        </div>
-      </div>
-
-      <!-- Controls -->
-      <div class="flex items-center gap-2">
-        <button id="langToggleBtn" class="px-2.5 py-1.5 rounded-xl border border-slate-200 dark:border-slate-800 text-xs font-bold text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-          EN
-        </button>
-
-        <button id="themeToggleBtn" class="p-2 rounded-xl border border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-          <svg id="sunIcon" class="w-4 h-4 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 9h-1m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
-          <svg id="moonIcon" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" /></svg>
-        </button>
-
-        <div id="adminPanel" class="hidden items-center gap-2">
-          <a id="sheetLink" target="_blank" class="text-xs bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 hover:bg-emerald-500 hover:text-white border border-emerald-500/30 px-3 py-1.5 rounded-xl transition font-semibold flex items-center gap-1.5">
-            <span id="t-edit-sheet">تعديل الشيت</span>
-          </a>
-          <button id="logoutBtn" class="text-xs text-slate-400 hover:text-rose-500 px-2 py-1 transition">خروج</button>
-        </div>
-
-        <button id="adminBtn" class="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition">
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>
-        </button>
-      </div>
+<header><div class="wrap">
+  <div class="bar">
+    <div><h1 id="tt"></h1><p class="sub" id="ts"></p></div>
+    <div class="tools">
+      <button class="ib" id="langBtn"></button>
+      <button class="ib" id="themeBtn"></button>
+      <button class="ib" id="adminBtn"><svg class="i"><use href="#lock"/></svg></button>
     </div>
-  </header>
+  </div>
+  <div class="admin" id="adminBar"><a id="sheetLink" target="_blank" rel="noopener"></a><button id="logoutBtn"></button></div>
+</div></header>
 
-  <main class="max-w-5xl mx-auto px-4 py-8 space-y-6">
+<nav class="nav"><div class="wrap">
+  <div class="wk-h"><span id="wkLabel"></span><b id="wkNow"></b></div>
+  <div class="weeks" id="weeks"></div>
+  <div class="days" id="days" role="tablist"></div>
+</div></nav>
 
-    <!-- شريط الأسابيع -->
-    <div class="space-y-2.5">
-      <div class="flex items-center justify-between text-xs px-1 font-semibold">
-        <span id="t-academic-week" class="text-slate-400 dark:text-slate-500 uppercase tracking-wider">الأسابيع الدراسية</span>
-        <span id="activeWeekDisplay" class="text-indigo-600 dark:text-indigo-400 font-mono">الأسبوع 1</span>
-      </div>
-      <div id="weeksNav" class="flex gap-2 overflow-x-auto no-scrollbar py-1"></div>
+<main class="wrap">
+  <div class="dh">
+    <div><h2 id="dayTitle"></h2><span class="cnt" id="dayCount"></span></div>
+    <div class="tools">
+      <button class="ib txt" id="copyBtn" hidden><svg class="i"><use href="#copy"/></svg><span id="copyTxt"></span></button>
+      <button class="ib" id="refreshBtn"><svg class="i"><use href="#refresh"/></svg></button>
     </div>
+  </div>
+  <p class="msg" id="msg" hidden></p>
+  <div class="list" id="list"></div>
+</main>
+<div class="toast" id="toast" role="status"></div>
 
-    <!-- شريط الأيام -->
-    <div id="daysNav" class="grid grid-cols-5 gap-1.5 sm:gap-2 p-1.5 bg-slate-200/70 dark:bg-slate-900/80 rounded-2xl border border-slate-300/80 dark:border-slate-800/80 backdrop-blur-md"></div>
+<script>
+const SHEET_ID='155dq1qg3Mt_P0JaF7zfxptKXFsD-v89thOskJeEiy58';
+const EDIT_URL=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit`;
+const store={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}},del:k=>{try{localStorage.removeItem(k)}catch(e){}}};
+const $=id=>document.getElementById(id);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
-    <!-- تفاصيل اليوم والمحاضرات -->
-    <div class="flex items-center justify-between pt-3">
-      <div class="flex items-center gap-2.5">
-        <div class="w-2 h-2 rounded-full bg-emerald-500 shadow-sm shadow-emerald-500/50"></div>
-        <h2 id="dayTitle" class="text-base font-bold text-slate-900 dark:text-white">محاضرات اليوم</h2>
-      </div>
-      <div class="flex items-center gap-2">
-        <button id="copyTgBtn" class="hidden text-xs bg-white dark:bg-slate-900 hover:bg-slate-50 dark:hover:bg-slate-800 text-sky-600 dark:text-sky-400 border border-slate-200 dark:border-slate-800 px-3.5 py-1.5 rounded-xl transition font-medium items-center gap-1.5 shadow-sm">
-          <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm4.64 6.8c-.15 1.58-.8 5.42-1.13 7.19-.14.75-.42 1-.68 1.03-.58.05-1.02-.38-1.58-.75-.88-.58-1.38-.94-2.23-1.5-.99-.65-.35-1.01.22-1.59.15-.15 2.71-2.48 2.76-2.69a.2.2 0 00-.05-.18c-.06-.05-.14-.03-.21-.02-.09.02-1.49.95-4.22 2.79-.4.27-.76.41-1.08.4-.36-.01-1.04-.2-1.55-.37-.63-.2-1.12-.31-1.08-.66.02-.18.27-.36.74-.55 2.92-1.27 4.86-2.11 5.83-2.51 2.78-1.16 3.35-1.36 3.73-1.36.08 0 .27.02.39.12.1.08.13.19.14.27-.01.06.01.24 0 .38z"/></svg>
-          <span id="t-copy-tg">نسخ لـ Telegram</span>
-        </button>
-        <button id="refreshBtn" class="text-slate-400 hover:text-slate-600 dark:hover:text-white p-2 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 transition" title="Refresh">
-          <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
-        </button>
-      </div>
-    </div>
+const T={
+ar:{title:'دليل المحاضرات والمحتوى',sub:'الفرقة الرابعة • الفصل الدراسي الأول (نساء وجراحة)',weeks:'الأسابيع الدراسية',week:'الأسبوع',n:'محاضرات',audio:'الريكورد',pdf:'الداتا',noAudio:'لا يوجد تسجيل',noPdf:'لا توجد داتا',note:'ملاحظة',edit:'تعديل الشيت',out:'خروج',copy:'نسخ لـ Telegram',copied:'تم نسخ رسالة التليجرام',pass:'أدخل رمز دخول المشرف:',err:'تعذر تحميل الروابط. تحقق من الاتصال ثم اضغط تحديث.',refresh:'تحديث',theme:'تغيير المظهر',admin:'دخول المشرف',lang:'EN',
+ days:['السبت','الأحد','الإثنين','الثلاثاء','الأربعاء'],short:['السبت','الأحد','الإثنين','الثلاثاء','الأربعاء']},
+en:{title:'Academic Course Companion',sub:'4th Year • 1st Semester (Gynecology & Surgery)',weeks:'Academic weeks',week:'Week',n:'sessions',audio:'Audio',pdf:'Slides',noAudio:'No recording',noPdf:'No slides',note:'Note',edit:'Edit sheet',out:'Logout',copy:'Copy for Telegram',copied:'Telegram message copied',pass:'Enter admin passcode:',err:"Couldn't load the links. Check your connection, then tap refresh.",refresh:'Refresh',theme:'Toggle theme',admin:'Admin login',lang:'عربي',
+ days:['Saturday','Sunday','Monday','Tuesday','Wednesday'],short:['Sat','Sun','Mon','Tue','Wed']}
+};
+const D=['sat','sun','mon','tue','wed'];
+const TY={L:['نظري','Lecture'],C:['إكلينيكي / مستشفى','Clinical / Hospital'],B:['معملي','Lab']};
 
-    <!-- مؤشر التحميل -->
-    <div id="loader" class="py-20 text-center">
-      <div class="inline-block w-7 h-7 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
-    </div>
+// [day, type, subject_ar, subject_en, place_ar, place_en, time]
+const S=[
+// السبت
+['sat','L','ع.ط جراحة وحروق','P.T. for Surgery & Burns','مدرج (ج)','Hall (C)','10:00 - 12:00'],
+['sat','L','ع.ط للجلد والأغشية','P.T. for Integumentary','مدرج (ج)','Hall (C)','12:00 - 01:00'],
+['sat','L','جراحة عامة وحروق','General Surgery & Burns','مدرج (ج)','Hall (C)','01:00 - 03:00'],
 
-    <!-- المحاضرات -->
-    <div id="lecturesList" class="space-y-3 hidden"></div>
+// الأحد
+['sun','C','ع.ط لصحة المرأة',"P.T. for Women's Health",'C 10-11-12-13 + C 20','C 10-11-12-13 + C 20','09:00 - 11:00'],
+['sun','B','ع.ط لصحة المرأة',"P.T. for Women's Health",'الدور الرابع D 1-8-9-15-17','4th Floor D 1-8-9-15-17','11:00 - 01:00'],
+['sun','L','ع.ط لصحة المرأة',"P.T. for Women's Health",'مدرج (د)','Hall (D)','01:00 - 03:00'],
 
-  </main>
+// الإثنين (مفصول إكلينيكي)
+['mon','C','ع.ط جراحة','P.T. for Surgery (Clinical)','الدور الثالث C-7-8-9-10-11','3rd Floor C-7-8-9-10-11','09:00 - 12:00'],
+['mon','C','ع.ط حروق','P.T. for Burns (Clinical)','الدور الثالث C-7-8-9-10-11','3rd Floor C-7-8-9-10-11','09:00 - 12:00'],
+['mon','L','أمراض نساء وتوليد','Obstetrics & Gynecology','مدرج (أ)','Hall (A)','12:00 - 02:00'],
+['mon','L','ميكانيكا العمل','Ergonomics / Occupational','مدرج (أ)','Hall (A)','02:00 - 03:00'],
+['mon','B','ميكانيكا العمل','Ergonomics / Occupational','مدرج (أ)','Hall (A)','03:00 - 05:00'],
 
-  <script>
-    const SHEET_ID = '155dq1qg3Mt_P0JaF7zfxptKXFsD-v89thOskJeEiy58';
-    const SHEET_EDIT_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit`;
+// الثلاثاء
+['tue','C','ع.ط لاضطرابات الحوض لدى السيدات','P.T. for Female Pelvic Disorders','الدور الثالث C10-11-12-13 + C20','3rd Floor C10-11-12-13 + C20','09:00 - 12:00'],
+['tue','L','ع.ط لاضطرابات الحوض لدى السيدات','P.T. for Female Pelvic Disorders','مدرج (هـ)','Hall (E)','12:00 - 02:00'],
 
-    const translations = {
-      ar: {
-        headerTitle: "دليل المحاضرات والمحتوى",
-        headerSub: "الفرقة الرابعة • الفصل الدراسي الأول (نساء وجراحة)",
-        academicWeek: "الأسابيع الدراسية",
-        weekPrefix: "الأسبوع",
-        dayLectures: "محاضرات",
-        editSheet: "تعديل الشيت",
-        logout: "خروج",
-        copyTg: "نسخ لـ Telegram",
-        noAudio: "لا يوجد تسجيل",
-        noPdf: "لا توجد داتا",
-        audioBtn: "الريكورد",
-        pdfBtn: "الداتا",
-        noteLabel: "ملاحظة:",
-        noLectures: "لا توجد محاضرات مجدولة لهذا اليوم",
-        adminPrompt: "أدخل رمز دخول المشرف:",
-        copied: "تم نسخ رسالة التليجرام بنجاح!",
-        days: { sat: "السبت", sun: "الأحد", mon: "الإثنين", tue: "الثلاثاء", wed: "الأربعاء" }
-      },
-      en: {
-        headerTitle: "Academic Course Companion",
-        headerSub: "4th Year • 1st Semester (Gynecology & Surgery)",
-        academicWeek: "Academic Weeks",
-        weekPrefix: "Week",
-        dayLectures: "Lectures for",
-        editSheet: "Edit Sheet",
-        logout: "Logout",
-        copyTg: "Copy for Telegram",
-        noAudio: "No Recording",
-        noPdf: "No Slides",
-        audioBtn: "Audio",
-        pdfBtn: "Slides",
-        noteLabel: "Note:",
-        noLectures: "No lectures scheduled for this day",
-        adminPrompt: "Enter admin passcode:",
-        copied: "Telegram message copied successfully!",
-        days: { sat: "Saturday", sun: "Sunday", mon: "Monday", tue: "Tuesday", wed: "Wednesday" }
-      }
-    };
+// الأربعاء (مفصول معملي)
+['wed','C','ع.ط للجلد والأغشية','P.T. for Integumentary','الدور الرابع D 1-8-9-15-17','4th Floor D 1-8-9-15-17','09:00 - 12:00'],
+['wed','B','ع.ط جراحة','P.T. for Surgery (Lab)','الدور الرابع D 1-8-9-15-17','4th Floor D 1-8-9-15-17','12:00 - 02:00'],
+['wed','B','ع.ط حروق','P.T. for Burns (Lab)','الدور الرابع D 1-8-9-15-17','4th Floor D 1-8-9-15-17','12:00 - 02:00'],
+['wed','L','أمراض جلدية','Dermatology','مدرج (ب)','Hall (B)','02:00 - 04:00']
+];
 
-    const baseSchedule = [
-      // السبت
-      { dayKey: 'sat', subject_ar: 'ع.ط جراحة وحروق', subject_en: 'P.T. for Surgery & Burns', type_ar: 'نظري', type_en: 'Lecture', place_ar: 'مدرج (ج)', place_en: 'Hall (C)', time: '10:00 - 12:00' },
-      { dayKey: 'sat', subject_ar: 'ع.ط للجلد والأغشية', subject_en: 'P.T. for Integumentary', type_ar: 'نظري', type_en: 'Lecture', place_ar: 'مدرج (ج)', place_en: 'Hall (C)', time: '12:00 - 01:00' },
-      { dayKey: 'sat', subject_ar: 'جراحة عامة وحروق', subject_en: 'General Surgery & Burns', type_ar: 'نظري', type_en: 'Lecture', place_ar: 'مدرج (ج)', place_en: 'Hall (C)', time: '01:00 - 03:00' },
-      
-      // الأحد
-      { dayKey: 'sun', subject_ar: 'ع.ط لصحة المرأة', subject_en: "P.T. for Women's Health", type_ar: 'إكلينيكي / مستشفى', type_en: 'Clinical / Hospital', place_ar: 'C 10-11-12-13 + C 20', place_en: 'C 10-11-12-13 + C 20', time: '09:00 - 11:00' },
-      { dayKey: 'sun', subject_ar: 'ع.ط لصحة المرأة', subject_en: "P.T. for Women's Health", type_ar: 'معملي', type_en: 'Lab', place_ar: 'الدور الرابع D 1-8-9-15-17', place_en: '4th Floor D 1-8-9-15-17', time: '11:00 - 01:00' },
-      { dayKey: 'sun', subject_ar: 'ع.ط لصحة المرأة', subject_en: "P.T. for Women's Health", type_ar: 'نظري', type_en: 'Lecture', place_ar: 'مدرج (د)', place_en: 'Hall (D)', time: '01:00 - 03:00' },
-      
-      // الإثنين (تم الفصل إلى جراحة وحروق إكلينيكي)
-      { dayKey: 'mon', subject_ar: 'ع.ط جراحة', subject_en: 'P.T. for Surgery (Clinical)', type_ar: 'إكلينيكي / مستشفى', type_en: 'Clinical / Hospital', place_ar: 'الدور الثالث C-7-8-9-10-11', place_en: '3rd Floor C-7-8-9-10-11', time: '09:00 - 12:00' },
-      { dayKey: 'mon', subject_ar: 'ع.ط حروق', subject_en: 'P.T. for Burns (Clinical)', type_ar: 'إكلينيكي / مستشفى', type_en: 'Clinical / Hospital', place_ar: 'الدور الثالث C-7-8-9-10-11', place_en: '3rd Floor C-7-8-9-10-11', time: '09:00 - 12:00' },
-      { dayKey: 'mon', subject_ar: 'أمراض نساء وتوليد', subject_en: 'Obstetrics & Gynecology', type_ar: 'نظري', type_en: 'Lecture', place_ar: 'مدرج (أ)', place_en: 'Hall (A)', time: '12:00 - 02:00' },
-      { dayKey: 'mon', subject_ar: 'ميكانيكا العمل', subject_en: 'Ergonomics / Occupational', type_ar: 'نظري', type_en: 'Lecture', place_ar: 'مدرج (أ)', place_en: 'Hall (A)', time: '02:00 - 03:00' },
-      { dayKey: 'mon', subject_ar: 'ميكانيكا العمل', subject_en: 'Ergonomics / Occupational', type_ar: 'معملي', type_en: 'Lab', place_ar: 'مدرج (أ)', place_en: 'Hall (A)', time: '03:00 - 05:00' },
-      
-      // الثلاثاء
-      { dayKey: 'tue', subject_ar: 'ع.ط لاضطرابات الحوض لدى السيدات', subject_en: 'P.T. for Female Pelvic Disorders', type_ar: 'إكلينيكي / مستشفى', type_en: 'Clinical / Hospital', place_ar: 'الدور الثالث C10-11-12-13 + C20', place_en: '3rd Floor C10-11-12-13 + C20', time: '09:00 - 12:00' },
-      { dayKey: 'tue', subject_ar: 'ع.ط لاضطرابات الحوض لدى السيدات', subject_en: 'P.T. for Female Pelvic Disorders', type_ar: 'نظري', type_en: 'Lecture', place_ar: 'مدرج (هـ)', place_en: 'Hall (E)', time: '12:00 - 02:00' },
-      
-      // الأربعاء (تم الفصل إلى جراحة وحروق معملي)
-      { dayKey: 'wed', subject_ar: 'ع.ط للجلد والأغشية', subject_en: 'P.T. for Integumentary', type_ar: 'إكلينيكي / مستشفى', type_en: 'Clinical / Hospital', place_ar: 'الدور الرابع D 1-8-9-15-17', place_en: '4th Floor D 1-8-9-15-17', time: '09:00 - 12:00' },
-      { dayKey: 'wed', subject_ar: 'ع.ط جراحة', subject_en: 'P.T. for Surgery (Lab)', type_ar: 'معملي', type_en: 'Lab', place_ar: 'الدور الرابع D 1-8-9-15-17', place_en: '4th Floor D 1-8-9-15-17', time: '12:00 - 02:00' },
-      { dayKey: 'wed', subject_ar: 'ع.ط حروق', subject_en: 'P.T. for Burns (Lab)', type_ar: 'معملي', type_en: 'Lab', place_ar: 'الدور الرابع D 1-8-9-15-17', place_en: '4th Floor D 1-8-9-15-17', time: '12:00 - 02:00' },
-      { dayKey: 'wed', subject_ar: 'أمراض جلدية', subject_en: 'Dermatology', type_ar: 'نظري', type_en: 'Lecture', place_ar: 'مدرج (ب)', place_en: 'Hall (B)', time: '02:00 - 04:00' }
-    ];
+const TODAY=({6:'sat',0:'sun',1:'mon',2:'tue',3:'wed'})[new Date().getDay()]||'sat';
+let lang=store.get('PT_LANG')==='en'?'en':'ar';
+let week=Math.min(14,Math.max(1,+store.get('PT_WEEK')||1));
+let day=TODAY, admin=store.get('PT_ADMIN')==='true';
+let data={}, cache={}, state='load', reqId=0;
 
-    let currentLang = localStorage.getItem('PT_LANG') || 'ar';
-    let currentWeek = 1;
-    let currentDay = 'sat';
-    let isAdmin = localStorage.getItem('PT_ADMIN') === 'true';
-    let sheetPayload = {};
+// دالة البحث مع المطابقة الدقيقة للنوع لمنع التداخل
+const lookup=(d,subj,ty)=>{
+  const fullType = TY[ty][0];
+  const shortType = ty === 'L' ? 'نظري' : (ty === 'B' ? 'معملي' : 'إكلينيكي');
+  return data[`${d}_${subj}_${fullType}`] || 
+         data[`${d}_${subj}_${shortType}`] || 
+         data[`${d}_${subj}`] || {};
+};
 
-    function setLanguage(lang) {
-      currentLang = lang;
-      localStorage.setItem('PT_LANG', lang);
-      document.documentElement.lang = lang;
-      document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+const isUrl=u=>/^https?:\/\//i.test(u||'');
 
-      const t = translations[lang];
-      document.getElementById('t-header-title').innerText = t.headerTitle;
-      document.getElementById('t-header-sub').innerText = t.headerSub;
-      document.getElementById('t-academic-week').innerText = t.academicWeek;
-      document.getElementById('t-edit-sheet').innerText = t.editSheet;
-      document.getElementById('logoutBtn').innerText = t.logout;
-      document.getElementById('t-copy-tg').innerText = t.copyTg;
-      document.getElementById('langToggleBtn').innerText = lang === 'ar' ? 'EN' : 'عربي';
+function setLang(l){
+  lang=l;store.set('PT_LANG',l);
+  const d=document.documentElement,t=T[l];
+  d.lang=l;d.dir=l==='ar'?'rtl':'ltr';
+  $('tt').textContent=t.title;$('ts').textContent=t.sub;$('wkLabel').textContent=t.weeks;
+  $('sheetLink').textContent=t.edit;$('sheetLink').href=EDIT_URL;$('logoutBtn').textContent=t.out;
+  $('copyTxt').textContent=t.copy;$('msg').textContent=t.err;$('langBtn').textContent=t.lang;
+  $('refreshBtn').title=$('refreshBtn').ariaLabel=t.refresh;
+  $('themeBtn').ariaLabel=t.theme;$('adminBtn').ariaLabel=t.admin;
+  renderWeeks();markWeek('auto');renderDays();renderList();
+}
+function applyTheme(t){
+  document.documentElement.dataset.theme=t;
+  $('themeBtn').innerHTML=`<svg class="i"><use href="#${t==='dark'?'sun':'moon'}"/></svg>`;
+  document.querySelector('meta[name=theme-color]').content=t==='dark'?'#0e1113':'#f2f4f5';
+}
+function renderWeeks(){
+  const c=$('weeks');c.innerHTML='';
+  for(let i=1;i<=14;i++){
+    const b=document.createElement('button');
+    b.className='wk';b.textContent=i;b.ariaLabel=`${T[lang].week} ${i}`;
+    b.onclick=()=>{week=i;store.set('PT_WEEK',i);markWeek('smooth');load();};
+    c.appendChild(b);
+  }
+}
+function markWeek(beh){
+  [...$('weeks').children].forEach((b,i)=>{     const on=i+1===week;b.setAttribute('aria-pressed',on);     if(on)b.scrollIntoView({inline:'center',block:'nearest',behavior:beh});   });$('wkNow').textContent=`${T[lang].week} ${week}`;
+}
+function renderDays(){
+  const c=$('days');c.innerHTML='';
+  D.forEach((k,i)=>{
+    const b=document.createElement('button');
+    b.className='day'+(k===TODAY?' today':'');
+    b.setAttribute('role','tab');b.setAttribute('aria-selected',k===day);
+    b.innerHTML=`<span>${T[lang].short[i]}</span>`;
+    b.onclick=()=>{day=k;renderDays();renderList();};
+    c.appendChild(b);
+  });
+}
+function renderList(){
+  const t=T[lang],items=S.filter(s=>s[0]===day);
+  $('dayTitle').textContent=t.days[D.indexOf(day)];$('dayCount').textContent=`${items.length} ${t.n}`;
+  const btn=(url,label,off,cls,icon)=>{
+    const ic=`<svg class="i"><use href="#${icon}"/></svg>`;
+    if(state==='load')return `<span class="btn wait">${ic}${label}</span>`;
+    return isUrl(url)?`<a class="btn ${cls}" href="${esc(url)}" target="_blank" rel="noopener">${ic}${label}</a>`:`<span class="btn off">${off}</span>`;
+  };
+  $('list').innerHTML=items.map(s=>{
+    const [,ty,sa,se,pa,pe,tm]=s,it=lookup(day,sa,ty),[a,b]=tm.split(' - ');
+    const subj=lang==='ar'?sa:se,place=lang==='ar'?pa:(pe||pa);
+    return `<article class="lec" data-t="${ty}">
+      <div class="time"><b>${a}</b><span>${b}</span></div>
+      <div class="body">
+        <div class="tag"><i></i>${TY[ty][lang==='ar'?0:1]}</div>
+        <h3>${subj}</h3>
+        <p class="meta"><svg class="i"><use href="#pin"/></svg><bdi>${place}</bdi></p>
+        <div class="acts">${btn(it.audio,t.audio,t.noAudio,'p','mic')}${btn(it.pdf,t.pdf,t.noPdf,'','file')}</div>
+        ${it.note?`<p class="note"><b>${t.note}:</b>${esc(it.note)}</p>`:''}
+      </div></article>`;
+  }).join('');
+}
+function parse(res){
+  const out={};
+  ((res&&res.table&&res.table.rows)||[]).forEach(r=>{
+    const c=r.c||[],v=i=>c[i]&&c[i].v!=null?String(c[i].v).trim():'';
+    // 1: المادة | 2: النوع | 5: Audio | 6: PDF | 7: ملاحظات | 8: dayKey
+    const subj=v(1),type=v(2),d=(v(8)||v(7)).toLowerCase();
+    const o={audio:v(5),pdf:v(6),note:v(7)};
+    if(o.note.toLowerCase()===d)o.note='';
 
-      renderWeeks();
-      renderDays();
-      renderLectures();
+    // حفظ الرابط بالمفتاح العام، والمفتاح الفريد بالنوع
+    out[`${d}_${subj}`]=o;
+    if(type){
+      out[`${d}_${subj}_${type}`]=o;
+      if(type.includes('إكلينيكي')) out[`${d}_${subj}_إكلينيكي`]=o;
+      if(type.includes('معمل')) out[`${d}_${subj}_معملي`]=o;
+      if(type.includes('نظري')) out[`${d}_${subj}_نظري`]=o;
     }
+  });
+  return out;
+}
+function load(force){
+  const my=++reqId;
+  if(force)delete cache[week];
+  if(cache[week]){data=cache[week];state='ok';document.body.classList.remove('loading');$('msg').hidden=true;renderList();return;}
+  state='load';data={};document.body.classList.add('loading');$('msg').hidden=true;renderList();
+  const cb='gs_'+my,s=document.createElement('script');
+  const finish=(ok,res)=>{
+    delete window[cb];s.remove();
+    if(my!==reqId)return;
+    document.body.classList.remove('loading');
+    if(ok){data=parse(res);cache[week]=data;state='ok';}else state='err';
+    $('msg').hidden=ok;renderList();
+  };
+  window[cb]=res=>finish(true,res);
+  s.onerror=()=>finish(false);
+  s.src=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${encodeURIComponent('الأسبوع '+week)}&tqx=responseHandler:${cb}&_t=${Date.now()}`;
+  document.body.appendChild(s);
+}
+function toast(m){const e=$('toast');e.textContent=m;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),2200);}
+function renderAdmin(){
+  $('adminBar').classList.toggle('on',admin);$('copyBtn').hidden=!admin;$('adminBtn').hidden=admin;
+}
 
-    function initTheme() {
-      const isDark = localStorage.getItem('PT_THEME') !== 'light';
-      if (isDark) {
-        document.documentElement.classList.add('dark');
-        document.getElementById('sunIcon').classList.add('hidden');
-        document.getElementById('moonIcon').classList.remove('hidden');
-      } else {
-        document.documentElement.classList.remove('dark');
-        document.getElementById('moonIcon').classList.add('hidden');
-        document.getElementById('sunIcon').classList.remove('hidden');
-      }
-    }
+$('langBtn').onclick=()=>setLang(lang==='ar'?'en':'ar');$('themeBtn').onclick=()=>{const t=document.documentElement.dataset.theme==='dark'?'light':'dark';store.set('PT_THEME',t);applyTheme(t);};
+$('refreshBtn').onclick=()=>load(true);$('adminBtn').onclick=()=>{if(prompt(T[lang].pass)==='admin2026'){admin=true;store.set('PT_ADMIN','true');renderAdmin();}};
+$('logoutBtn').onclick=()=>{admin=false;store.del('PT_ADMIN');renderAdmin();};$('copyBtn').onclick=()=>{
+  const a=T.ar;
+  let text=`📌 *محتوى يوم ${a.days[D.indexOf(day)]} (${a.week} ${week})*\n───────────────────\n\n`;
+  S.filter(s=>s[0]===day).forEach(s=>{
+    const [,ty,sa,,pa]=s,it=lookup(day,sa,ty);
+    text+=`🔹 *${sa}* (${TY[ty][0]})\n`;
+    if(pa)text+=`📍 المكان: ${pa}\n`;
+    if(isUrl(it.audio))text+=`🎙️ الريكورد: ${it.audio}\n`;
+    if(isUrl(it.pdf))text+=`📑 الداتا: ${it.pdf}\n`;
+    if(it.note)text+=`💡 ملاحظة: ${it.note}\n`;
+    text+='\n';
+  });
+  text+=`#الأسبوع_${week} #الفرقة_الرابعة`;
+  const ok=()=>toast(T[lang].copied);
+  (navigator.clipboard?navigator.clipboard.writeText(text):Promise.reject()).then(ok,()=>{
+    const x=document.createElement('textarea');x.value=text;document.body.appendChild(x);x.select();
+    try{document.execCommand('copy');ok();}catch(e){}x.remove();
+  });
+};
 
-    document.getElementById('themeToggleBtn').onclick = () => {
-      const isDark = document.documentElement.classList.toggle('dark');
-      localStorage.setItem('PT_THEME', isDark ? 'dark' : 'light');
-      initTheme();
-    };
-
-    document.getElementById('langToggleBtn').onclick = () => {
-      setLanguage(currentLang === 'ar' ? 'en' : 'ar');
-    };
-
-    function renderWeeks() {
-      const container = document.getElementById('weeksNav');
-      const t = translations[currentLang];
-      container.innerHTML = '';
-
-      for (let i = 1; i <= 14; i++) {
-        const btn = document.createElement('button');
-        const active = currentWeek === i;
-        btn.className = `px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all duration-150 ${
-          active 
-            ? 'bg-slate-900 text-white dark:bg-white dark:text-slate-900 shadow-sm ring-1 ring-slate-900/10 dark:ring-white/20' 
-            : 'bg-white dark:bg-[#111726] text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 border border-slate-200/90 dark:border-slate-800'
-        }`;
-        btn.innerText = `${t.weekPrefix} ${i}`;
-        btn.onclick = () => {
-          currentWeek = i;
-          document.getElementById('activeWeekDisplay').innerText = `${t.weekPrefix} ${i}`;
-          renderWeeks();
-          fetchData();
-        };
-        container.appendChild(btn);
-      }
-    }
-
-    function renderDays() {
-      const container = document.getElementById('daysNav');
-      const t = translations[currentLang];
-      const dayKeys = ['sat', 'sun', 'mon', 'tue', 'wed'];
-      container.innerHTML = '';
-
-      dayKeys.forEach(key => {
-        const active = currentDay === key;
-        const btn = document.createElement('button');
-        btn.className = `py-2 rounded-xl text-xs sm:text-sm font-bold transition-all duration-150 ${
-          active 
-            ? 'bg-white dark:bg-[#161f36] text-indigo-600 dark:text-indigo-300 shadow-sm border border-slate-300/80 dark:border-slate-700/80' 
-            : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-        }`;
-        btn.innerText = t.days[key];
-        btn.onclick = () => {
-          currentDay = key;
-          renderDays();
-          renderLectures();
-        };
-        container.appendChild(btn);
-      });
-    }
-
-    function fetchData() {
-      document.getElementById('loader').classList.remove('hidden');
-      document.getElementById('lecturesList').classList.add('hidden');
-
-      const sheetTabName = encodeURIComponent(`الأسبوع ${currentWeek}`);
-
-      window.googleSheetCallback = function(res) {
-        try {
-          const rows = res.table ? res.table.rows || [] : [];
-          sheetPayload = {};
-
-          rows.forEach(r => {
-            const c = r.c || [];
-            // العمود 1: المادة | 5: الريكورد | 6: الداتا | 7: الملاحظات | 8: dayKey
-            const subj = (c[1]?.v || '').toString().trim();
-            const dKey = (c[8]?.v || c[7]?.v || '').toString().toLowerCase().trim();
-            const audio = (c[5]?.v || '').toString().trim();
-            const pdf = (c[6]?.v || '').toString().trim();
-            const note = (c[7]?.v || '').toString().trim();
-
-            const lookupKey = `${dKey}_${subj}`;
-            sheetPayload[lookupKey] = { audio, pdf, note: (note !== dKey ? note : '') };
-          });
-        } catch (e) {
-          console.error(e);
-        } finally {
-          document.getElementById('loader').classList.add('hidden');
-          document.getElementById('lecturesList').classList.remove('hidden');
-          renderLectures();
-        }
-      };
-
-      const old = document.getElementById('jsonpScript');
-      if (old) old.remove();
-
-      const script = document.createElement('script');
-      script.id = 'jsonpScript';
-      script.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${sheetTabName}&tqx=responseHandler:googleSheetCallback&_t=${Date.now()}`;
-      
-      script.onerror = function() {
-        document.getElementById('loader').classList.add('hidden');
-        document.getElementById('lecturesList').classList.remove('hidden');
-        renderLectures();
-      };
-
-      document.body.appendChild(script);
-    }
-
-    function renderLectures() {
-      const t = translations[currentLang];
-      document.getElementById('dayTitle').innerText = `${t.dayLectures} ${t.days[currentDay]} • ${t.weekPrefix} ${currentWeek}`;
-
-      const list = document.getElementById('lecturesList');
-      list.innerHTML = '';
-
-      const dayLectures = baseSchedule.filter(l => l.dayKey === currentDay);
-
-      if (dayLectures.length === 0) {
-        list.innerHTML = `
-          <div class="py-14 text-center rounded-2xl border border-dashed border-slate-300 dark:border-slate-800">
-            <p class="text-xs text-slate-500 font-medium">${t.noLectures}</p>
-          </div>
-        `;
-        return;
-      }
-
-      dayLectures.forEach(lec => {
-        const lookupKey = `${currentDay}_${lec.subject_ar}`;
-        const item = sheetPayload[lookupKey] || {};
-
-        const audioUrl = item.audio && item.audio.startsWith('http') ? item.audio : null;
-        const pdfUrl = item.pdf && item.pdf.startsWith('http') ? item.pdf : null;
-        const noteText = item.note && item.note.length > 0 ? item.note : null;
-
-        const card = document.createElement('div');
-        card.className = "bg-white dark:bg-[#101625] border border-slate-200/90 dark:border-slate-800/90 hover:border-slate-300 dark:hover:border-slate-700/80 rounded-2xl p-4 sm:p-5 transition shadow-sm";
-
-        const subjectName = currentLang === 'ar' ? lec.subject_ar : lec.subject_en;
-        const typeName = currentLang === 'ar' ? lec.type_ar : lec.type_en;
-        const placeName = currentLang === 'ar' ? lec.place_ar : lec.place_en;
-
-        let badgeStyle = 'bg-blue-50 text-blue-700 dark:bg-blue-950/40 dark:text-blue-300 border-blue-200/60 dark:border-blue-900/40';
-        if (lec.type_ar.includes('إكلينيكي')) badgeStyle = 'bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-300 border-amber-200/60 dark:border-amber-900/40';
-        if (lec.type_ar.includes('معمل')) badgeStyle = 'bg-purple-50 text-purple-700 dark:bg-purple-950/40 dark:text-purple-300 border-purple-200/60 dark:border-purple-900/40';
-
-        card.innerHTML = `
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div class="space-y-1.5">
-              <div class="flex items-center gap-2">
-                <span class="text-[10px] font-extrabold uppercase tracking-wider px-2 py-0.5 rounded-md border ${badgeStyle}">
-                  ${typeName}
-                </span>
-                <h3 class="text-sm sm:text-base font-bold text-slate-900 dark:text-slate-100 tracking-tight">${subjectName}</h3>
-              </div>
-              <div class="flex items-center gap-3 text-xs text-slate-500 dark:text-slate-400 font-medium">
-                ${placeName ? `<span class="flex items-center gap-1">📍 ${placeName}</span>` : ''}
-                ${lec.time ? `<span class="flex items-center gap-1 font-mono text-[11px]">⏰ ${lec.time}</span>` : ''}
-              </div>
-            </div>
-
-            <!-- أزرار الروابط -->
-            <div class="flex items-center gap-2 self-start sm:self-center pt-1 sm:pt-0">
-              ${audioUrl ? `
-                <a href="${audioUrl}" target="_blank" class="text-xs bg-indigo-50 dark:bg-indigo-950/50 hover:bg-indigo-600 text-indigo-700 dark:text-indigo-300 hover:text-white border border-indigo-200/80 dark:border-indigo-800/60 px-3.5 py-1.5 rounded-xl transition font-bold flex items-center gap-1.5">
-                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 100-6 3 3 0 000 6z"/></svg>
-                  <span>${t.audioBtn}</span>
-                </a>
-              ` : `<span class="text-[11px] text-slate-400 dark:text-slate-600 font-medium px-2 py-1">${t.noAudio}</span>`}
-
-              ${pdfUrl ? `
-                <a href="${pdfUrl}" target="_blank" class="text-xs bg-emerald-50 dark:bg-emerald-950/50 hover:bg-emerald-600 text-emerald-700 dark:text-emerald-300 hover:text-white border border-emerald-200/80 dark:border-emerald-800/60 px-3.5 py-1.5 rounded-xl transition font-bold flex items-center gap-1.5">
-                  <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-                  <span>${t.pdfBtn}</span>
-                </a>
-              ` : `<span class="text-[11px] text-slate-400 dark:text-slate-600 font-medium px-2 py-1">${t.noPdf}</span>`}
-            </div>
-          </div>
-
-          <!-- شريط الملاحظات الذكي -->
-          ${noteText ? `
-            <div class="mt-3.5 pt-3 border-t border-slate-100 dark:border-slate-800/60 flex items-start gap-2 text-xs">
-              <span class="font-bold text-amber-600 dark:text-amber-400 shrink-0">${t.noteLabel}</span>
-              <p class="text-slate-600 dark:text-slate-300 leading-relaxed font-normal">${noteText}</p>
-            </div>
-          ` : ''}
-        `;
-        list.appendChild(card);
-      });
-    }
-
-    function updateAdminState() {
-      const panel = document.getElementById('adminPanel');
-      const copyBtn = document.getElementById('copyTgBtn');
-      const loginBtn = document.getElementById('adminBtn');
-      document.getElementById('sheetLink').href = SHEET_EDIT_URL;
-
-      if (isAdmin) {
-        panel.classList.remove('hidden');
-        panel.classList.add('flex');
-        copyBtn.classList.remove('hidden');
-        copyBtn.classList.add('flex');
-        loginBtn.classList.add('hidden');
-      } else {
-        panel.classList.add('hidden');
-        panel.classList.remove('flex');
-        copyBtn.classList.add('hidden');
-        copyBtn.classList.remove('flex');
-        loginBtn.classList.remove('hidden');
-      }
-    }
-
-    document.getElementById('adminBtn').onclick = () => {
-      const t = translations[currentLang];
-      const p = prompt(t.adminPrompt);
-      if (p === 'admin2026') {
-        isAdmin = true;
-        localStorage.setItem('PT_ADMIN', 'true');
-        updateAdminState();
-      }
-    };
-
-    document.getElementById('logoutBtn').onclick = () => {
-      isAdmin = false;
-      localStorage.removeItem('PT_ADMIN');
-      updateAdminState();
-    };
-
-    document.getElementById('copyTgBtn').onclick = () => {
-      const t = translations[currentLang];
-      const dayLectures = baseSchedule.filter(l => l.dayKey === currentDay);
-
-      let text = `📌 *محتوى يوم ${translations.ar.days[currentDay]} (${translations.ar.weekPrefix} ${currentWeek})*\n`;
-      text += `───────────────────\n\n`;
-
-      dayLectures.forEach(lec => {
-        const lookupKey = `${currentDay}_${lec.subject_ar}`;
-        const item = sheetPayload[lookupKey] || {};
-        text += `🔹 *${lec.subject_ar}* (${lec.type_ar})\n`;
-        if (lec.place_ar) text += `📍 المكان: ${lec.place_ar}\n`;
-        if (item.audio && item.audio.startsWith('http')) text += `🎙️ الريكورد: ${item.audio}\n`;
-        if (item.pdf && item.pdf.startsWith('http')) text += `📑 الداتا: ${item.pdf}\n`;
-        if (item.note) text += `💡 ملاحظة: ${item.note}\n`;
-        text += `\n`;
-      });
-
-      text += `#الأسبوع_${currentWeek} #الفرقة_الرابعة`;
-      navigator.clipboard.writeText(text).then(() => alert(t.copied));
-    };
-
-    document.getElementById('refreshBtn').onclick = fetchData;
-
-    initTheme();
-    setLanguage(currentLang);
-    updateAdminState();
-    fetchData();
-  </script>
+applyTheme(document.documentElement.dataset.theme||'light');
+renderAdmin();
+setLang(lang);
+load();
+</script>
 </body>
 </html>

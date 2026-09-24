@@ -126,6 +126,25 @@
 [data-theme="dark"] .bg-mesh { opacity: 0.7; filter: blur(80px); }
 [data-theme="dark"] .bg-grid { opacity: 0.4; }
 
+@media (max-width: 1024px) {
+  .bg-mesh {
+    filter: blur(25px);
+    opacity: 0.25;
+    animation: none;
+    will-change: auto;
+  }
+  .bg-grid {
+    animation: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .bg-mesh,
+  .bg-grid {
+    display: none !important;
+  }
+}
+
 
 /* Favorite Star Button & Animations */
 .fav-btn {
@@ -823,6 +842,14 @@ h1 {
   border-bottom: 1px solid var(--line);
   transition: padding 0.2s ease;
 }
+
+@media (max-width: 768px) {
+  .weeknav {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: var(--bg) !important;
+  }
+}
 .weeknav-header {
   display: flex;
   align-items: center;
@@ -916,29 +943,10 @@ h1 {
   background: color-mix(in srgb, var(--brand) 10%, var(--surface));
   color: var(--brand);
 }
-.wk.current::before {
-  content: "📍";
-  position: absolute;
-  top: -8px;
-  inset-inline-start: 50%;
-  transform: translateX(50%);
-  font-size: 9px;
-}
 .wk.past:not([aria-pressed="true"]) {
   opacity: 0.65;
 }
-.wk.past::after {
-  content: "✓";
-  position: absolute;
-  top: 1px;
-  inset-inline-end: 3px;
-  font-size: 8.5px;
-  font-weight: 800;
-  color: var(--brand);
-}
-.wk[aria-pressed="true"].past::after {
-  color: var(--on-brand);
-}
+
 
 .days {
   display: grid;
@@ -1167,6 +1175,7 @@ main {
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-sm);
+  contain: layout style paint;
 }
 
 /* Individual Lecture Card (with micro-interactions) */
@@ -1176,6 +1185,8 @@ main {
   border-top: 1px solid var(--line);
   transition: transform 150ms ease, box-shadow 150ms ease, background-color 150ms ease;
   cursor: pointer;
+  content-visibility: auto;
+  contain-intrinsic-size: 0 140px;
 }
 .lec:first-child { border-top: 0; }
 .lec:hover {
@@ -1308,6 +1319,9 @@ button.chip.off:hover {
   overflow: hidden;
   box-shadow: var(--shadow-sm);
   transition: border-inline-start-width 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  content-visibility: auto;
+  contain-intrinsic-size: 0 80px;
+  contain: layout style;
 }
 .subj:hover {
   border-inline-start-width: 5px !important;
@@ -1691,6 +1705,29 @@ button.chip.off:hover {
   .lec-head { gap: 16px; }
 }
 
+@media (max-width: 768px) {
+  /* Disable stagger animation and GPU-heavy card transitions on mobile */
+  .view-card-anim {
+    animation: none !important;
+    will-change: auto !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  .lec, .subj, .chip, .pill, .btn, .stat-item {
+    transition-duration: 0.1s !important;
+  }
+  .lec:hover, .subj:hover {
+    transform: none !important;
+    box-shadow: var(--shadow-sm) !important;
+  }
+  .lec:hover::before {
+    width: 3px !important;
+  }
+  .stat-item:hover {
+    transform: none !important;
+  }
+}
+
 @media (max-width: 640px) {
   .week-toggle-btn { display: inline-flex; }
   .weeks-collapsible.is-collapsed {
@@ -1706,9 +1743,13 @@ button.chip.off:hover {
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
-    transition: none !important;
-    animation: none !important;
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     scroll-behavior: auto !important;
+  }
+  .bg-mesh, .bg-grid, .adhkar-track {
+    animation: none !important;
   }
 }
 </style>
@@ -1735,7 +1776,7 @@ button.chip.off:hover {
   <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
   <symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
   <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></symbol>
-  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 0 1 1-9-9Z"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
   <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
   <symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
   <symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="m18 15-6-6-6 6"/></symbol>
@@ -1874,8 +1915,6 @@ button.chip.off:hover {
 
 <!-- Main Results Area -->
 <main class="wrap">
-  <!-- Next Class Card ("المحاضرة القادمة") -->
-  <section id="nextClassContainer" aria-label="المحاضرة القادمة"></section>
 
   <!-- Dynamic Results Counter -->
   <div class="results-info">
@@ -2694,81 +2733,12 @@ function getNearestUpcomingLecture() {
  */
 function updateNextClassCard() {
   const container = $('nextClassContainer');
-  if (!container) return;
-
-  const nearest = getNearestUpcomingLecture();
-  if (!nearest) {
-    container.innerHTML = '';
-    return;
-  }
-
-  const { lec, candDate, isNow, isSoon, msUntilStart, msUntilEnd } = nearest;
-  const tm = typeMeta(lec.type);
-
-  let statusBadgeHtml = '';
-  let countdownText = '';
-
-  if (isNow) {
-    const minsLeft = Math.max(1, Math.round(msUntilEnd / (1000 * 60)));
-    statusBadgeHtml = `<span class="next-class-status-badge now" aria-label="المحاضرة جارية الآن">● جارية الآن</span>`;
-    countdownText = `تنتهي خلال ${minsLeft} دقيقة`;
-  } else if (isSoon) {
-    const minsLeft = Math.max(1, Math.round(msUntilStart / (1000 * 60)));
-    statusBadgeHtml = `<span class="next-class-status-badge soon">⚡ تبدأ قريباً</span>`;
-    countdownText = `تبدأ بعد ${minsLeft} دقيقة`;
-  } else {
-    const hoursLeft = Math.floor(msUntilStart / (1000 * 60 * 60));
-    const minsLeft = Math.floor((msUntilStart % (1000 * 60 * 60)) / (1000 * 60));
-
-    if (hoursLeft < 24 && candDate.getDate() === new Date().getDate()) {
-      countdownText = `تبدأ اليوم بعد ${hoursLeft > 0 ? hoursLeft + ' س و ' : ''}${minsLeft} د`;
-    } else {
-      const daysLeft = Math.ceil(msUntilStart / (1000 * 60 * 60 * 24));
-      const dayName = CONFIG.DAYS.find(d => d.k === lec.dayKey)?.n || lec.day;
-      countdownText = `يوم ${dayName} (${daysLeft === 1 ? 'غداً' : 'بعد ' + daysLeft + ' أيام'})`;
-    }
-    statusBadgeHtml = `<span class="next-class-status-badge">الأسبوع ${lec.wk}</span>`;
-  }
-
-  container.innerHTML = `
-    <div class="next-class-card" role="region" aria-label="محاضرتك القادمة">
-      <div class="next-class-header">
-        <span class="next-class-title-badge">
-          ${ic('clock')}محاضرتك القادمة
-        </span>
-        ${statusBadgeHtml}
-      </div>
-      <div class="next-class-main">
-        <div class="next-class-info">
-          <h3><bdi>${esc(lec.subject)}</bdi></h3>
-          <div class="next-class-meta">
-            <span style="color:var(${tm.v});font-weight:700">
-              <svg class="i"><use href="#${tm.iconSymbol}"/></svg>${esc(lec.type || '—')}
-            </span>
-            <span>${ic('pin')}<bdi>${esc(lec.place || '—')}</bdi></span>
-            <span>${ic('clock')}<bdi>${esc(lec.time || '—')}</bdi></span>
-          </div>
-          <div class="next-class-timer" aria-live="polite" aria-atomic="true">
-            ⏳ <span>${countdownText}</span>
-          </div>
-        </div>
-        <button class="btn next-class-goto" data-goto-lec="${esc(lec.id)}" data-wk="${lec.wk}" data-day="${lec.dayKey}">
-          اذهب للمحاضرة
-          <svg class="i"><use href="#i-arrow-left"/></svg>
-        </button>
-      </div>
-    </div>
-  `;
+  if (container) container.innerHTML = '';
 }
 
 // Start live timer for Next Class Card
 function startNextClassTimer() {
-  if (nextClassTimerInterval) clearInterval(nextClassTimerInterval);
-  nextClassTimerInterval = setInterval(() => {
-    if (document.visibilityState === 'visible') {
-      updateNextClassCard();
-    }
-  }, 60000);
+  // Disabled - Next Class Card removed
 }
 
 document.addEventListener('visibilitychange', () => {

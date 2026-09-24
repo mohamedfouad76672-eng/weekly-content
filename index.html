@@ -20,8 +20,8 @@ var d=document.documentElement;d.lang=l;d.dir=l==='ar'?'rtl':'ltr';d.dataset.the
 *{box-sizing:border-box;margin:0}
 [hidden]{display:none!important}
 body{font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;min-height:100dvh;-webkit-text-size-adjust:100%}
-.wrap{max-width:720px;margin:0 auto;padding-inline:var(--pad)}
-.i{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.wrap{max-width:760px;margin:0 auto;padding-inline:var(--pad)}
+.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
 button,a{-webkit-tap-highlight-color:transparent}
 button:focus-visible,a:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
 
@@ -55,7 +55,7 @@ h2{display:inline;font-size:1.0625rem;font-weight:600}
 .cnt{font-size:.8125rem;color:var(--mute);margin-inline-start:8px}
 .msg{font-size:.8125rem;color:var(--C);margin-bottom:10px}
 
-.list{display:grid;gap:10px;align-items:start}
+.list{display:grid;gap:12px;align-items:start}
 .lec{display:grid;grid-template-columns:68px 1fr;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
 .lec[data-t=L]{--c:var(--L)}.lec[data-t=C]{--c:var(--C)}.lec[data-t=B]{--c:var(--B)}
 .time{padding:14px 0;text-align:center;direction:ltr;border-inline-end:1px solid var(--line);font-variant-numeric:tabular-nums}
@@ -67,12 +67,20 @@ h2{display:inline;font-size:1.0625rem;font-weight:600}
 h3{font-size:1rem;font-weight:600;line-height:1.5;margin:2px 0 4px}
 .meta{display:flex;align-items:flex-start;gap:6px;font-size:.8125rem;color:var(--mute)}
 .meta .i{width:15px;height:15px;margin-top:4px}
-.acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
-.btn{flex:1 1 120px;min-height:44px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:0 14px;border-radius:9px;border:1px solid var(--acc);color:var(--acc);font-size:.875rem;font-weight:500;text-decoration:none}
-.btn .i{width:18px;height:18px}
-.btn.p{background:var(--acc);color:var(--on)}
-.btn.off{border:1px dashed var(--line);color:var(--mute);font-weight:400}
+
+.acts{display:grid;grid-template-columns:repeat(auto-fit, minmax(130px, 1fr));gap:6px;margin-top:12px}
+.btn{min-height:38px;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 10px;border-radius:8px;border:1px solid var(--line);color:var(--mute);font-size:.8125rem;font-weight:500;text-decoration:none;transition:0.15s}
+.btn .i{width:16px;height:16px}
+.btn.act-audio{border-color:var(--acc);color:var(--acc);background:var(--soft)}
+.btn.act-pdf{border-color:#3b62a8;color:#3b62a8;background:#ebf1fa}
+[data-theme=dark] .btn.act-pdf{background:#132038;color:#8ab4f8;border-color:#2a3d60}
+.btn.act-sum{border-color:#b0620f;color:#b0620f;background:#fdf4eb}
+[data-theme=dark] .btn.act-sum{background:#2b1907;color:#f3b068;border-color:#5c350a}
+.btn.act-q{border-color:#7b4a8f;color:#7b4a8f;background:#f8f0fc}
+[data-theme=dark] .btn.act-q{background:#26112e;color:#d59bed;border-color:#552469}
+.btn.off{border:1px dashed var(--line);color:var(--mute);opacity:0.6;font-size:.75rem}
 .btn.wait{border-color:var(--line);color:var(--mute);animation:pulse 1.2s infinite}
+
 .note{margin-top:12px;padding:10px 12px;background:var(--soft);border-radius:8px;font-size:.8125rem}
 .note b{color:var(--acc);font-weight:600}
 
@@ -92,6 +100,8 @@ h3{font-size:1rem;font-weight:600;line-height:1.5;margin:2px 0 4px}
 <symbol id="refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 00-14.9-3M4 4v4h4M4 13a8 8 0 0014.9 3M20 20v-4h-4"/></symbol>
 <symbol id="mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3"/></symbol>
 <symbol id="file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></symbol>
+<symbol id="book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></symbol>
+<symbol id="quiz" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
 <symbol id="copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 012-2h9"/></symbol>
 <symbol id="pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol>
 </defs></svg>
@@ -135,38 +145,33 @@ const $=id=>document.getElementById(id);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
 const T={
-ar:{title:'دليل المحاضرات والمحتوى',sub:'الفرقة الرابعة • الفصل الدراسي الأول (نساء وجراحة)',weeks:'الأسابيع الدراسية',week:'الأسبوع',n:'محاضرات',audio:'الريكورد',pdf:'الداتا',noAudio:'لا يوجد تسجيل',noPdf:'لا توجد داتا',note:'ملاحظة',edit:'تعديل الشيت',out:'خروج',copy:'نسخ لـ Telegram',copied:'تم نسخ رسالة التليجرام',pass:'أدخل رمز دخول المشرف:',err:'تعذر تحميل الروابط. تحقق من الاتصال ثم اضغط تحديث.',refresh:'تحديث',theme:'تغيير المظهر',admin:'دخول المشرف',lang:'EN',
+ar:{title:'دليل المحاضرات والمحتوى',sub:'الفرقة الرابعة • الفصل الدراسي الأول',weeks:'الأسابيع الدراسية',week:'الأسبوع',n:'محاضرات',audio:'الريكورد',pdf:'الداتا',sum:'الملخص',q:'الأسئلة',noAudio:'لا يوجد تسجيل',noPdf:'لا توجد داتا',noSum:'لا يوجد ملخص',noQ:'لا توجد أسئلة',note:'ملاحظة',edit:'تعديل الشيت',out:'خروج',copy:'نسخ لـ Telegram',copied:'تم نسخ رسالة التليجرام',pass:'أدخل رمز دخول المشرف:',err:'تعذر تحميل الروابط. تحقق من الاتصال ثم اضغط تحديث.',refresh:'تحديث',theme:'تغيير المظهر',admin:'دخول المشرف',lang:'EN',
  days:['السبت','الأحد','الإثنين','الثلاثاء','الأربعاء'],short:['السبت','الأحد','الإثنين','الثلاثاء','الأربعاء']},
-en:{title:'Academic Course Companion',sub:'4th Year • 1st Semester (Gynecology & Surgery)',weeks:'Academic weeks',week:'Week',n:'sessions',audio:'Audio',pdf:'Slides',noAudio:'No recording',noPdf:'No slides',note:'Note',edit:'Edit sheet',out:'Logout',copy:'Copy for Telegram',copied:'Telegram message copied',pass:'Enter admin passcode:',err:"Couldn't load the links. Check your connection, then tap refresh.",refresh:'Refresh',theme:'Toggle theme',admin:'Admin login',lang:'عربي',
+en:{title:'Academic Course Companion',sub:'4th Year • 1st Semester',weeks:'Academic weeks',week:'Week',n:'sessions',audio:'Audio',pdf:'Slides',sum:'Summary',q:'Quiz',noAudio:'No audio',noPdf:'No slides',noSum:'No summary',noQ:'No quiz',note:'Note',edit:'Edit sheet',out:'Logout',copy:'Copy for Telegram',copied:'Telegram message copied',pass:'Enter admin passcode:',err:"Couldn't load links.",refresh:'Refresh',theme:'Toggle theme',admin:'Admin login',lang:'عربي',
  days:['Saturday','Sunday','Monday','Tuesday','Wednesday'],short:['Sat','Sun','Mon','Tue','Wed']}
 };
 const D=['sat','sun','mon','tue','wed'];
 const TY={L:['نظري','Lecture'],C:['إكلينيكي / مستشفى','Clinical / Hospital'],B:['معملي','Lab']};
 
-// [day, type, subject_ar, subject_en, place_ar, place_en, time]
 const S=[
 // السبت
 ['sat','L','ع.ط جراحة وحروق','P.T. for Surgery & Burns','مدرج (ج)','Hall (C)','10:00 - 12:00'],
 ['sat','L','ع.ط للجلد والأغشية','P.T. for Integumentary','مدرج (ج)','Hall (C)','12:00 - 01:00'],
 ['sat','L','جراحة عامة وحروق','General Surgery & Burns','مدرج (ج)','Hall (C)','01:00 - 03:00'],
-
 // الأحد
 ['sun','C','ع.ط لصحة المرأة',"P.T. for Women's Health",'C 10-11-12-13 + C 20','C 10-11-12-13 + C 20','09:00 - 11:00'],
 ['sun','B','ع.ط لصحة المرأة',"P.T. for Women's Health",'الدور الرابع D 1-8-9-15-17','4th Floor D 1-8-9-15-17','11:00 - 01:00'],
 ['sun','L','ع.ط لصحة المرأة',"P.T. for Women's Health",'مدرج (د)','Hall (D)','01:00 - 03:00'],
-
-// الإثنين (مفصول إكلينيكي)
+// الإثنين
 ['mon','C','ع.ط جراحة','P.T. for Surgery (Clinical)','الدور الثالث C-7-8-9-10-11','3rd Floor C-7-8-9-10-11','09:00 - 12:00'],
 ['mon','C','ع.ط حروق','P.T. for Burns (Clinical)','الدور الثالث C-7-8-9-10-11','3rd Floor C-7-8-9-10-11','09:00 - 12:00'],
 ['mon','L','أمراض نساء وتوليد','Obstetrics & Gynecology','مدرج (أ)','Hall (A)','12:00 - 02:00'],
 ['mon','L','ميكانيكا العمل','Ergonomics / Occupational','مدرج (أ)','Hall (A)','02:00 - 03:00'],
 ['mon','B','ميكانيكا العمل','Ergonomics / Occupational','مدرج (أ)','Hall (A)','03:00 - 05:00'],
-
 // الثلاثاء
 ['tue','C','ع.ط لاضطرابات الحوض لدى السيدات','P.T. for Female Pelvic Disorders','الدور الثالث C10-11-12-13 + C20','3rd Floor C10-11-12-13 + C20','09:00 - 12:00'],
 ['tue','L','ع.ط لاضطرابات الحوض لدى السيدات','P.T. for Female Pelvic Disorders','مدرج (هـ)','Hall (E)','12:00 - 02:00'],
-
-// الأربعاء (مفصول معملي)
+// الأربعاء
 ['wed','C','ع.ط للجلد والأغشية','P.T. for Integumentary','الدور الرابع D 1-8-9-15-17','4th Floor D 1-8-9-15-17','09:00 - 12:00'],
 ['wed','B','ع.ط جراحة','P.T. for Surgery (Lab)','الدور الرابع D 1-8-9-15-17','4th Floor D 1-8-9-15-17','12:00 - 02:00'],
 ['wed','B','ع.ط حروق','P.T. for Burns (Lab)','الدور الرابع D 1-8-9-15-17','4th Floor D 1-8-9-15-17','12:00 - 02:00'],
@@ -179,13 +184,10 @@ let week=Math.min(14,Math.max(1,+store.get('PT_WEEK')||1));
 let day=TODAY, admin=store.get('PT_ADMIN')==='true';
 let data={}, cache={}, state='load', reqId=0;
 
-// دالة البحث مع المطابقة الدقيقة للنوع لمنع التداخل
 const lookup=(d,subj,ty)=>{
   const fullType = TY[ty][0];
   const shortType = ty === 'L' ? 'نظري' : (ty === 'B' ? 'معملي' : 'إكلينيكي');
-  return data[`${d}_${subj}_${fullType}`] || 
-         data[`${d}_${subj}_${shortType}`] || 
-         data[`${d}_${subj}`] || {};
+  return data[`${d}_${subj}_${fullType}`] || data[`${d}_${subj}_${shortType}`] || data[`${d}_${subj}`] || {};
 };
 
 const isUrl=u=>/^https?:\/\//i.test(u||'');
@@ -216,7 +218,11 @@ function renderWeeks(){
   }
 }
 function markWeek(beh){
-  [...$('weeks').children].forEach((b,i)=>{     const on=i+1===week;b.setAttribute('aria-pressed',on);     if(on)b.scrollIntoView({inline:'center',block:'nearest',behavior:beh});   });$('wkNow').textContent=`${T[lang].week} ${week}`;
+  [...$('weeks').children].forEach((b,i)=>{
+    const on=i+1===week;b.setAttribute('aria-pressed',on);
+    if(on)b.scrollIntoView({inline:'center',block:'nearest',behavior:beh});
+  });
+  $('wkNow').textContent=`${T[lang].week} ${week}`;
 }
 function renderDays(){
   const c=$('days');c.innerHTML='';
@@ -231,12 +237,15 @@ function renderDays(){
 }
 function renderList(){
   const t=T[lang],items=S.filter(s=>s[0]===day);
-  $('dayTitle').textContent=t.days[D.indexOf(day)];$('dayCount').textContent=`${items.length} ${t.n}`;
+  $('dayTitle').textContent=t.days[D.indexOf(day)];
+  $('dayCount').textContent=`${items.length} ${t.n}`;
+
   const btn=(url,label,off,cls,icon)=>{
     const ic=`<svg class="i"><use href="#${icon}"/></svg>`;
     if(state==='load')return `<span class="btn wait">${ic}${label}</span>`;
     return isUrl(url)?`<a class="btn ${cls}" href="${esc(url)}" target="_blank" rel="noopener">${ic}${label}</a>`:`<span class="btn off">${off}</span>`;
   };
+
   $('list').innerHTML=items.map(s=>{
     const [,ty,sa,se,pa,pe,tm]=s,it=lookup(day,sa,ty),[a,b]=tm.split(' - ');
     const subj=lang==='ar'?sa:se,place=lang==='ar'?pa:(pe||pa);
@@ -246,8 +255,13 @@ function renderList(){
         <div class="tag"><i></i>${TY[ty][lang==='ar'?0:1]}</div>
         <h3>${subj}</h3>
         <p class="meta"><svg class="i"><use href="#pin"/></svg><bdi>${place}</bdi></p>
-        <div class="acts">${btn(it.audio,t.audio,t.noAudio,'p','mic')}${btn(it.pdf,t.pdf,t.noPdf,'','file')}</div>
-        ${it.note?`<p class="note"><b>${t.note}:</b>${esc(it.note)}</p>`:''}
+        <div class="acts">
+          ${btn(it.audio,t.audio,t.noAudio,'act-audio','mic')}
+          ${btn(it.pdf,t.pdf,t.noPdf,'act-pdf','file')}
+          ${btn(it.summary,t.sum,t.noSum,'act-sum','book')}
+          ${btn(it.questions,t.q,t.noQ,'act-q','quiz')}
+        </div>
+        ${it.note?`<p class="note"><b>${t.note}:</b> ${esc(it.note)}</p>`:''}
       </div></article>`;
   }).join('');
 }
@@ -255,12 +269,12 @@ function parse(res){
   const out={};
   ((res&&res.table&&res.table.rows)||[]).forEach(r=>{
     const c=r.c||[],v=i=>c[i]&&c[i].v!=null?String(c[i].v).trim():'';
-    // 1: المادة | 2: النوع | 5: Audio | 6: PDF | 7: ملاحظات | 8: dayKey
-    const subj=v(1),type=v(2),d=(v(8)||v(7)).toLowerCase();
-    const o={audio:v(5),pdf:v(6),note:v(7)};
+    // الأعمدة: 1:المادة | 2:النوع | 5:Audio | 6:PDF | 7:Summary | 8:Questions | 9:Note | 10:dayKey
+    const subj=v(1),type=v(2);
+    const d=(v(10)||v(8)||v(7)).toLowerCase();
+    const o={audio:v(5),pdf:v(6),summary:v(7),questions:v(8),note:v(9)};
     if(o.note.toLowerCase()===d)o.note='';
 
-    // حفظ الرابط بالمفتاح العام، والمفتاح الفريد بالنوع
     out[`${d}_${subj}`]=o;
     if(type){
       out[`${d}_${subj}_${type}`]=o;
@@ -294,18 +308,23 @@ function renderAdmin(){
   $('adminBar').classList.toggle('on',admin);$('copyBtn').hidden=!admin;$('adminBtn').hidden=admin;
 }
 
-$('langBtn').onclick=()=>setLang(lang==='ar'?'en':'ar');$('themeBtn').onclick=()=>{const t=document.documentElement.dataset.theme==='dark'?'light':'dark';store.set('PT_THEME',t);applyTheme(t);};
-$('refreshBtn').onclick=()=>load(true);$('adminBtn').onclick=()=>{if(prompt(T[lang].pass)==='admin2026'){admin=true;store.set('PT_ADMIN','true');renderAdmin();}};
-$('logoutBtn').onclick=()=>{admin=false;store.del('PT_ADMIN');renderAdmin();};$('copyBtn').onclick=()=>{
+$('langBtn').onclick=()=>setLang(lang==='ar'?'en':'ar');
+$('themeBtn').onclick=()=>{const t=document.documentElement.dataset.theme==='dark'?'light':'dark';store.set('PT_THEME',t);applyTheme(t);};
+$('refreshBtn').onclick=()=>load(true);
+$('adminBtn').onclick=()=>{if(prompt(T[lang].pass)==='admin2026'){admin=true;store.set('PT_ADMIN','true');renderAdmin();}};
+$('logoutBtn').onclick=()=>{admin=false;store.del('PT_ADMIN');renderAdmin();};
+$('copyBtn').onclick=()=>{
   const a=T.ar;
   let text=`📌 *محتوى يوم ${a.days[D.indexOf(day)]} (${a.week} ${week})*\n───────────────────\n\n`;
   S.filter(s=>s[0]===day).forEach(s=>{
     const [,ty,sa,,pa]=s,it=lookup(day,sa,ty);
     text+=`🔹 *${sa}* (${TY[ty][0]})\n`;
-    if(pa)text+=`📍 المكان: ${pa}\n`;
-    if(isUrl(it.audio))text+=`🎙️ الريكورد: ${it.audio}\n`;
-    if(isUrl(it.pdf))text+=`📑 الداتا: ${it.pdf}\n`;
-    if(it.note)text+=`💡 ملاحظة: ${it.note}\n`;
+    if(pa) text+=`📍 المكان: ${pa}\n`;
+    if(isUrl(it.audio)) text+=`🎙️ الريكورد: ${it.audio}\n`;
+    if(isUrl(it.pdf)) text+=`📑 الداتا: ${it.pdf}\n`;
+    if(isUrl(it.summary)) text+=`📖 الملخص: ${it.summary}\n`;
+    if(isUrl(it.questions)) text+=`❓ الأسئلة: ${it.questions}\n`;
+    if(it.note) text+=`💡 ملاحظة: ${it.note}\n`;
     text+='\n';
   });
   text+=`#الأسبوع_${week} #الفرقة_الرابعة`;

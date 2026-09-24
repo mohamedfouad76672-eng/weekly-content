@@ -3,342 +3,548 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="color-scheme" content="light dark">
-<meta name="theme-color" content="#f2f4f5">
-<title>دليل المحاضرات والمحتوى | كلية العلاج الطبيعي</title>
+<title>بوابة العلاج الطبيعي | المحاضرات والمصادر</title>
+<meta name="theme-color" content="#f3f5f4">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
-<script>
-(function(){try{var l=localStorage.getItem('PT_LANG')||'ar',t=localStorage.getItem('PT_THEME');
-if(!t)t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
-var d=document.documentElement;d.lang=l;d.dir=l==='ar'?'rtl':'ltr';d.dataset.theme=t;}catch(e){}})();
-</script>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script>try{var t=localStorage.getItem('pt_theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');document.documentElement.dataset.theme=t}catch(e){}</script>
 <style>
-:root{--bg:#f2f4f5;--card:#fff;--ink:#1a2024;--mute:#5f6b73;--line:#dde2e5;--acc:#0e6e6a;--on:#fff;--soft:#e8f1f0;--L:#3b62a8;--C:#b0620f;--B:#7b4a8f;--pad:16px}
-[data-theme=dark]{--bg:#0e1113;--card:#161a1d;--ink:#e8eaeb;--mute:#8b969c;--line:#252b2f;--acc:#4db3aa;--on:#08201e;--soft:#14262a;--L:#7c9fe0;--C:#e0964a;--B:#b98ad0}
+:root{--bg:#f3f5f4;--surface:#fff;--ink:#10201f;--mute:#5b6b69;--line:#dde4e2;--line2:#c6d1ce;--brand:#0c5551;--on-brand:#fff;--soft:#e2eeec;--soft-ink:#0c5551;--t-theory:#3f6fa8;--t-practical:#b04a63;--t-hospital:#94650e;color-scheme:light}
+[data-theme=dark]{--bg:#0d1514;--surface:#131f1e;--ink:#e5edeb;--mute:#8ea2a0;--line:#223331;--line2:#2f4442;--brand:#5cbdb3;--on-brand:#06201d;--soft:rgba(92,189,179,.13);--soft-ink:#86d5cc;--t-theory:#7ea8dc;--t-practical:#e08aa0;--t-hospital:#d9a94a;color-scheme:dark}
 *{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,system-ui,sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.7;min-height:100vh;font-variant-numeric:tabular-nums}
 [hidden]{display:none!important}
-body{font-family:'IBM Plex Sans Arabic','Segoe UI',Tahoma,system-ui,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6;min-height:100dvh;-webkit-text-size-adjust:100%}
-.wrap{max-width:760px;margin:0 auto;padding-inline:var(--pad)}
-.i{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
-button,a{-webkit-tap-highlight-color:transparent}
-button:focus-visible,a:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
-
-.bar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:14px 10px}
-h1{font-size:1.125rem;font-weight:600;line-height:1.4}
-.sub{font-size:.8125rem;color:var(--mute)}
-.tools{display:flex;gap:2px;flex:none}
-.ib{min-width:44px;height:44px;display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;background:none;color:var(--mute);border-radius:10px;font:inherit;font-size:.8125rem;font-weight:500;cursor:pointer}
-.ib:hover{background:var(--soft);color:var(--ink)}
-.ib.txt{padding:0 12px;color:var(--acc)}
-.admin{display:none;align-items:center;justify-content:space-between;border-top:1px solid var(--line);font-size:.8125rem}
-.admin.on{display:flex}
-.admin a,.admin button{color:var(--acc);font:inherit;font-weight:500;background:none;border:0;cursor:pointer;text-decoration:none;min-height:44px;display:inline-flex;align-items:center}
-
-.nav{position:sticky;top:0;z-index:5;background:var(--bg);border-bottom:1px solid var(--line)}
-.wk-h{display:flex;justify-content:space-between;align-items:baseline;font-size:.8125rem;color:var(--mute);padding-top:8px}
-.wk-h b{color:var(--ink);font-weight:600}
-.weeks{display:flex;gap:6px;overflow-x:auto;scroll-snap-type:x proximity;padding:8px var(--pad) 10px;margin-inline:calc(var(--pad)*-1);scrollbar-width:none}
-.weeks::-webkit-scrollbar{display:none}
-.wk{flex:none;width:44px;height:44px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--mute);font:inherit;font-weight:500;font-variant-numeric:tabular-nums;cursor:pointer;scroll-snap-align:center}
-.wk[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:var(--bg)}
-.days{display:grid;grid-template-columns:repeat(5,1fr)}
-.day{height:48px;border:0;border-bottom:2px solid transparent;margin-bottom:-1px;background:none;color:var(--mute);font:inherit;font-size:.9375rem;font-weight:500;cursor:pointer}
-.day[aria-selected=true]{color:var(--ink);font-weight:600;border-color:var(--acc)}
-.today span::after{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--acc);margin-inline-start:5px;vertical-align:middle}
-.loading .nav{border-bottom-color:var(--acc);animation:pulse 1s infinite}
-
-main{padding-block:18px 48px}
-.dh{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:10px;min-height:44px}
-h2{display:inline;font-size:1.0625rem;font-weight:600}
-.cnt{font-size:.8125rem;color:var(--mute);margin-inline-start:8px}
-.msg{font-size:.8125rem;color:var(--C);margin-bottom:10px}
-
-.list{display:grid;gap:12px;align-items:start}
-.lec{display:grid;grid-template-columns:68px 1fr;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden}
-.lec[data-t=L]{--c:var(--L)}.lec[data-t=C]{--c:var(--C)}.lec[data-t=B]{--c:var(--B)}
-.time{padding:14px 0;text-align:center;direction:ltr;border-inline-end:1px solid var(--line);font-variant-numeric:tabular-nums}
-.time b{display:block;font-size:1rem;font-weight:600}
-.time span{font-size:.75rem;color:var(--mute)}
-.body{padding:14px 16px;min-width:0}
-.tag{display:flex;align-items:center;gap:6px;font-size:.75rem;font-weight:500;color:var(--c)}
-.tag i{width:7px;height:7px;border-radius:50%;background:var(--c)}
-h3{font-size:1rem;font-weight:600;line-height:1.5;margin:2px 0 4px}
-.meta{display:flex;align-items:flex-start;gap:6px;font-size:.8125rem;color:var(--mute)}
-.meta .i{width:15px;height:15px;margin-top:4px}
-
-.acts{display:grid;grid-template-columns:repeat(auto-fit, minmax(130px, 1fr));gap:6px;margin-top:12px}
-.btn{min-height:38px;display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:0 10px;border-radius:8px;border:1px solid var(--line);color:var(--mute);font-size:.8125rem;font-weight:500;text-decoration:none;transition:0.15s}
-.btn .i{width:16px;height:16px}
-.btn.act-audio{border-color:var(--acc);color:var(--acc);background:var(--soft)}
-.btn.act-pdf{border-color:#3b62a8;color:#3b62a8;background:#ebf1fa}
-[data-theme=dark] .btn.act-pdf{background:#132038;color:#8ab4f8;border-color:#2a3d60}
-.btn.act-sum{border-color:#b0620f;color:#b0620f;background:#fdf4eb}
-[data-theme=dark] .btn.act-sum{background:#2b1907;color:#f3b068;border-color:#5c350a}
-.btn.act-q{border-color:#7b4a8f;color:#7b4a8f;background:#f8f0fc}
-[data-theme=dark] .btn.act-q{background:#26112e;color:#d59bed;border-color:#552469}
-.btn.off{border:1px dashed var(--line);color:var(--mute);opacity:0.6;font-size:.75rem}
-.btn.wait{border-color:var(--line);color:var(--mute);animation:pulse 1.2s infinite}
-
-.note{margin-top:12px;padding:10px 12px;background:var(--soft);border-radius:8px;font-size:.8125rem}
-.note b{color:var(--acc);font-weight:600}
-
-.toast{position:fixed;inset-inline:16px;bottom:20px;margin:auto;max-width:360px;background:var(--ink);color:var(--bg);padding:12px 16px;border-radius:10px;font-size:.875rem;text-align:center;opacity:0;transform:translateY(8px);transition:.2s;pointer-events:none}
-.toast.on{opacity:1;transform:none}
-@keyframes pulse{50%{opacity:.35}}
-@media(min-width:640px){:root{--pad:24px}.lec{grid-template-columns:84px 1fr}}
-@media(min-width:900px){.wrap{max-width:960px}.list{grid-template-columns:1fr 1fr}}
-@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+button,input{font:inherit;color:inherit}button{cursor:pointer;background:none;border:0}a{color:inherit;text-decoration:none}
+:focus-visible{outline:2px solid var(--brand);outline-offset:2px}
+.wrap{max-width:720px;margin-inline:auto;padding-inline:16px}
+.i{width:1.1em;height:1.1em;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.mast{padding-top:28px}
+.mast-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+h1{font-size:26px;font-weight:700;line-height:1.4}
+.sub{color:var(--mute);font-size:14px}
+.acts{display:flex;gap:8px;flex:none}
+.btn{height:40px;padding-inline:14px;border-radius:10px;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:8px;background:var(--brand);color:var(--on-brand)}
+.btn.ghost{background:none;color:var(--ink);border:1px solid var(--line2)}
+.icon-btn{width:40px;height:40px;border-radius:10px;border:1px solid var(--line2);display:grid;place-items:center;color:var(--mute);flex:none}
+.icon-btn:hover{color:var(--ink)}.icon-btn.sm{width:34px;height:34px}
+.stats{display:flex;flex-wrap:wrap;gap:2px 18px;margin-top:14px;font-size:13.5px;color:var(--mute)}.stats b{color:var(--ink);font-weight:700}
+.seg{display:grid;grid-template-columns:1fr 1fr;background:var(--line);padding:3px;border-radius:12px;margin-top:18px}
+.seg button{height:38px;border-radius:9px;font-weight:600;font-size:14px;color:var(--mute)}
+.seg button[aria-selected=true]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.1)}
+.srow{display:flex;gap:8px;margin-top:12px}
+.search{position:relative;flex:1}.search .i{position:absolute;inset-inline-start:13px;top:50%;transform:translateY(-50%);color:var(--mute)}
+.search input{width:100%;height:44px;border-radius:12px;border:1px solid var(--line2);background:var(--surface);padding-inline:38px 12px}
+.search input:focus{outline:2px solid var(--brand);outline-offset:1px}
+.srow .btn.ghost{height:44px;border-radius:12px}
+.cnt{min-width:20px;height:20px;border-radius:10px;background:var(--brand);color:var(--on-brand);font-size:12px;display:grid;place-items:center;padding-inline:5px}
+.filters{margin-top:10px;padding:14px;border:1px solid var(--line);border-radius:14px;background:var(--surface);display:grid;gap:12px}
+.frow{display:flex;gap:10px;align-items:flex-start}.flabel{width:50px;flex:none;font-size:13px;color:var(--mute);padding-top:7px}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{height:36px;padding-inline:14px;border-radius:999px;border:1px solid var(--line2);font-size:13px;font-weight:600;color:var(--mute);display:inline-flex;align-items:center;gap:7px}
+.pill[aria-pressed=true]{background:var(--brand);border-color:var(--brand);color:var(--on-brand)}
+.dot{width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block;flex:none}
+.pill .dot{background:var(--tc)}.pill[aria-pressed=true] .dot{background:currentColor}
+.weeknav{position:sticky;top:0;z-index:20;margin-top:18px;background:var(--bg);background:color-mix(in srgb,var(--bg) 88%,transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.weekrow{display:flex;align-items:center;gap:10px;padding-top:10px}.weekrow>span{font-size:13px;color:var(--mute);flex:none}
+.weeks{display:flex;gap:6px;overflow-x:auto;flex:1;scrollbar-width:none}.weeks::-webkit-scrollbar{display:none}
+.wk{flex:none;width:36px;height:36px;border-radius:10px;border:1px solid var(--line2);font-weight:600;color:var(--mute)}
+.wk[aria-pressed=true]{background:var(--brand);border-color:var(--brand);color:var(--on-brand)}
+.days{display:grid;grid-template-columns:repeat(6,1fr);margin-top:4px}
+.day{position:relative;height:42px;font-size:13.5px;font-weight:600;color:var(--mute);white-space:nowrap}
+.day[aria-pressed=true]{color:var(--ink)}.day[aria-pressed=true]::after{content:"";position:absolute;inset-inline:8px;bottom:0;height:2px;border-radius:2px;background:var(--brand)}
+.today{display:inline-block;width:5px;height:5px;border-radius:50%;background:var(--brand);margin-inline-start:4px;vertical-align:middle}
+main{padding-block:8px 72px}
+.group{margin-top:22px}.group-h{display:flex;align-items:baseline;gap:8px;padding:0 4px 8px}.group-h h2{font-size:16px;font-weight:700}.group-h span{font-size:13px;color:var(--mute)}
+.panel,.subj{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+main>.panel{margin-top:16px}
+.lec{position:relative;padding:14px 18px;border-top:1px solid var(--line)}.lec:first-child{border-top:0}
+.lec::before{content:"";position:absolute;inset-block:0;inset-inline-start:0;width:3px;background:var(--tc)}
+.lec-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.lec-tag{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:600;color:var(--tc)}.ctx{color:var(--mute);font-weight:500}
+.lec-title{font-size:16px;font-weight:600;line-height:1.5;margin-top:2px}
+.lec-meta{display:flex;flex-wrap:wrap;gap:2px 16px;font-size:13px;color:var(--mute);margin-top:2px}.lec-meta span{display:inline-flex;align-items:center;gap:6px}
+.res{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}
+.chip{display:inline-flex;align-items:center;gap:6px;height:34px;padding-inline:11px;border-radius:9px;font-size:13px;font-weight:600;background:var(--soft);color:var(--soft-ink)}
+a.chip:hover{box-shadow:inset 0 0 0 1px var(--brand)}
+.chip.off{background:none;color:var(--mute);border:1px dashed var(--line2);font-weight:500;opacity:.6}
+.chip.book{background:none;border:1px solid var(--line2);color:var(--ink)}
+.subj{margin-top:10px}.subj>summary{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;list-style:none}.subj>summary::-webkit-details-marker{display:none}
+.subj-t{flex:1;min-width:0}.subj-n{display:block;font-size:16px;font-weight:600;line-height:1.5}
+.subj-types{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:2px}.stype{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:var(--tc)}
+.subj-c{font-size:13px;color:var(--mute);white-space:nowrap}.chev{color:var(--mute);transition:transform .2s}.subj[open] .chev{transform:rotate(180deg)}
+.subj[open]>summary{border-bottom:1px solid var(--line)}
+.subj-book{display:flex;align-items:center;gap:8px;padding:10px 16px;font-size:13px;font-weight:600;color:var(--soft-ink);background:var(--soft);border-bottom:1px solid var(--line)}
+.empty{text-align:center;padding:48px 16px}.empty b{display:block;font-size:16px}.empty p{color:var(--mute);margin:4px 0 16px}
+.loading{display:grid;gap:10px;padding-top:16px;color:var(--mute);font-size:13.5px}
+.loading i{display:block;height:92px;border-radius:14px;background:var(--line);opacity:.55;animation:p 1.4s ease-in-out infinite}
+@keyframes p{50%{opacity:.25}}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,8px);max-width:90%;background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:30}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media(min-width:640px){h1{font-size:30px}.mast{padding-top:44px}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;scroll-behavior:auto!important}}
 </style>
 </head>
-<body class="loading">
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs>
-<symbol id="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol>
-<symbol id="moon" viewBox="0 0 24 24"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></symbol>
-<symbol id="lock" viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 018 0v4"/></symbol>
-<symbol id="refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 00-14.9-3M4 4v4h4M4 13a8 8 0 0014.9 3M20 20v-4h-4"/></symbol>
-<symbol id="mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0014 0M12 18v3"/></symbol>
-<symbol id="file" viewBox="0 0 24 24"><path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8z"/><path d="M14 3v5h5M9 13h6M9 17h6"/></symbol>
-<symbol id="book" viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></symbol>
-<symbol id="quiz" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></symbol>
-<symbol id="copy" viewBox="0 0 24 24"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 012-2h9"/></symbol>
-<symbol id="pin" viewBox="0 0 24 24"><path d="M12 21s7-6.2 7-11a7 7 0 10-14 0c0 4.8 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol>
-</defs></svg>
-
-<header><div class="wrap">
-  <div class="bar">
-    <div><h1 id="tt"></h1><p class="sub" id="ts"></p></div>
-    <div class="tools">
-      <button class="ib" id="langBtn"></button>
-      <button class="ib" id="themeBtn"></button>
-      <button class="ib" id="adminBtn"><svg class="i"><use href="#lock"/></svg></button>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-headphones" viewBox="0 0 24 24"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></symbol><symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4M16 13H8M16 17H8M10 9H8"/></symbol><symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol><symbol id="i-text" viewBox="0 0 24 24"><path d="M17 6H3M21 12H3M15 18H3"/></symbol><symbol id="i-quiz" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3M12 17h.01"/></symbol><symbol id="i-book" viewBox="0 0 24 24"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2zM22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></symbol><symbol id="i-share" viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8M16 6l-4-4-4 4M12 2v13"/></symbol><symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol><symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol><symbol id="i-search" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol><symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/></symbol><symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol><symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></symbol><symbol id="i-chev" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol></svg>
+<header class="mast wrap">
+  <div class="mast-row">
+    <div><h1>بوابة العلاج الطبيعي</h1><p class="sub">الفرقة الرابعة، الفصل الدراسي الأول</p></div>
+    <div class="acts">
+      <button id="todayBtn" class="btn">محاضرات اليوم</button>
+      <button id="themeBtn" class="icon-btn"><svg class="i"><use id="themeUse" href="#i-moon"/></svg></button>
     </div>
   </div>
-  <div class="admin" id="adminBar"><a id="sheetLink" target="_blank" rel="noopener"></a><button id="logoutBtn"></button></div>
-</div></header>
+  <p class="stats"><span><b id="statLec">–</b> محاضرة</span><span><b id="statTr">–</b> تفريغ جاهز</span><span><b id="statQ">–</b> بنك أسئلة</span></p>
+  <div class="seg">
+    <button data-view="week" class="viewBtn">حسب الأسبوع</button>
+    <button data-view="subject" class="viewBtn">حسب المادة</button>
+  </div>
+  <div class="srow">
+    <label class="search"><svg class="i"><use href="#i-search"/></svg><input id="search" type="search" aria-label="بحث" placeholder="ابحث بالمادة، القاعة، أو اليوم…"></label>
+    <button id="filterBtn" class="btn ghost" aria-expanded="false" aria-controls="filters"><svg class="i"><use href="#i-sliders"/></svg>تصفية<span id="filterCount" class="cnt" hidden></span></button>
+  </div>
+  <div id="filters" class="filters" hidden>
+    <div class="frow"><span class="flabel">النوع</span><div id="typePills" class="pills"></div></div>
+    <div class="frow"><span class="flabel">المتوفر</span><div id="resPills" class="pills"></div></div>
+  </div>
+</header>
 
-<nav class="nav"><div class="wrap">
-  <div class="wk-h"><span id="wkLabel"></span><b id="wkNow"></b></div>
-  <div class="weeks" id="weeks"></div>
-  <div class="days" id="days" role="tablist"></div>
+<nav id="weekNav" class="weeknav"><div class="wrap">
+  <div class="weekrow"><span>الأسبوع</span><div id="weekPills" class="weeks"></div></div>
+  <div id="dayTabs" class="days"></div>
 </div></nav>
 
 <main class="wrap">
-  <div class="dh">
-    <div><h2 id="dayTitle"></h2><span class="cnt" id="dayCount"></span></div>
-    <div class="tools">
-      <button class="ib txt" id="copyBtn" hidden><svg class="i"><use href="#copy"/></svg><span id="copyTxt"></span></button>
-      <button class="ib" id="refreshBtn"><svg class="i"><use href="#refresh"/></svg></button>
-    </div>
-  </div>
-  <p class="msg" id="msg" hidden></p>
-  <div class="list" id="list"></div>
+  <div id="loading" class="loading" role="status"><span>جارٍ تحميل الجدول…</span><i></i><i></i><i></i></div>
+  <div id="content"></div>
 </main>
-<div class="toast" id="toast" role="status"></div>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
 
 <script>
-const SHEET_ID='155dq1qg3Mt_P0JaF7zfxptKXFsD-v89thOskJeEiy58';
-const EDIT_URL=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/edit`;
-const store={get:k=>{try{return localStorage.getItem(k)}catch(e){return null}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}},del:k=>{try{localStorage.removeItem(k)}catch(e){}}};
-const $=id=>document.getElementById(id);
-const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const SHEET_ID = '1JqxzBRGmDWjUuQgCCaaExbyh96zmWAdXlL9-pFellqY';
+const WEEKS = 14;
+const DAYS = [
+  { k: 'sat', n: 'السبت' },
+  { k: 'sun', n: 'الأحد' },
+  { k: 'mon', n: 'الإثنين' },
+  { k: 'tue', n: 'الثلاثاء' },
+  { k: 'wed', n: 'الأربعاء' }
+];
+const TODAY_MAP = { 0: 'sun', 1: 'mon', 2: 'tue', 3: 'wed', 6: 'sat' };
+const TODAY = TODAY_MAP[new Date().getDay()] || 'sat';
 
-const T={
-ar:{title:'دليل المحاضرات والمحتوى',sub:'الفرقة الرابعة • الفصل الدراسي الأول',weeks:'الأسابيع الدراسية',week:'الأسبوع',n:'محاضرات',audio:'الريكورد',pdf:'الداتا',sum:'الملخص',q:'الأسئلة',noAudio:'لا يوجد تسجيل',noPdf:'لا توجد داتا',noSum:'لا يوجد ملخص',noQ:'لا توجد أسئلة',note:'ملاحظة',edit:'تعديل الشيت',out:'خروج',copy:'نسخ لـ Telegram',copied:'تم نسخ رسالة التليجرام',pass:'أدخل رمز دخول المشرف:',err:'تعذر تحميل الروابط. تحقق من الاتصال ثم اضغط تحديث.',refresh:'تحديث',theme:'تغيير المظهر',admin:'دخول المشرف',lang:'EN',
- days:['السبت','الأحد','الإثنين','الثلاثاء','الأربعاء'],short:['السبت','الأحد','الإثنين','الثلاثاء','الأربعاء']},
-en:{title:'Academic Course Companion',sub:'4th Year • 1st Semester',weeks:'Academic weeks',week:'Week',n:'sessions',audio:'Audio',pdf:'Slides',sum:'Summary',q:'Quiz',noAudio:'No audio',noPdf:'No slides',noSum:'No summary',noQ:'No quiz',note:'Note',edit:'Edit sheet',out:'Logout',copy:'Copy for Telegram',copied:'Telegram message copied',pass:'Enter admin passcode:',err:"Couldn't load links.",refresh:'Refresh',theme:'Toggle theme',admin:'Admin login',lang:'عربي',
- days:['Saturday','Sunday','Monday','Tuesday','Wednesday'],short:['Sat','Sun','Mon','Tue','Wed']}
-};
-const D=['sat','sun','mon','tue','wed'];
-const TY={L:['نظري','Lecture'],C:['إكلينيكي / مستشفى','Clinical / Hospital'],B:['معملي','Lab']};
-
-const S=[
-// السبت
-['sat','L','ع.ط جراحة وحروق','P.T. for Surgery & Burns','مدرج (ج)','Hall (C)','10:00 - 12:00'],
-['sat','L','ع.ط للجلد والأغشية','P.T. for Integumentary','مدرج (ج)','Hall (C)','12:00 - 01:00'],
-['sat','L','جراحة عامة وحروق','General Surgery & Burns','مدرج (ج)','Hall (C)','01:00 - 03:00'],
-// الأحد
-['sun','C','ع.ط لصحة المرأة',"P.T. for Women's Health",'C 10-11-12-13 + C 20','C 10-11-12-13 + C 20','09:00 - 11:00'],
-['sun','B','ع.ط لصحة المرأة',"P.T. for Women's Health",'الدور الرابع D 1-8-9-15-17','4th Floor D 1-8-9-15-17','11:00 - 01:00'],
-['sun','L','ع.ط لصحة المرأة',"P.T. for Women's Health",'مدرج (د)','Hall (D)','01:00 - 03:00'],
-// الإثنين
-['mon','C','ع.ط جراحة','P.T. for Surgery (Clinical)','الدور الثالث C-7-8-9-10-11','3rd Floor C-7-8-9-10-11','09:00 - 12:00'],
-['mon','C','ع.ط حروق','P.T. for Burns (Clinical)','الدور الثالث C-7-8-9-10-11','3rd Floor C-7-8-9-10-11','09:00 - 12:00'],
-['mon','L','أمراض نساء وتوليد','Obstetrics & Gynecology','مدرج (أ)','Hall (A)','12:00 - 02:00'],
-['mon','L','ميكانيكا العمل','Ergonomics / Occupational','مدرج (أ)','Hall (A)','02:00 - 03:00'],
-['mon','B','ميكانيكا العمل','Ergonomics / Occupational','مدرج (أ)','Hall (A)','03:00 - 05:00'],
-// الثلاثاء
-['tue','C','ع.ط لاضطرابات الحوض لدى السيدات','P.T. for Female Pelvic Disorders','الدور الثالث C10-11-12-13 + C20','3rd Floor C10-11-12-13 + C20','09:00 - 12:00'],
-['tue','L','ع.ط لاضطرابات الحوض لدى السيدات','P.T. for Female Pelvic Disorders','مدرج (هـ)','Hall (E)','12:00 - 02:00'],
-// الأربعاء
-['wed','C','ع.ط للجلد والأغشية','P.T. for Integumentary','الدور الرابع D 1-8-9-15-17','4th Floor D 1-8-9-15-17','09:00 - 12:00'],
-['wed','B','ع.ط جراحة','P.T. for Surgery (Lab)','الدور الرابع D 1-8-9-15-17','4th Floor D 1-8-9-15-17','12:00 - 02:00'],
-['wed','B','ع.ط حروق','P.T. for Burns (Lab)','الدور الرابع D 1-8-9-15-17','4th Floor D 1-8-9-15-17','12:00 - 02:00'],
-['wed','L','أمراض جلدية','Dermatology','مدرج (ب)','Hall (B)','02:00 - 04:00']
+const TYPES = [
+  { k: 'نظري', v: '--t-theory' },
+  { k: 'عملي', v: '--t-practical' },
+  { k: 'مستشفى', v: '--t-hospital' }
 ];
 
-const TODAY=({6:'sat',0:'sun',1:'mon',2:'tue',3:'wed'})[new Date().getDay()]||'sat';
-let lang=store.get('PT_LANG')==='en'?'en':'ar';
-let week=Math.min(14,Math.max(1,+store.get('PT_WEEK')||1));
-let day=TODAY, admin=store.get('PT_ADMIN')==='true';
-let data={}, cache={}, state='load', reqId=0;
+const RES = [
+  { k: 'audio', l: 'استماع للريكورد', i: 'headphones', pill: 'متاح ريكورد' },
+  { k: 'pdf', l: 'عرض الداتا', i: 'file', pill: 'متاحة داتا' },
+  { k: 'summary', l: 'الملخص', i: 'list', pill: null },
+  { k: 'transcript', l: 'التفريغ', i: 'text', pill: 'متاح تفريغ' },
+  { k: 'quiz', l: 'بنك الأسئلة', i: 'quiz', pill: 'متاح بنك أسئلة' }
+];
 
-const lookup=(d,subj,ty)=>{
-  const fullType = TY[ty][0];
-  const shortType = ty === 'L' ? 'نظري' : (ty === 'B' ? 'معملي' : 'إكلينيكي');
-  return data[`${d}_${subj}_${fullType}`] || data[`${d}_${subj}_${shortType}`] || data[`${d}_${subj}`] || {};
+// روابط مجلدات الكتب ومواصفات المحتوى المتاح لكل مادة
+const SUBJECT_CONFIG = {
+  "P.T. for Surgery & Burns": {
+    url: "https://drive.google.com/drive/folders/1rjzM4ujaowyxsckjmTjge_UVvJ1qpdfw",
+    types: ["نظري", "عملي", "مستشفى"]
+  },
+  "P.T. for Surgery": {
+    url: "https://drive.google.com/drive/folders/1rjzM4ujaowyxsckjmTjge_UVvJ1qpdfw",
+    types: ["عملي", "مستشفى"]
+  },
+  "P.T. for Burns": {
+    url: "https://drive.google.com/drive/folders/1rjzM4ujaowyxsckjmTjge_UVvJ1qpdfw",
+    types: ["عملي", "مستشفى"]
+  },
+  "P.T. for Women's Health": {
+    url: "https://drive.google.com/drive/folders/1wDijakf-aLTelHirAOvMHvhANAws2kFv",
+    types: ["نظري", "عملي", "مستشفى"]
+  },
+  "P.T. for Female Pelvic Disorders": {
+    url: "https://drive.google.com/drive/folders/1Y6fbWpXBx0H0J1ZrcbKnQF05t77JHlfU",
+    types: ["نظري", "مستشفى"]
+  },
+  "P.T. for Integumentary": {
+    url: "https://drive.google.com/drive/folders/12ephKkEgw-1tTMbsxriLDvW0N3KpGuX8",
+    types: ["نظري", "مستشفى"]
+  },
+  "Ergonomics & Work Mechanics": {
+    url: "https://drive.google.com/drive/folders/1LTOyqqQYOQFU25oa7efM6po6yfhUCvfJ",
+    types: ["نظري", "عملي"]
+  },
+  "General Surgery & Burns": {
+    url: "https://drive.google.com/drive/folders/1OmWCBW2dSecijWiAR0n6RK0QV7fUAOmR",
+    types: ["نظري"]
+  },
+  "Obstetrics & Gynecology": {
+    url: "https://drive.google.com/drive/folders/1GROsrh5PeIupkKwFFyJpIgqsX9EnMYfA",
+    types: ["نظري"]
+  },
+  "Dermatology": {
+    url: "https://drive.google.com/drive/folders/15Ntua6_yw0nEcG5Rv_lDToteGZkLUh6B",
+    types: ["نظري"]
+  }
+};
+const DEFAULT_BOOKS_FOLDER = "https://drive.google.com/drive/folders/1nc0vXWqaD9wV2y-yYfVkwi1VEHIraBBW";
+
+function getSubjectConfig(subj) {
+  return SUBJECT_CONFIG[subj] || { url: DEFAULT_BOOKS_FOLDER, types: ["نظري"] };
+}
+
+const $ = id => document.getElementById(id);
+const isUrl = u => /^https?:\/\//i.test(u || '');
+const store = {
+  get: (k, f) => { try { return localStorage.getItem(k) ?? f; } catch (e) { return f; } },
+  set: (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} }
+};
+const sess = {
+  get: k => { try { return JSON.parse(sessionStorage.getItem(k)); } catch (e) { return null; } },
+  set: (k, v) => { try { sessionStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
 };
 
-const isUrl=u=>/^https?:\/\//i.test(u||'');
+let ALL = [], VIEW = [];
+let st = {
+  view: store.get('pt_view', 'week'),
+  week: Math.min(WEEKS, Math.max(1, +store.get('pt_week', 1) || 1)),
+  day: 'all',
+  type: 'all',
+  res: new Set(),
+  q: ''
+};
 
-function setLang(l){
-  lang=l;store.set('PT_LANG',l);
-  const d=document.documentElement,t=T[l];
-  d.lang=l;d.dir=l==='ar'?'rtl':'ltr';
-  $('tt').textContent=t.title;$('ts').textContent=t.sub;$('wkLabel').textContent=t.weeks;
-  $('sheetLink').textContent=t.edit;$('sheetLink').href=EDIT_URL;$('logoutBtn').textContent=t.out;
-  $('copyTxt').textContent=t.copy;$('msg').textContent=t.err;$('langBtn').textContent=t.lang;
-  $('refreshBtn').title=$('refreshBtn').ariaLabel=t.refresh;
-  $('themeBtn').ariaLabel=t.theme;$('adminBtn').ariaLabel=t.admin;
-  renderWeeks();markWeek('auto');renderDays();renderList();
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const ic = n => `<svg class="i" aria-hidden="true"><use href="#i-${n}"/></svg>`;
+const typeMeta = t => TYPES.find(x => x.k === t) || { k: t, v: '--mute' };
+
+function fetchWeek(n) {
+  const key = 'ptw_' + n;
+  const cached = sess.get(key);
+  if (cached) return Promise.resolve(cached);
+
+  return new Promise(resolve => {
+    const cb = 'gviz_callback_' + n + '_' + Math.random().toString(36).substring(2, 9);
+    const sheetName = 'Week ' + String(n).padStart(2, '0');
+    const script = document.createElement('script');
+
+    let isDone = false;
+    const cleanup = () => {
+      isDone = true;
+      if (window[cb]) delete window[cb];
+      if (script.parentNode) script.remove();
+    };
+
+    const timeout = setTimeout(() => {
+      if (!isDone) {
+        cleanup();
+        resolve(null);
+      }
+    }, 10000);
+
+    window[cb] = function(resp) {
+      clearTimeout(timeout);
+      try {
+        const rows = ((resp && resp.table && resp.table.rows) || []).map(row => {
+          const c = row.c || [];
+          const v = i => (c[i] && c[i].v != null) ? String(c[i].v).trim() : '';
+          return {
+            wk: n,
+            day: v(0),
+            subject: v(1),
+            type: v(2),
+            place: v(3),
+            time: v(4),
+            audio: v(5),
+            pdf: v(6),
+            summary: v(7),
+            transcript: v(8),
+            quiz: v(9),
+            dayKey: (v(10) || '').toLowerCase()
+          };
+        }).filter(x => x.subject);
+
+        sess.set(key, rows);
+        cleanup();
+        resolve(rows);
+      } catch (err) {
+        cleanup();
+        resolve(null);
+      }
+    };
+
+    script.onerror = function() {
+      clearTimeout(timeout);
+      cleanup();
+      resolve(null);
+    };
+
+    script.src = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${encodeURIComponent(sheetName)}&tqx=responseHandler:${cb}`;
+    document.body.appendChild(script);
+  });
 }
-function applyTheme(t){
-  document.documentElement.dataset.theme=t;
-  $('themeBtn').innerHTML=`<svg class="i"><use href="#${t==='dark'?'sun':'moon'}"/></svg>`;
-  document.querySelector('meta[name=theme-color]').content=t==='dark'?'#0e1113':'#f2f4f5';
-}
-function renderWeeks(){
-  const c=$('weeks');c.innerHTML='';
-  for(let i=1;i<=14;i++){
-    const b=document.createElement('button');
-    b.className='wk';b.textContent=i;b.ariaLabel=`${T[lang].week} ${i}`;
-    b.onclick=()=>{week=i;store.set('PT_WEEK',i);markWeek('smooth');load();};
-    c.appendChild(b);
+
+async function loadAll(force) {
+  if (force) {
+    for (let i = 1; i <= WEEKS; i++) sessionStorage.removeItem('ptw_' + i);
   }
-}
-function markWeek(beh){
-  [...$('weeks').children].forEach((b,i)=>{
-    const on=i+1===week;b.setAttribute('aria-pressed',on);
-    if(on)b.scrollIntoView({inline:'center',block:'nearest',behavior:beh});
-  });
-  $('wkNow').textContent=`${T[lang].week} ${week}`;
-}
-function renderDays(){
-  const c=$('days');c.innerHTML='';
-  D.forEach((k,i)=>{
-    const b=document.createElement('button');
-    b.className='day'+(k===TODAY?' today':'');
-    b.setAttribute('role','tab');b.setAttribute('aria-selected',k===day);
-    b.innerHTML=`<span>${T[lang].short[i]}</span>`;
-    b.onclick=()=>{day=k;renderDays();renderList();};
-    c.appendChild(b);
-  });
-}
-function renderList(){
-  const t=T[lang],items=S.filter(s=>s[0]===day);
-  $('dayTitle').textContent=t.days[D.indexOf(day)];
-  $('dayCount').textContent=`${items.length} ${t.n}`;
+  $('loading').hidden = false;
 
-  const btn=(url,label,off,cls,icon)=>{
-    const ic=`<svg class="i"><use href="#${icon}"/></svg>`;
-    if(state==='load')return `<span class="btn wait">${ic}${label}</span>`;
-    return isUrl(url)?`<a class="btn ${cls}" href="${esc(url)}" target="_blank" rel="noopener">${ic}${label}</a>`:`<span class="btn off">${off}</span>`;
-  };
+  const currentWeekData = await fetchWeek(st.week);
+  if (currentWeekData && currentWeekData.length) {
+    ALL = [...currentWeekData];
+    $('loading').hidden = true;
+    renderStats();
+    render();
+  }
 
-  $('list').innerHTML=items.map(s=>{
-    const [,ty,sa,se,pa,pe,tm]=s,it=lookup(day,sa,ty),[a,b]=tm.split(' - ');
-    const subj=lang==='ar'?sa:se,place=lang==='ar'?pa:(pe||pa);
-    return `<article class="lec" data-t="${ty}">
-      <div class="time"><b>${a}</b><span>${b}</span></div>
-      <div class="body">
-        <div class="tag"><i></i>${TY[ty][lang==='ar'?0:1]}</div>
-        <h3>${subj}</h3>
-        <p class="meta"><svg class="i"><use href="#pin"/></svg><bdi>${place}</bdi></p>
-        <div class="acts">
-          ${btn(it.audio,t.audio,t.noAudio,'act-audio','mic')}
-          ${btn(it.pdf,t.pdf,t.noPdf,'act-pdf','file')}
-          ${btn(it.summary,t.sum,t.noSum,'act-sum','book')}
-          ${btn(it.questions,t.q,t.noQ,'act-q','quiz')}
-        </div>
-        ${it.note?`<p class="note"><b>${t.note}:</b> ${esc(it.note)}</p>`:''}
-      </div></article>`;
+  const otherWeeksPromises = Array.from({ length: WEEKS }, (_, i) => i + 1)
+    .filter(n => n !== st.week)
+    .map(n => fetchWeek(n));
+
+  const otherResults = await Promise.all(otherWeeksPromises);
+  const combined = [
+    ...(currentWeekData || []),
+    ...otherResults.filter(Boolean).flat()
+  ];
+
+  if (combined.length) {
+    ALL = combined;
+  }
+
+  $('loading').hidden = true;
+  renderStats();
+  render();
+}
+
+function matches(it, ignoreDay) {
+  if (st.type !== 'all' && it.type !== st.type) return false;
+  for (const r of st.res) {
+    if (!isUrl(it[r])) return false;
+  }
+  if (!ignoreDay && st.view === 'week' && st.day !== 'all' && it.dayKey !== st.day) return false;
+  if (st.q) {
+    const hay = (it.subject + ' ' + it.place + ' ' + it.day).toLowerCase();
+    if (!hay.includes(st.q.toLowerCase())) return false;
+  }
+  return true;
+}
+
+function copyItem(it) {
+  let t = `📌 *${it.subject}*\n${it.type || ''} — ${it.day || ''} ${it.time || ''}\n📍 ${it.place || ''}\n`;
+  RES.forEach(r => {
+    if (isUrl(it[r.k])) t += `${r.i} ${r.l}: ${it[r.k]}\n`;
+  });
+  const cfg = getSubjectConfig(it.subject);
+  if (cfg.url) t += `📚 كتب المادة ومذكراتها: ${cfg.url}\n`;
+
+  const ok = () => toast('تم نسخ تفاصيل المحاضرة للمشاركة');
+  (navigator.clipboard ? navigator.clipboard.writeText(t) : Promise.reject()).then(ok, () => {
+    const x = document.createElement('textarea');
+    x.value = t;
+    document.body.appendChild(x);
+    x.select();
+    try { document.execCommand('copy'); ok(); } catch (e) {}
+    x.remove();
+  });
+}
+
+function toast(m) {
+  const e = $('toast');
+  e.textContent = m;
+  e.classList.add('show');
+  clearTimeout(toast.t);
+  toast.t = setTimeout(() => e.classList.remove('show'), 2200);
+}
+
+function toTop() {
+  const y = $('content').offsetTop - (st.view === 'week' ? $('weekNav').offsetHeight : 0) - 8;
+  if (scrollY > y) scrollTo({ top: Math.max(0, y) });
+}
+
+const hasFilters = () => st.q || st.type !== 'all' || st.res.size || (st.view === 'week' && st.day !== 'all');
+
+function emptyHTML() {
+  if (!$('loading').hidden) return '';
+  const loaded = ALL.length > 0;
+  return `<div class="empty"><b>${loaded ? 'لا توجد محاضرات مطابقة' : 'تعذّر تحميل الجدول'}</b>
+    <p>${loaded ? 'جرّب أسبوعًا أو يومًا آخر، أو غيّر البحث والتصفية.' : 'تأكد من الاتصال بالإنترنت ثم أعد المحاولة.'}</p>
+    ${loaded ? (hasFilters() ? '<button class="btn ghost" data-act="clear">إزالة كل التصفيات</button>' : '') : '<button class="btn" data-act="retry">إعادة المحاولة</button>'}</div>`;
+}
+
+function resChip(it, r) {
+  const url = it[r.k];
+  if (!isUrl(url)) return `<span class="chip off" title="لم يتم رفعه بعد" aria-label="${r.l} (غير متاح بعد)">${ic(r.i)}${r.l}</span>`;
+  return `<a class="chip" href="${esc(url)}" target="_blank" rel="noopener">${ic(r.i)}${r.l}</a>`;
+}
+
+function cardHTML(it, ctx, showBook) {
+  VIEW.push(it);
+  const tm = typeMeta(it.type);
+  const cfg = getSubjectConfig(it.subject);
+  const bookLabel = it.type === 'عملي' ? 'مذكرة العملي' : (it.type === 'مستشفى' ? 'شيت المستشفى' : 'كتاب المادة');
+  return `<article class="lec" data-i="${VIEW.length - 1}" style="--tc:var(${tm.v})">
+    <div class="lec-head">
+      <div style="min-width:0">
+        <p class="lec-tag"><i class="dot"></i>${esc(it.type || '—')}${ctx ? `<span class="ctx">${esc(ctx)}</span>` : ''}</p>
+        <h3 class="lec-title"><bdi>${esc(it.subject)}</bdi></h3>
+        <p class="lec-meta"><span>${ic('pin')}<bdi>${esc(it.place || '—')}</bdi></span><span>${ic('clock')}<bdi>${esc(it.time || '—')}</bdi></span></p>
+      </div>
+      <button class="icon-btn sm copyBtn" title="نسخ للمشاركة" aria-label="نسخ تفاصيل المحاضرة للمشاركة">${ic('share')}</button>
+    </div>
+    <div class="res">${RES.map(r => resChip(it, r)).join('')}${showBook ? `<a class="chip book" href="${esc(cfg.url)}" target="_blank" rel="noopener">${ic('book')}${bookLabel}</a>` : ''}</div>
+  </article>`;
+}
+
+function render() {
+  $('weekNav').hidden = st.view !== 'week';
+  document.querySelectorAll('.viewBtn').forEach(b => b.setAttribute('aria-selected', b.dataset.view === st.view));
+  const n = (st.type !== 'all' ? 1 : 0) + st.res.size;
+  $('filterCount').hidden = !n;
+  $('filterCount').textContent = n;
+  VIEW = [];
+  st.view === 'week' ? renderWeek() : renderSubjects();
+}
+
+function renderWeek() {
+  document.querySelectorAll('.wk').forEach(b => b.setAttribute('aria-pressed', +b.dataset.w === st.week));
+  document.querySelectorAll('.day').forEach(b => b.setAttribute('aria-pressed', b.dataset.d === st.day));
+  document.querySelector('.wk[aria-pressed=true]')?.scrollIntoView({ inline: 'center', block: 'nearest' });
+
+  const items = ALL.filter(it => it.wk === st.week && matches(it));
+  const root = $('content');
+  if (!items.length) { root.innerHTML = emptyHTML(); return; }
+  if (st.day !== 'all') {
+    root.innerHTML = `<div class="panel">${items.map(it => cardHTML(it, '', true)).join('')}</div>`;
+    return;
+  }
+  const known = DAYS.map(d => d.k);
+  const groups = DAYS.map(d => ({ n: d.n, rows: items.filter(x => x.dayKey === d.k) }));
+  groups.push({ n: 'بدون يوم محدد', rows: items.filter(x => !known.includes(x.dayKey)) });
+  root.innerHTML = groups.filter(g => g.rows.length).map(g => {
+    const extra = g.rows[0].day && g.rows[0].day !== g.n && g.n !== 'بدون يوم محدد' ? g.rows[0].day : '';
+    return `<section class="group"><div class="group-h"><h2>${g.n}</h2><span>${extra ? esc(extra) + '، ' : ''}${g.rows.length} محاضرة</span></div>
+      <div class="panel">${g.rows.map(it => cardHTML(it, '', true)).join('')}</div></section>`;
   }).join('');
 }
-function parse(res){
-  const out={};
-  ((res&&res.table&&res.table.rows)||[]).forEach(r=>{
-    const c=r.c||[],v=i=>c[i]&&c[i].v!=null?String(c[i].v).trim():'';
-    // الأعمدة: 1:المادة | 2:النوع | 5:Audio | 6:PDF | 7:Summary | 8:Questions | 9:Note | 10:dayKey
-    const subj=v(1),type=v(2);
-    const d=(v(10)||v(8)||v(7)).toLowerCase();
-    const o={audio:v(5),pdf:v(6),summary:v(7),questions:v(8),note:v(9)};
-    if(o.note.toLowerCase()===d)o.note='';
 
-    out[`${d}_${subj}`]=o;
-    if(type){
-      out[`${d}_${subj}_${type}`]=o;
-      if(type.includes('إكلينيكي')) out[`${d}_${subj}_إكلينيكي`]=o;
-      if(type.includes('معمل')) out[`${d}_${subj}_معملي`]=o;
-      if(type.includes('نظري')) out[`${d}_${subj}_نظري`]=o;
-    }
-  });
-  return out;
-}
-function load(force){
-  const my=++reqId;
-  if(force)delete cache[week];
-  if(cache[week]){data=cache[week];state='ok';document.body.classList.remove('loading');$('msg').hidden=true;renderList();return;}
-  state='load';data={};document.body.classList.add('loading');$('msg').hidden=true;renderList();
-  const cb='gs_'+my,s=document.createElement('script');
-  const finish=(ok,res)=>{
-    delete window[cb];s.remove();
-    if(my!==reqId)return;
-    document.body.classList.remove('loading');
-    if(ok){data=parse(res);cache[week]=data;state='ok';}else state='err';
-    $('msg').hidden=ok;renderList();
-  };
-  window[cb]=res=>finish(true,res);
-  s.onerror=()=>finish(false);
-  s.src=`https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?sheet=${encodeURIComponent('الأسبوع '+week)}&tqx=responseHandler:${cb}&_t=${Date.now()}`;
-  document.body.appendChild(s);
-}
-function toast(m){const e=$('toast');e.textContent=m;e.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>e.classList.remove('on'),2200);}
-function renderAdmin(){
-  $('adminBar').classList.toggle('on',admin);$('copyBtn').hidden=!admin;$('adminBtn').hidden=admin;
+function renderSubjects() {
+  const bySubject = {};
+  ALL.filter(it => matches(it, true)).forEach(it => (bySubject[it.subject] ??= []).push(it));
+  const subjects = Object.keys(bySubject).sort((a, b) => a.localeCompare(b));
+  const root = $('content');
+  if (!subjects.length) { root.innerHTML = emptyHTML(); return; }
+  const open = (st.q || st.type !== 'all' || st.res.size) ? ' open' : '';
+
+  root.innerHTML = subjects.map(sub => {
+    const rows = bySubject[sub].sort((a, b) => a.wk - b.wk);
+    const cfg = getSubjectConfig(sub);
+    const types = (cfg.types || ['نظري']).map(t => `<span class="stype" style="--tc:var(${typeMeta(t).v})"><i class="dot"></i>${esc(t)}</span>`).join('');
+    return `<details class="subj"${open}>
+      <summary><span class="subj-t"><span class="subj-n"><bdi>${esc(sub)}</bdi></span><span class="subj-types">${types}</span></span>
+        <span class="subj-c">${rows.length} محاضرة</span>${ic('chev').replace('class="i"', 'class="i chev"')}</summary>
+      <a class="subj-book" href="${esc(cfg.url)}" target="_blank" rel="noopener">${ic('book')}كتب ومذكرات المادة</a>
+      <div>${rows.map(it => cardHTML(it, `الأسبوع ${it.wk}، ${it.day}`, false)).join('')}</div>
+    </details>`;
+  }).join('');
 }
 
-$('langBtn').onclick=()=>setLang(lang==='ar'?'en':'ar');
-$('themeBtn').onclick=()=>{const t=document.documentElement.dataset.theme==='dark'?'light':'dark';store.set('PT_THEME',t);applyTheme(t);};
-$('refreshBtn').onclick=()=>load(true);
-$('adminBtn').onclick=()=>{if(prompt(T[lang].pass)==='admin2026'){admin=true;store.set('PT_ADMIN','true');renderAdmin();}};
-$('logoutBtn').onclick=()=>{admin=false;store.del('PT_ADMIN');renderAdmin();};
-$('copyBtn').onclick=()=>{
-  const a=T.ar;
-  let text=`📌 *محتوى يوم ${a.days[D.indexOf(day)]} (${a.week} ${week})*\n───────────────────\n\n`;
-  S.filter(s=>s[0]===day).forEach(s=>{
-    const [,ty,sa,,pa]=s,it=lookup(day,sa,ty);
-    text+=`🔹 *${sa}* (${TY[ty][0]})\n`;
-    if(pa) text+=`📍 المكان: ${pa}\n`;
-    if(isUrl(it.audio)) text+=`🎙️ الريكورد: ${it.audio}\n`;
-    if(isUrl(it.pdf)) text+=`📑 الداتا: ${it.pdf}\n`;
-    if(isUrl(it.summary)) text+=`📖 الملخص: ${it.summary}\n`;
-    if(isUrl(it.questions)) text+=`❓ الأسئلة: ${it.questions}\n`;
-    if(it.note) text+=`💡 ملاحظة: ${it.note}\n`;
-    text+='\n';
-  });
-  text+=`#الأسبوع_${week} #الفرقة_الرابعة`;
-  const ok=()=>toast(T[lang].copied);
-  (navigator.clipboard?navigator.clipboard.writeText(text):Promise.reject()).then(ok,()=>{
-    const x=document.createElement('textarea');x.value=text;document.body.appendChild(x);x.select();
-    try{document.execCommand('copy');ok();}catch(e){}x.remove();
-  });
+function renderStats() {
+  $('statLec').textContent = ALL.length;
+  $('statTr').textContent = ALL.filter(x => isUrl(x.transcript)).length;
+  $('statQ').textContent = ALL.filter(x => isUrl(x.quiz)).length;
+}
+
+function renderPills() {
+  $('typePills').innerHTML = ['all', ...TYPES.map(t => t.k)].map(t => {
+    const tm = t === 'all' ? null : typeMeta(t);
+    return `<button class="pill" data-t="${t}" aria-pressed="${st.type === t}"${tm ? ` style="--tc:var(${tm.v})"` : ''}>${tm ? '<i class="dot"></i>' : ''}${tm ? t : 'الكل'}</button>`;
+  }).join('');
+  $('resPills').innerHTML = RES.filter(r => r.pill).map(r =>
+    `<button class="pill" data-r="${r.k}" aria-pressed="${st.res.has(r.k)}">${ic(r.i)}${r.pill}</button>`).join('');
+}
+
+async function selectWeek(i) {
+  st.week = i;
+  store.set('pt_week', i);
+  render();
+  toTop();
+  if (!ALL.some(x => x.wk === i)) {
+    $('loading').hidden = false;
+    const w = await fetchWeek(i);
+    if (w) { ALL = [...ALL.filter(x => x.wk !== i), ...w]; renderStats(); }
+    $('loading').hidden = true;
+    render();
+  }
+}
+
+function clearAll() {
+  st.q = ''; $('search').value = ''; st.type = 'all'; st.res.clear(); st.day = 'all';
+  renderPills(); render();
+}
+
+$('weekPills').innerHTML = Array.from({ length: WEEKS }, (_, i) => `<button class="wk" data-w="${i + 1}" aria-label="الأسبوع ${i + 1}">${i + 1}</button>`).join('');
+$('weekPills').onclick = e => { const b = e.target.closest('.wk'); if (b) selectWeek(+b.dataset.w); };
+$('dayTabs').innerHTML = [{ k: 'all', n: 'الكل' }, ...DAYS].map(d =>
+  `<button class="day" data-d="${d.k}">${d.n}${d.k === TODAY ? '<i class="today"></i><span class="sr"> (اليوم)</span>' : ''}</button>`).join('');
+$('dayTabs').onclick = e => { const b = e.target.closest('.day'); if (b) { st.day = b.dataset.d; render(); toTop(); } };
+
+$('typePills').onclick = e => { const b = e.target.closest('[data-t]'); if (b) { st.type = b.dataset.t; renderPills(); render(); } };
+$('resPills').onclick = e => {
+  const b = e.target.closest('[data-r]'); if (!b) return;
+  st.res.has(b.dataset.r) ? st.res.delete(b.dataset.r) : st.res.add(b.dataset.r);
+  renderPills(); render();
+};
+$('filterBtn').onclick = () => {
+  const p = $('filters'); p.hidden = !p.hidden;
+  $('filterBtn').setAttribute('aria-expanded', String(!p.hidden));
+};
+$('content').addEventListener('click', e => {
+  const c = e.target.closest('.copyBtn');
+  if (c) { const it = VIEW[+c.closest('article').dataset.i]; if (it) copyItem(it); return; }
+  const a = e.target.closest('[data-act]');
+  if (a) a.dataset.act === 'clear' ? clearAll() : loadAll(true);
+});
+
+document.querySelectorAll('.viewBtn').forEach(b => b.onclick = () => {
+  st.view = b.dataset.view;
+  store.set('pt_view', st.view);
+  render();
+});
+
+$('search').oninput = e => {
+  clearTimeout($('search')._t);
+  const v = e.target.value;
+  $('search')._t = setTimeout(() => { st.q = v; render(); }, 250);
 };
 
-applyTheme(document.documentElement.dataset.theme||'light');
-renderAdmin();
-setLang(lang);
-load();
+$('todayBtn').onclick = () => {
+  st.view = 'week';
+  st.day = TODAY;
+  store.set('pt_view', 'week');
+  render();
+  toTop();
+};
+
+function applyTheme(t, persist) {
+  document.documentElement.dataset.theme = t;
+  $('themeUse').setAttribute('href', t === 'dark' ? '#i-sun' : '#i-moon');
+  $('themeBtn').setAttribute('aria-label', t === 'dark' ? 'التبديل إلى الوضع الفاتح' : 'التبديل إلى الوضع الداكن');
+  document.querySelector('meta[name=theme-color]').content = t === 'dark' ? '#0d1514' : '#f3f5f4';
+  if (persist) store.set('pt_theme', t);
+}
+$('themeBtn').onclick = () => applyTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark', true);
+
+applyTheme(document.documentElement.dataset.theme || 'light');
+renderPills();
+render();
+loadAll();
 </script>
 </body>
 </html>

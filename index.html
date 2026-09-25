@@ -150,24 +150,44 @@
 }
 
 @media (max-width: 768px) {
-  .bg-mesh,
   .bg-grid {
     display: none !important;
+  }
+  /* Mobile Static Ambient Gradient (Zero animation & zero blur filter for 60fps performance with visual depth) */
+  .bg-mesh {
+    display: block !important;
+    position: fixed;
+    inset: 0 !important;
+    filter: none !important;
+    animation: none !important;
+    will-change: auto !important;
+    opacity: 1 !important;
+    transform: none !important;
+    background: 
+      radial-gradient(circle at 10% 8%, color-mix(in srgb, var(--brand) 12%, transparent) 0%, transparent 55%),
+      radial-gradient(circle at 90% 90%, color-mix(in srgb, var(--soft-ink) 9%, transparent) 0%, transparent 60%),
+      linear-gradient(180deg, color-mix(in srgb, var(--brand) 5%, transparent) 0%, transparent 35%) !important;
+  }
+  [data-theme="dark"] .bg-mesh {
+    background: 
+      radial-gradient(circle at 10% 8%, rgba(92, 189, 179, 0.14) 0%, transparent 60%),
+      radial-gradient(circle at 90% 90%, rgba(139, 224, 214, 0.09) 0%, transparent 65%),
+      linear-gradient(180deg, rgba(92, 189, 179, 0.06) 0%, transparent 40%) !important;
   }
 }
 
 
 /* Favorite Star Button & Animations */
 .fav-btn {
-  width: 32px;
-  height: 32px;
-  border-radius: var(--radius-sm);
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
   display: grid;
   place-items: center;
   color: var(--mute);
   background: none;
   border: 1px solid transparent;
-  transition: color 0.15s, transform 0.15s;
+  transition: color 0.15s, transform 0.15s, background-color 0.15s;
   flex: none;
 }
 .fav-btn:hover {
@@ -522,7 +542,26 @@ h1 {
   transition: color 0.15s, border-color 0.15s, background-color 0.15s, transform 0.1s;
 }
 .icon-btn:hover { color: var(--ink); border-color: var(--brand); background: var(--soft); }
-.icon-btn.sm { width: 34px; height: 34px; border-radius: var(--radius-sm); }
+.icon-btn.sm { width: 40px; height: 40px; border-radius: var(--radius-md); }
+
+/* Last Sync Timestamp Label (next to refresh button) */
+.refresh-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  cursor: pointer;
+}
+.last-sync-label {
+  font-size: 11.5px;
+  font-weight: 500;
+  color: var(--mute);
+  white-space: nowrap;
+  user-select: none;
+  transition: color 0.15s ease;
+}
+.refresh-wrap:hover .last-sync-label {
+  color: var(--brand);
+}
 
 /* Interactive Stats Row (Clickable Filter Shortcuts with Hover Scale) */
 .stats {
@@ -649,17 +688,23 @@ h1 {
 /* Term Progress Bar */
 .term-progress {
   width: 100%;
-  height: 4px;
+  height: 5.5px;
   background: color-mix(in srgb, var(--brand) 12%, transparent);
   border-radius: 999px;
   overflow: hidden;
-  margin-block: 8px 12px;
+  margin-block: 8px 14px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.08);
 }
 .term-progress-fill {
   height: 100%;
-  background: var(--brand);
+  background: linear-gradient(to left, var(--brand-hover) 0%, var(--brand) 45%, #14b8a6 100%);
   border-radius: 999px;
-  transition: width 0.4s ease;
+  transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 1px 4px color-mix(in srgb, var(--brand) 30%, transparent);
+}
+[data-theme="dark"] .term-progress-fill {
+  background: linear-gradient(to left, #0e4c47 0%, var(--brand) 50%, #75cac1 100%);
+  box-shadow: 0 0 8px rgba(92, 189, 179, 0.35);
 }
 
 /* Segmented Control (Accessible Tablist) */
@@ -947,6 +992,9 @@ h1 {
   flex: 1;
   min-width: 0;
   transition: max-height 0.2s ease, opacity 0.2s ease;
+  position: relative;
+  mask-image: linear-gradient(to right, transparent 0%, #000 16px, #000 calc(100% - 16px), transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 16px, #000 calc(100% - 16px), transparent 100%);
 }
 .weeks {
   display: flex;
@@ -955,6 +1003,7 @@ h1 {
   flex: 1;
   scrollbar-width: none;
   padding-block: 2px;
+  padding-inline: 4px;
 }
 .weeks::-webkit-scrollbar { display: none; }
 .wk {
@@ -1084,104 +1133,93 @@ h1 {
   }
 }
 
-/* ==========================================================================
-   Featured Next Class Card ("المحاضرة القادمة")
-   ========================================================================== */
-.next-class-card {
-  margin-bottom: 20px;
-  padding: 16px 20px;
-  background: var(--soft);
-  border: 1px solid color-mix(in srgb, var(--brand) 35%, transparent);
-  border-radius: var(--radius-lg);
+/* Offline Cached Data Notice Banner */
+.offline-banner {
+  margin-bottom: 14px;
+  padding: 10px 14px;
+  border-radius: var(--radius-md);
+  background: color-mix(in srgb, var(--surface) 92%, #d97706);
+  border: 1px solid color-mix(in srgb, #d97706 40%, var(--line2));
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
   box-shadow: var(--shadow-sm);
-  display: grid;
+  animation: slideDownFade 0.25s ease-out;
+}
+[data-theme="dark"] .offline-banner {
+  background: color-mix(in srgb, var(--surface) 88%, #b45309);
+  border-color: color-mix(in srgb, #f59e0b 35%, var(--line2));
+}
+.offline-banner-content {
+  display: flex;
+  align-items: center;
   gap: 10px;
-  position: relative;
-  overflow: hidden;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  min-width: 0;
+  flex: 1;
 }
-.next-class-card:hover {
-  box-shadow: var(--shadow-md);
-  transform: translateY(-1px);
+.offline-icon {
+  width: 20px;
+  height: 20px;
+  color: #d97706;
+  flex-shrink: 0;
 }
-.next-class-header {
+[data-theme="dark"] .offline-icon {
+  color: #fbbf24;
+}
+.offline-banner-text {
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: 8px;
   flex-wrap: wrap;
-}
-.next-class-title-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
+  gap: 6px 10px;
   font-size: 13px;
-  font-weight: 700;
-  color: var(--brand);
-}
-.next-class-status-badge {
-  padding: 3px 10px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 700;
-  background: var(--surface);
-  color: var(--ink);
-  border: 1px solid var(--line2);
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-}
-.next-class-status-badge.now {
-  background: #dc2626;
-  color: #fff;
-  border-color: #dc2626;
-  animation: pulseNow 1.8s infinite;
-}
-.next-class-status-badge.soon {
-  background: #ea580c;
-  color: #fff;
-  border-color: #ea580c;
-}
-@keyframes pulseNow {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.75; }
-}
-.next-class-main {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 14px;
-}
-.next-class-info h3 {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--ink);
   line-height: 1.4;
 }
-.next-class-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px 16px;
-  font-size: 13px;
-  color: var(--mute);
-  margin-top: 4px;
+.offline-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 1px 7px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  background: #d97706;
+  color: #fff;
+  flex-shrink: 0;
 }
-.next-class-meta span {
+.offline-retry-btn {
   display: inline-flex;
   align-items: center;
   gap: 5px;
-}
-.next-class-timer {
-  font-size: 13.5px;
+  padding: 5px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line2);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 12px;
   font-weight: 600;
-  color: var(--soft-ink);
-  margin-top: 4px;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-.next-class-goto {
+  cursor: pointer;
+  white-space: nowrap;
   flex-shrink: 0;
+  transition: background-color 0.15s, border-color 0.15s, transform 0.1s;
+}
+.offline-retry-btn:hover {
+  background: var(--soft);
+  border-color: var(--brand);
+  color: var(--brand);
+}
+.offline-retry-btn:active {
+  transform: scale(0.97);
+}
+@keyframes slideDownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ==========================================================================
@@ -1449,6 +1487,10 @@ button.chip.off:hover {
   font-weight: 600;
   color: inherit;
   text-decoration: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
   transition: background-color 150ms ease, color 150ms ease;
 }
 .chip-split-main:hover {
@@ -1457,6 +1499,22 @@ button.chip.off:hover {
 }
 [data-theme="dark"] .chip-split-main:hover {
   background: rgba(92, 189, 179, 0.16);
+}
+.chip-split.is-playing {
+  border-color: var(--brand);
+  background: color-mix(in srgb, var(--brand) 16%, var(--surface));
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--brand) 30%, transparent);
+}
+.chip-split.is-playing .chip-split-main {
+  color: var(--brand);
+}
+.chip-split.is-playing .chip-audio-icon {
+  display: inline-flex;
+  animation: pulseBrand 1.2s ease-in-out infinite;
+}
+@keyframes pulseBrand {
+  0%, 100% { transform: scale(1); filter: brightness(1); }
+  50% { transform: scale(1.15); filter: brightness(1.2); }
 }
 .chip-split-divider {
   width: 1px;
@@ -1607,11 +1665,12 @@ button.chip.off:hover {
   font-weight: 500;
   color: var(--mute);
 }
-.stype-dot {
-  width: 6px;
-  height: 6px;
+.stype-dot,
+.stype .dot {
+  width: 7px;
+  height: 7px;
   border-radius: 50%;
-  background: var(--brand);
+  background: var(--tc, var(--brand));
   display: inline-block;
   flex: none;
 }
@@ -1888,6 +1947,742 @@ button.chip.off:hover {
 }
 
 /* ==========================================================================
+   Academic Audio Player (Custom Clean Dark Theme)
+   ========================================================================== */
+.audio-player {
+  position: fixed;
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(540px, calc(100vw - 24px));
+  z-index: 1000;
+  border-radius: 18px;
+  background: #101a18;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 20px 50px -10px rgba(0, 0, 0, 0.7), 0 4px 16px rgba(0, 0, 0, 0.35);
+  color: #e7f1ee;
+  direction: rtl;
+  user-select: none;
+  font-family: inherit;
+  overflow: hidden;
+  transition: width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              max-width 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              border-radius 0.35s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.35s ease,
+              background-color 0.25s ease,
+              transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: apSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes apSlideUp {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(24px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+[data-theme="light"] .audio-player {
+  background: #14201e;
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Minimized Dock Mode with Smooth Morphing */
+.audio-player.minimized {
+  width: min(390px, calc(100vw - 24px));
+  max-width: min(390px, calc(100vw - 24px));
+  border-radius: 999px;
+  background: #101a18;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 36px -4px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(255, 255, 255, 0.08);
+}
+
+/* Full Card Layout (Morphs smoothly on minimize) */
+.ap-card {
+  display: flex;
+  flex-direction: column;
+  padding: 16px 20px 18px;
+  opacity: 1;
+  max-height: 520px;
+  transform: translateY(0) scale(1);
+  transform-origin: bottom center;
+  transition: opacity 0.22s ease 0.06s,
+              transform 0.28s cubic-bezier(0.16, 1, 0.3, 1),
+              max-height 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+              padding 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.audio-player.minimized .ap-card {
+  opacity: 0;
+  max-height: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+  pointer-events: none;
+  overflow: hidden;
+  transform: translateY(-14px) scale(0.95);
+  transition: opacity 0.14s ease,
+              transform 0.2s ease,
+              max-height 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+              padding 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Minimized Bar Layout (Fades and slides up smoothly) */
+.ap-mini {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 0 16px;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
+  transform: translateY(10px) scale(0.95);
+  transition: opacity 0.15s ease,
+              transform 0.2s ease,
+              max-height 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+              padding 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.audio-player.minimized .ap-mini {
+  opacity: 1;
+  max-height: 56px;
+  padding: 8px 16px;
+  pointer-events: auto;
+  transform: translateY(0) scale(1);
+  transition: opacity 0.25s ease 0.08s,
+              transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) 0.04s,
+              max-height 0.32s cubic-bezier(0.16, 1, 0.3, 1),
+              padding 0.32s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ap-mini-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  cursor: pointer;
+}
+.ap-mini-info:hover .ap-mini-title {
+  color: #4ecdc4;
+}
+
+.ap-mini-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.ap-mini-title {
+  font-size: 13.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 190px;
+  color: #fff;
+  transition: color 0.15s ease;
+}
+.ap-mini-time {
+  font-size: 11px;
+  color: #78908c;
+  font-variant-numeric: tabular-nums;
+}
+.ap-mini-acts {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+}
+.ap-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: #8fa6a3;
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.ap-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+.ap-btn:active {
+  transform: scale(0.9);
+}
+.ap-btn.ap-btn-play {
+  background: #4ecdc4;
+  color: #08211e;
+  width: 34px;
+  height: 34px;
+}
+.ap-btn.ap-btn-play:hover {
+  background: #5fe1d8;
+  transform: scale(1.05);
+}
+.ap-btn.ap-btn-play:active {
+  transform: scale(0.92);
+}
+
+/* 1. Header Row */
+.ap-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.ap-meta-group {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  flex: 1;
+}
+.ap-title-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.ap-title {
+  margin: 0;
+  font-size: 16.5px;
+  font-weight: 700;
+  color: #ffffff;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.35;
+}
+.ap-badge {
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 2px 9px;
+  border-radius: 6px;
+  background: rgba(78, 205, 196, 0.16);
+  color: #4ecdc4;
+  border: 1px solid rgba(78, 205, 196, 0.28);
+  flex: none;
+  letter-spacing: 0.2px;
+}
+.ap-badge[data-type="عملي"] {
+  background: rgba(240, 149, 171, 0.16);
+  color: #f095ab;
+  border-color: rgba(240, 149, 171, 0.28);
+}
+.ap-badge[data-type="مستشفى"] {
+  background: rgba(230, 190, 96, 0.16);
+  color: #e6be60;
+  border-color: rgba(230, 190, 96, 0.28);
+}
+.ap-subtitle {
+  margin: 3px 0 0;
+  font-size: 12.5px;
+  color: #78908c;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Toolbar Buttons */
+.ap-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: none;
+}
+.ap-tool-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 7px;
+  border: none;
+  background: transparent;
+  color: #829a96;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.15s ease;
+}
+.ap-tool-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+.ap-tool-btn.ap-close:hover {
+  background: rgba(229, 72, 77, 0.15);
+  color: #ff6b6b;
+}
+.ap-tool-btn.has-bookmark {
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.14);
+}
+.ap-tool-btn.has-bookmark:hover {
+  background: rgba(245, 158, 11, 0.25);
+  color: #fbbf24;
+  box-shadow: 0 0 10px rgba(245, 158, 11, 0.35);
+}
+
+/* 2. Active Body: Waveform */
+.ap-active-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.ap-waveform-wrap {
+  position: relative;
+  width: 100%;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  padding: 4px 0;
+  margin-top: 14px;
+  user-select: none;
+  touch-action: none;
+}
+.ap-waveform {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3.5px;
+}
+.ap-wave-bar {
+  flex: 1;
+  max-width: 4.5px;
+  min-width: 2.5px;
+  border-radius: 3px;
+  background: #253734;
+  height: 10px;
+  transition: background 0.12s ease, transform 0.15s ease;
+}
+.ap-wave-bar.active {
+  background: #4ecdc4;
+  box-shadow: 0 0 8px rgba(78, 205, 196, 0.4);
+}
+.ap-waveform-wrap:hover .ap-wave-bar {
+  filter: brightness(1.15);
+}
+
+/* Bookmark Pin on Waveform */
+.ap-bookmark-pin {
+  position: absolute;
+  top: 50%;
+  transform: translate(50%, -50%);
+  width: 16px;
+  height: 38px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: transform 0.15s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.ap-bookmark-pin::before {
+  content: '';
+  position: absolute;
+  top: 2px;
+  bottom: 2px;
+  width: 2.5px;
+  background: #f59e0b;
+  border-radius: 2px;
+  box-shadow: 0 0 8px rgba(245, 158, 11, 0.8);
+}
+.ap-bookmark-pin::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  background: #fbbf24;
+  border: 2px solid #101a18;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #f59e0b;
+}
+.ap-bookmark-pin:hover {
+  transform: translate(50%, -50%) scale(1.3);
+}
+.ap-bookmark-pin:hover::after {
+  background: #ffffff;
+  box-shadow: 0 0 12px #fbbf24;
+}
+
+/* Time Row & Bookmark Indicator */
+.ap-time-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13px;
+  font-weight: 600;
+  color: #78908c;
+  margin-top: 6px;
+  font-variant-numeric: tabular-nums;
+  gap: 8px;
+}
+.ap-time-loading {
+  font-size: 11.5px;
+  color: #78908c;
+  animation: pulseBrand 1.5s infinite;
+}
+
+.ap-bookmark-indicator {
+  display: inline-flex;
+  align-items: center;
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.28);
+  border-radius: 20px;
+  padding: 2px 4px 2px 8px;
+  gap: 5px;
+  font-size: 12px;
+  animation: fadeIn 0.2s ease-out;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+.ap-bookmark-jump-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: transparent;
+  border: none;
+  color: #fbbf24;
+  font-weight: 600;
+  font-family: inherit;
+  font-size: 11.5px;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 12px;
+  transition: all 0.15s ease;
+}
+.ap-bookmark-jump-btn:hover {
+  color: #ffffff;
+  background: rgba(245, 158, 11, 0.25);
+  transform: translateY(-1px);
+}
+.ap-bookmark-jump-btn:active {
+  transform: translateY(0);
+}
+.ap-bookmark-jump-btn .i {
+  width: 13px;
+  height: 13px;
+  color: #f59e0b;
+}
+.ap-bookmark-jump-btn strong {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.ap-bookmark-del-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.08);
+  color: #9cb1ad;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.15s ease;
+}
+.ap-bookmark-del-btn:hover {
+  background: rgba(239, 68, 68, 0.25);
+  color: #ef4444;
+  transform: scale(1.1);
+}
+.ap-bookmark-del-btn .i {
+  width: 11px;
+  height: 11px;
+}
+
+/* Playback Controls Row */
+.ap-ctrl-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  direction: ltr; /* Keeps [Rewind 10s] on left, [Play] in center, [Forward 10s] on right */
+  gap: 28px;
+  margin: 14px 0 10px;
+}
+.ap-step-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  color: #9cb1ad;
+  cursor: pointer;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.ap-step-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+  border-color: rgba(78, 205, 196, 0.4);
+  transform: scale(1.08);
+}
+.ap-step-btn:active {
+  transform: scale(0.92);
+}
+.ap-step-btn .i {
+  width: 28px !important;
+  height: 28px !important;
+}
+.ap-main-play {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: none;
+  background: #4ecdc4;
+  color: #08211e;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(78, 205, 196, 0.35);
+  transition: transform 0.15s ease, background-color 0.15s ease, box-shadow 0.15s ease;
+}
+.ap-main-play:hover {
+  background: #5fe1d8;
+  transform: scale(1.06);
+  box-shadow: 0 6px 22px rgba(78, 205, 196, 0.5);
+}
+.ap-main-play:active {
+  transform: scale(0.94);
+}
+.ap-main-play .i {
+  width: 24px;
+  height: 24px;
+}
+
+/* Footer Bar: Speed & Volume */
+.ap-footer-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.ap-speed-wrapper {
+  position: relative;
+}
+.ap-speed-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 12px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  color: #d0e0dc;
+  font-size: 13px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.ap-speed-pill:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #4ecdc4;
+  color: #4ecdc4;
+}
+
+.ap-speed-menu {
+  position: absolute;
+  bottom: calc(100% + 8px);
+  inset-inline-start: 0;
+  background: #14221f;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 10px;
+  padding: 5px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 105px;
+  z-index: 10;
+}
+.ap-speed-opt {
+  display: block;
+  width: 100%;
+  text-align: right;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: transparent;
+  border: none;
+  color: #8fa6a3;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all 0.12s ease;
+}
+.ap-speed-opt:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+.ap-speed-opt.active {
+  background: rgba(78, 205, 196, 0.16);
+  color: #4ecdc4;
+  font-weight: 700;
+}
+
+.ap-volume-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  direction: ltr; /* Volume 0 on left, 100% on right */
+}
+.ap-vol-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  color: #829a96;
+  cursor: pointer;
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+.ap-vol-btn:hover {
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.08);
+}
+.ap-vol-btn .i {
+  width: 19px;
+  height: 19px;
+}
+.ap-vol-slider {
+  width: 95px;
+  height: 6px;
+  border-radius: 999px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: linear-gradient(to right, #4ecdc4 100%, #253734 100%);
+  cursor: pointer;
+  outline: none;
+}
+.ap-vol-slider::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 999px;
+  background: transparent;
+}
+.ap-vol-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid #4ecdc4;
+  margin-top: -4px;
+  box-shadow: 0 0 8px rgba(78, 205, 196, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3);
+  transition: transform 0.12s ease;
+}
+.ap-vol-slider:hover::-webkit-slider-thumb {
+  transform: scale(1.2);
+}
+.ap-vol-slider::-moz-range-track {
+  height: 6px;
+  border-radius: 999px;
+  background: transparent;
+}
+.ap-vol-slider::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid #4ecdc4;
+  box-shadow: 0 0 8px rgba(78, 205, 196, 0.5);
+  transition: transform 0.12s ease;
+}
+.ap-vol-slider:hover::-moz-range-thumb {
+  transform: scale(1.2);
+}
+
+/* Wave Animation inside mini pill */
+.ap-waves {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  height: 18px;
+  width: 20px;
+  flex: none;
+}
+.ap-waves span {
+  display: inline-block;
+  width: 3px;
+  background: #4ecdc4;
+  border-radius: 2px;
+  height: 5px;
+  transition: height 0.2s ease;
+}
+.audio-player.is-playing .ap-waves span:nth-child(1) { animation: waveAnim 0.9s ease-in-out infinite 0.1s; }
+.audio-player.is-playing .ap-waves span:nth-child(2) { animation: waveAnim 0.9s ease-in-out infinite 0.3s; }
+.audio-player.is-playing .ap-waves span:nth-child(3) { animation: waveAnim 0.9s ease-in-out infinite 0.15s; }
+.audio-player.is-playing .ap-waves span:nth-child(4) { animation: waveAnim 0.9s ease-in-out infinite 0.4s; }
+
+@keyframes waveAnim {
+  0%, 100% { height: 4px; }
+  50% { height: 18px; }
+}
+
+/* Mobile responsive adaptations */
+@media (max-width: 640px) {
+  .audio-player {
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    width: calc(100vw - 16px);
+  }
+  .ap-card {
+    padding: 14px 16px;
+  }
+  .ap-title {
+    font-size: 15px;
+  }
+  .ap-vol-slider {
+    display: none;
+  }
+  .ap-fallback-actions {
+    flex-direction: column-reverse;
+    gap: 8px;
+  }
+  .ap-action-btn {
+    width: 100%;
+  }
+}
+
+/* Layout padding compensation when audio player is active */
+body.has-audio-player main {
+  padding-bottom: 140px !important;
+}
+body.has-audio-player.audio-minimized main {
+  padding-bottom: 75px !important;
+}
+body.has-audio-player .back-to-top {
+  bottom: calc(145px + env(safe-area-inset-bottom, 0px));
+}
+body.has-audio-player.audio-minimized .back-to-top {
+  bottom: calc(75px + env(safe-area-inset-bottom, 0px));
+}
+
+/* ==========================================================================
    Responsive & Accessibility Adaptations
    ========================================================================== */
 @media (min-width: 640px) {
@@ -1920,6 +2715,37 @@ button.chip.off:hover {
 }
 
 @media (max-width: 640px) {
+  /* Mobile Header Layout: Actions in dedicated top row, Title on a single line underneath */
+  .mast {
+    padding-top: 18px;
+  }
+  .mast-row {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 12px;
+  }
+  .mast-row .acts {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    gap: 8px;
+  }
+  .mast-row .acts #todayBtn {
+    flex: 1;
+    justify-content: center;
+    font-size: 13px;
+  }
+  .mast-row h1 {
+    font-size: clamp(19px, 5.5vw, 22px);
+    line-height: 1.25;
+    white-space: nowrap;
+  }
+  .mast-row .sub {
+    font-size: 12.5px;
+    margin-top: 2px;
+  }
+
   .week-toggle-btn { display: inline-flex; }
   .weeks-collapsible.is-collapsed {
     display: none;
@@ -1931,8 +2757,22 @@ button.chip.off:hover {
   .chip { padding-inline: 10px; }
   .chip-split-main { padding-inline: 10px 7px; font-size: 12px; }
   .chip-split-dl { width: 30px; }
-  .next-class-main { flex-direction: column; }
-  .next-class-goto { width: 100%; }
+
+  .refresh-wrap { gap: 5px; }
+  .last-sync-label { font-size: 11px; max-width: 105px; overflow: hidden; text-overflow: ellipsis; }
+  .offline-banner {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+    padding: 10px 12px;
+  }
+  .offline-retry-btn {
+    align-self: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .last-sync-prefix { display: none; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1997,12 +2837,32 @@ button.chip.off:hover {
   <symbol id="i-dermatology" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.7l5.66 5.66a8 8 0 1 1-11.31 0z"/><path d="M12 11v6"/><path d="M9 14h6"/></symbol>
   <symbol id="i-armchair" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 11a2 2 0 0 1 2 2v2H17v-2a2 2 0 0 1 2 -2h1a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-2v1a1 1 0 0 1 -1 1h-1a1 1 0 0 1 -1 -1v-1H9v1a1 1 0 0 1 -1 1H7a1 1 0 0 1 -1 -1v-1H4a2 2 0 0 1 -2 -2v-4a2 2 0 0 1 2 -2h1z"/><path d="M6 11V6a3 3 0 0 1 3 -3h6a3 3 0 0 1 3 3v5"/></symbol>
   <symbol id="i-wash-hand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 15h2v-3a2 2 0 1 1 4 0v3h2"/><path d="M4 11a2 2 0 0 1 2 -2h1a1 1 0 0 1 1 1v3.5"/><path d="M16 11a2 2 0 0 0 -2 -2h-1a1 1 0 0 0 -1 1v3.5"/><path d="M6 16v4"/><path d="M18 16v4"/></symbol>
-  <symbol id="i-expand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 6 5 5 5-5"/><path d="m7 13 5 5 5-5"/></symbol>
-  <symbol id="i-collapse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 18 5-5 5 5"/><path d="m7 11 5-5 5 5"/></symbol>
+  <symbol id="i-expand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></symbol>
+  <symbol id="i-collapse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+  <symbol id="i-chevron-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></symbol>
+  <symbol id="i-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
   <!-- SVG Icons for Lecture Types (Replacing Emojis) -->
   <symbol id="i-theory" viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c0 2 3 3 6 3s6-1 6-3v-5"/></symbol>
   <symbol id="i-practical" viewBox="0 0 24 24"><path d="M6 18h8M3 22h18M14 22a7 7 0 1 0-7-7M9 14h2M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"/><path d="M12 6V3a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1v3"/></symbol>
   <symbol id="i-hospital" viewBox="0 0 24 24"><path d="M3 21h18M5 21V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16M9 21v-4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v4"/><path d="M10 9h4M12 7v4"/></symbol>
+  <!-- Audio Player Icons -->
+  <symbol id="i-play" viewBox="0 0 24 24"><polygon points="6 4 20 12 6 20 6 4" fill="currentColor"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16" fill="currentColor" rx="1"/><rect x="14" y="4" width="4" height="16" fill="currentColor" rx="1"/></symbol>
+  <symbol id="i-replay-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+    <polyline points="3 3 3 8 8 8"/>
+    <text x="12" y="15.5" font-size="8.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="800" fill="currentColor" stroke="none" text-anchor="middle">10</text>
+  </symbol>
+  <symbol id="i-forward-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 12a9 9 0 1 1-9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
+    <polyline points="21 3 21 8 16 8"/>
+    <text x="12" y="15.5" font-size="8.5" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="800" fill="currentColor" stroke="none" text-anchor="middle">10</text>
+  </symbol>
+  <symbol id="i-external" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></symbol>
+  <symbol id="i-volume-2" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></symbol>
+  <symbol id="i-volume-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></symbol>
+  <symbol id="i-bookmark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></symbol>
+  <symbol id="i-bookmark-filled" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"/></symbol>
 </svg>
 
 <!-- Header & Masthead -->
@@ -2017,9 +2877,14 @@ button.chip.off:hover {
         محاضرات اليوم
         <span id="todayBadge" class="btn-badge muted" title="عدد محاضرات اليوم">-</span>
       </button>
-      <button id="refreshBtn" class="icon-btn" aria-label="تحديث البيانات من المصدر" title="تحديث الجدول">
-        <svg class="i"><use href="#i-refresh"/></svg>
-      </button>
+      <div class="refresh-wrap" id="refreshWrap" title="تحديث الجدول وعرض وقت آخر مزامنة">
+        <button id="refreshBtn" class="icon-btn" aria-label="تحديث البيانات من المصدر" title="تحديث الجدول">
+          <svg class="i"><use href="#i-refresh"/></svg>
+        </button>
+        <span id="lastSyncLabel" class="last-sync-label">
+          <span class="last-sync-prefix">آخر تحديث: </span><span id="lastSyncValue">جاري التحميل…</span>
+        </span>
+      </div>
       <button id="themeBtn" class="icon-btn" aria-label="التبديل إلى الوضع الداكن">
         <svg class="i"><use id="themeUse" href="#i-moon"/></svg>
       </button>
@@ -2120,6 +2985,23 @@ button.chip.off:hover {
 <!-- Main Results Area -->
 <main class="wrap">
 
+  <!-- Offline Cached Data Notice Banner -->
+  <div id="offlineNotice" class="offline-banner" hidden role="status" aria-live="polite">
+    <div class="offline-banner-content">
+      <svg class="offline-icon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M1 1l22 22M16.72 11.06A10.94 10.94 0 0 1 19 12.55M5 12.55a10.94 10.94 0 0 1 5.17-2.39M10.71 5.05A16 16 0 0 1 22.58 9M1.42 9a15.91 15.91 0 0 1 4.7-2.88M8.53 16.11a6 6 0 0 1 6.95 0M12 20h.01"/>
+      </svg>
+      <div class="offline-banner-text">
+        <span class="offline-tag">دون اتصال</span>
+        <span>تعذّر الاتصال بالإنترنت — بتشوف بيانات محفوظة من <strong id="offlineTimeText">منذ قليل</strong></span>
+      </div>
+    </div>
+    <button type="button" id="offlineRetryBtn" class="offline-retry-btn" title="محاولة الاتصال بالإنترنت وتحديث البيانات">
+      <svg class="i" style="width:13px;height:13px;"><use href="#i-refresh"/></svg>
+      <span>إعادة المحاولة</span>
+    </button>
+  </div>
+
   <!-- Dynamic Results Counter -->
   <div class="results-info">
     <span id="resultsCount" aria-live="polite">جارٍ التحميل…</span>
@@ -2156,6 +3038,134 @@ button.chip.off:hover {
   <!-- Content Container with Screen Reader Live Updates -->
   <div id="content" aria-live="polite"></div>
 </main>
+
+<!-- Floating Mini Audio Player (Docked Bottom Center) -->
+<div id="audioPlayer" class="audio-player" role="region" aria-label="مشغل الصوت المدمج" style="display:none;">
+  <!-- Hidden HTML5 Audio Element -->
+  <audio id="globalAudio" preload="metadata"></audio>
+  
+  <!-- Minimized Bar (Visible when .minimized) -->
+  <div class="ap-mini" id="apMini">
+    <div class="ap-mini-info" id="apMiniInfo" title="انقر لتوسيع المشغل" role="button" tabindex="0" aria-label="توسيع المشغل">
+      <div class="ap-waves" aria-hidden="true">
+        <span></span><span></span><span></span><span></span>
+      </div>
+      <div class="ap-mini-text">
+        <span class="ap-mini-title" id="apMiniTitle">—</span>
+      </div>
+    </div>
+    <div class="ap-mini-acts">
+      <button type="button" class="ap-btn ap-btn-play" id="apMiniPlayBtn" aria-label="تشغيل / إيقاف مؤقت">
+        <svg class="i"><use href="#i-play"/></svg>
+      </button>
+      <button type="button" class="ap-btn" id="apExpandBtn" title="توسيع المشغل" aria-label="توسيع مشغل الصوت">
+        <svg class="i"><use href="#i-chevron-up"/></svg>
+      </button>
+      <button type="button" class="ap-btn ap-close" id="apMiniCloseBtn" title="إغلاق المشغل" aria-label="إغلاق مشغل الصوت">
+        <svg class="i"><use href="#i-x"/></svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Full / Standard Expanded Player Card -->
+  <div class="ap-card" id="apCard">
+    <!-- Top Header: Title & Badge on right, Actions on left -->
+    <div class="ap-header">
+      <div class="ap-meta-group">
+        <div class="ap-title-row">
+          <h3 class="ap-title" id="apTitle">—</h3>
+          <span class="ap-badge" id="apTypeBadge">نظري</span>
+        </div>
+        <p class="ap-subtitle" id="apSubtitle">—</p>
+      </div>
+
+      <div class="ap-toolbar" role="toolbar" aria-label="أدوات المشغل">
+        <button type="button" class="ap-tool-btn ap-close" id="apCloseBtn" title="إغلاق المشغل" aria-label="إغلاق المشغل">
+          <svg class="i"><use href="#i-x"/></svg>
+        </button>
+        <button type="button" class="ap-tool-btn" id="apBookmarkBtn" title="حفظ علامة عند الوقت الحالي" aria-label="حفظ علامة عند الوقت الحالي">
+          <svg class="i" id="apBookmarkIcon"><use href="#i-bookmark"/></svg>
+        </button>
+        <a class="ap-tool-btn" id="apExtLink" href="#" target="_blank" rel="noopener noreferrer" title="فتح الملف خارجيًا" aria-label="فتح خارجي">
+          <svg class="i"><use href="#i-external"/></svg>
+        </a>
+        <a class="ap-tool-btn" id="apDlLink" href="#" target="_blank" rel="noopener noreferrer" download title="تنزيل الملف للجهاز" aria-label="تنزيل الريكورد">
+          <svg class="i"><use href="#i-download"/></svg>
+        </a>
+        <button type="button" class="ap-tool-btn" id="apMinBtn" title="تصغير المشغل" aria-label="تصغير المشغل">
+          <svg class="i"><use href="#i-chevron-down"/></svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Active Playing State -->
+    <div class="ap-active-body" id="apActiveBody">
+      <!-- Waveform Progress Scrubber -->
+      <div class="ap-waveform-wrap" id="apWaveformWrap" title="انقر أو اسحب للتقديم والتأخير">
+        <div class="ap-waveform" id="apWaveform"></div>
+        <div class="ap-bookmark-pin" id="apBookmarkPin" style="display:none;" title="علامة حفظ - انقر للرجوع إليها"></div>
+      </div>
+
+      <!-- Time Display Row -->
+      <div class="ap-time-row">
+        <span class="ap-time current" id="apCurrentTime">00:00</span>
+        <div class="ap-bookmark-indicator" id="apBookmarkIndicator" style="display:none;">
+          <button type="button" class="ap-bookmark-jump-btn" id="apJumpBookmarkBtn" title="الرجوع للعلامة المحفوظة">
+            <svg class="i"><use href="#i-bookmark-filled"/></svg>
+            <span>استئناف من <strong id="apBookmarkTime">00:00</strong></span>
+          </button>
+          <button type="button" class="ap-bookmark-del-btn" id="apDelBookmarkBtn" title="حذف علامة الحفظ" aria-label="حذف علامة الحفظ">
+            <svg class="i"><use href="#i-x"/></svg>
+          </button>
+        </div>
+        <span class="ap-time total" id="apDuration">
+          <span id="apTimeLoading" class="ap-time-loading">جارٍ التحميل…</span>
+          <span id="apTimeText" style="display:none;">00:00</span>
+        </span>
+      </div>
+
+      <!-- Main Controls: Left = Rewind 10s (يرجع 10ث), Center = Play, Right = Forward 10s (يقدم 10ث) -->
+      <div class="ap-ctrl-row">
+        <button type="button" class="ap-step-btn" id="apRewindBtn" title="تأخير 10 ثوانٍ" aria-label="تأخير 10 ثوانٍ">
+          <svg class="i"><use href="#i-forward-10"/></svg>
+        </button>
+
+        <button type="button" class="ap-main-play" id="apPlayBtn" aria-label="تشغيل أو إيقاف مؤقت">
+          <svg class="i" id="apPlayIcon"><use href="#i-play"/></svg>
+        </button>
+
+        <button type="button" class="ap-step-btn" id="apForwardBtn" title="تقديم 10 ثوانٍ" aria-label="تقديم 10 ثوانٍ">
+          <svg class="i"><use href="#i-replay-10"/></svg>
+        </button>
+      </div>
+
+      <!-- Footer Bar: Speed Pill (Left) & Volume Control (Right) -->
+      <div class="ap-footer-bar">
+        <div class="ap-speed-wrapper">
+          <button type="button" class="ap-speed-pill" id="apSpeedBtn" title="سرعة التشغيل" aria-label="سرعة التشغيل 1x">
+            <span id="apSpeedLabel">1x</span>
+          </button>
+          <div class="ap-speed-menu" id="apSpeedMenu" style="display:none;" role="menu">
+            <button type="button" class="ap-speed-opt" data-spd="0.5">0.5x</button>
+            <button type="button" class="ap-speed-opt" data-spd="0.75">0.75x</button>
+            <button type="button" class="ap-speed-opt active" data-spd="1">1x (طبيعي)</button>
+            <button type="button" class="ap-speed-opt" data-spd="1.25">1.25x</button>
+            <button type="button" class="ap-speed-opt" data-spd="1.5">1.5x</button>
+            <button type="button" class="ap-speed-opt" data-spd="1.75">1.75x</button>
+            <button type="button" class="ap-speed-opt" data-spd="2">2x</button>
+          </div>
+        </div>
+
+        <div class="ap-volume-box">
+          <button type="button" class="ap-vol-btn" id="apMuteBtn" title="كتم / تشغيل الصوت" aria-label="كتم الصوت">
+            <svg class="i" id="apMuteIcon"><use href="#i-volume-2"/></svg>
+          </button>
+          <input type="range" id="apVolume" class="ap-vol-slider" min="0" max="1" step="0.05" value="1" title="مستوى الصوت" aria-label="مستوى الصوت">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- Floating Back To Top Button (Fade + Slide, Fixed Bottom Right) -->
 <button id="backToTop" class="back-to-top" aria-label="الرجوع لأعلى الصفحة" title="الرجوع لأعلى">
@@ -2300,12 +3310,13 @@ const store = {
 };
 
 const cache = {
-  get: k => {
+  get: (k, ignoreExpiry = false) => {
     try {
-      const item = JSON.parse(sessionStorage.getItem(k));
-      if (!item || !item.t || !item.d) return null;
-      if (Date.now() - item.t > CONFIG.CACHE_TTL) {
-        sessionStorage.removeItem(k);
+      const raw = localStorage.getItem(k);
+      if (!raw) return null;
+      const item = JSON.parse(raw);
+      if (!item || !item.d) return null;
+      if (!ignoreExpiry && item.t && (Date.now() - item.t > CONFIG.CACHE_TTL)) {
         return null;
       }
       return item.d;
@@ -2313,19 +3324,105 @@ const cache = {
       return null;
     }
   },
+  getMeta: k => {
+    try {
+      const raw = localStorage.getItem(k);
+      if (!raw) return null;
+      const item = JSON.parse(raw);
+      return (item && item.d) ? { t: item.t || 0, d: item.d } : null;
+    } catch (e) {
+      return null;
+    }
+  },
   set: (k, data) => {
     try {
-      sessionStorage.setItem(k, JSON.stringify({ t: Date.now(), d: data }));
+      const now = Date.now();
+      localStorage.setItem(k, JSON.stringify({ t: now, d: data }));
+      store.set('pt_last_sync_time', String(now));
+      updateLastSyncDisplay();
     } catch (e) {}
+  },
+  getAllCached: () => {
+    const allRows = [];
+    let newestTimestamp = 0;
+    try {
+      for (let i = 1; i <= CONFIG.WEEKS; i++) {
+        const raw = localStorage.getItem('ptw_' + i);
+        if (raw) {
+          const item = JSON.parse(raw);
+          if (item && Array.isArray(item.d)) {
+            allRows.push(...item.d);
+            if (item.t && item.t > newestTimestamp) newestTimestamp = item.t;
+          }
+        }
+      }
+    } catch (e) {}
+    return { rows: allRows, newestTimestamp };
   },
   clear: () => {
     try {
       for (let i = 1; i <= CONFIG.WEEKS; i++) {
-        sessionStorage.removeItem('ptw_' + i);
+        localStorage.removeItem('ptw_' + i);
       }
     } catch (e) {}
   }
 };
+
+/**
+ * Formats a timestamp into a polite, human-readable Arabic relative time string.
+ * @param {number} timestamp
+ * @returns {string}
+ */
+function formatRelativeTime(timestamp) {
+  if (!timestamp) return 'غير متاح';
+  const diffSec = Math.floor((Date.now() - timestamp) / 1000);
+  if (diffSec < 45) return 'منذ لحظات';
+  const diffMin = Math.floor(diffSec / 60);
+  const arNum = n => new Intl.NumberFormat('ar-EG').format(n);
+
+  if (diffMin === 1) return 'منذ دقيقة';
+  if (diffMin === 2) return 'منذ دقيقتين';
+  if (diffMin >= 3 && diffMin <= 10) return `منذ ${arNum(diffMin)} دقائق`;
+  if (diffMin < 60) return `منذ ${arNum(diffMin)} دقيقة`;
+
+  const diffHours = Math.floor(diffMin / 60);
+  if (diffHours === 1) return 'منذ ساعة';
+  if (diffHours === 2) return 'منذ ساعتين';
+  if (diffHours >= 3 && diffHours <= 10) return `منذ ${arNum(diffHours)} ساعات`;
+  if (diffHours < 24) return `منذ ${arNum(diffHours)} ساعة`;
+
+  const diffDays = Math.floor(diffHours / 24);
+  if (diffDays === 1) return 'منذ يوم';
+  if (diffDays === 2) return 'منذ يومين';
+  if (diffDays >= 3 && diffDays <= 10) return `منذ ${arNum(diffDays)} أيام`;
+  return `منذ ${arNum(diffDays)} يوماً`;
+}
+
+/**
+ * Updates the "آخر تحديث" display label next to the refresh button.
+ */
+function updateLastSyncDisplay() {
+  const valEl = $('lastSyncValue');
+  const labelEl = $('lastSyncLabel');
+  if (!valEl) return;
+  const lastSync = parseInt(store.get('pt_last_sync_time', '0'), 10);
+  if (!lastSync) {
+    valEl.textContent = 'غير متاح';
+    if (labelEl) labelEl.title = 'لم يتم تحديث البيانات بعد';
+    return;
+  }
+  const rel = formatRelativeTime(lastSync);
+  valEl.textContent = rel;
+  if (labelEl) {
+    try {
+      const d = new Date(lastSync);
+      const timeStr = d.toLocaleTimeString('ar-EG', { hour: '2-digit', minute: '2-digit' });
+      labelEl.title = `آخر تحديث ناجح للبيانات: ${timeStr} (${rel})`;
+    } catch (e) {
+      labelEl.title = `آخر تحديث: ${rel}`;
+    }
+  }
+}
 
 // ==========================================================================
 // 3. APPLICATION STATE & DATES
@@ -2609,6 +3706,68 @@ function getDirectDownloadUrl(url) {
 }
 
 /**
+ * Extracts Google Drive File ID from various link formats.
+ * @param {string} url
+ * @returns {string|null}
+ */
+function getGoogleDriveId(url) {
+  if (!url || typeof url !== 'string') return null;
+  const trimmed = url.trim();
+  const m1 = trimmed.match(/\/file\/d\/([a-zA-Z0-9_-]+)/);
+  if (m1 && m1[1]) return m1[1];
+  const m2 = trimmed.match(/[?&]id=([a-zA-Z0-9_-]+)/);
+  if (m2 && m2[1]) return m2[1];
+  const m3 = trimmed.match(/\/d\/([a-zA-Z0-9_-]+)/);
+  if (m3 && m3[1]) return m3[1];
+  return null;
+}
+
+/**
+ * Resolves an embeddable Google Drive preview player URL (for iframe fallback).
+ * @param {string} url
+ * @returns {string|null}
+ */
+function getGoogleDrivePreviewUrl(url) {
+  const id = getGoogleDriveId(url);
+  return id ? `https://drive.google.com/file/d/${id}/preview` : null;
+}
+
+/**
+ * Resolves a playable direct audio stream URL from various sources (Google Drive, Dropbox, direct audio).
+ * @param {string} url
+ * @returns {string}
+ */
+function getAudioStreamUrl(url) {
+  if (!url || typeof url !== 'string') return '';
+  const id = getGoogleDriveId(url);
+  if (id) {
+    return `https://drive.usercontent.google.com/download?id=${id}&export=download&confirm=t`;
+  }
+  const trimmed = url.trim();
+  if (trimmed.includes('dropbox.com')) {
+    return trimmed.replace('dl=0', 'raw=1');
+  }
+  return trimmed;
+}
+
+/**
+ * Formats time in seconds to mm:ss or hh:mm:ss string.
+ * @param {number} seconds
+ * @returns {string}
+ */
+function formatAudioTime(seconds) {
+  if (isNaN(seconds) || seconds < 0) return '00:00';
+  const s = Math.floor(seconds % 60);
+  const m = Math.floor((seconds / 60) % 60);
+  const h = Math.floor(seconds / 3600);
+  const pad = n => (n < 10 ? '0' + n : String(n));
+  if (h > 0) {
+    return `${h}:${pad(m)}:${pad(s)}`;
+  }
+  return `${pad(m)}:${pad(s)}`;
+}
+
+/**
  * Formats lecture notes with auto-linked URLs and safe HTML escaping.
  * @param {string} text
  * @returns {string}
@@ -2686,15 +3845,18 @@ function toTop() {
 // ==========================================================================
 
 /**
- * Fetches a single week's data with support for AbortSignal & Timeout.
+ * Fetches a single week's data with support for AbortSignal, Timeout & Offline Fallback.
  * @param {number} n Week number (1-14)
  * @param {AbortSignal} [signal] Optional abort signal
+ * @param {boolean} [bypassCache=false] Force network request
  * @returns {Promise<Array|null>}
  */
-function fetchWeek(n, signal) {
+function fetchWeek(n, signal, bypassCache = false) {
   const cacheKey = 'ptw_' + n;
-  const cached = cache.get(cacheKey);
-  if (cached) return Promise.resolve(cached);
+  if (!bypassCache) {
+    const cached = cache.get(cacheKey);
+    if (cached) return Promise.resolve(cached);
+  }
 
   if (signal && signal.aborted) {
     return Promise.resolve(null);
@@ -2727,9 +3889,12 @@ function fetchWeek(n, signal) {
     const timeout = setTimeout(() => {
       if (!completed) {
         cleanup();
-        resolve(null);
+        // Fallback to durable localStorage cache if network timed out
+        const fallback = cache.get(cacheKey, true);
+        if (fallback) isOfflineMode = true;
+        resolve(fallback || null);
       }
-    }, 12000);
+    }, 10000);
 
     window[cb] = function(resp) {
       clearTimeout(timeout);
@@ -2782,14 +3947,19 @@ function fetchWeek(n, signal) {
         resolve(rows);
       } catch (err) {
         cleanup();
-        resolve(null);
+        const fallback = cache.get(cacheKey, true);
+        if (fallback) isOfflineMode = true;
+        resolve(fallback || null);
       }
     };
 
     script.onerror = function() {
       clearTimeout(timeout);
       cleanup();
-      resolve(null);
+      // Fallback to durable localStorage cache if network errored
+      const fallback = cache.get(cacheKey, true);
+      if (fallback) isOfflineMode = true;
+      resolve(fallback || null);
     };
 
     const params = new URLSearchParams({
@@ -2831,6 +4001,7 @@ function processBackgroundQueue() {
         renderStats();
         updateTodayBadge();
         updateNextClassCard();
+        updateLastSyncDisplay();
         // If current view is subject or current week matches, re-render
         if (st.view === 'subject' || batch.includes(st.week)) {
           render(false);
@@ -2849,14 +4020,15 @@ function processBackgroundQueue() {
   runBatch();
 }
 
+let isOfflineMode = false;
+
 /**
  * Loads the current week first, then queues remaining weeks progressively.
+ * Preserves cached data on failure and displays offline notice.
  * @param {boolean} [force=false]
  */
 async function loadAll(force = false) {
   if (force) {
-    cache.clear();
-    ALL = [];
     backgroundFetchQueue = [];
     isBackgroundQueueRunning = false;
   }
@@ -2870,24 +4042,68 @@ async function loadAll(force = false) {
   const ctrl = new AbortController();
   pendingControllers.set(st.week, ctrl);
 
-  const currentData = await fetchWeek(st.week, ctrl.signal);
+  let currentData = null;
+  let fetchFailed = false;
+
+  try {
+    currentData = await fetchWeek(st.week, ctrl.signal, force);
+  } catch (err) {
+    fetchFailed = true;
+  }
   pendingControllers.delete(st.week);
 
   if (currentData && currentData.length) {
     ALL = [...ALL.filter(x => x.wk !== st.week), ...currentData];
+    isOfflineMode = !navigator.onLine;
+  } else {
+    fetchFailed = true;
+  }
+
+  // If fetch failed or network offline, attempt fallback to any cached data in localStorage
+  if (fetchFailed || !currentData || !currentData.length) {
+    const fallbackWeek = cache.get('ptw_' + st.week, true);
+    if (fallbackWeek && fallbackWeek.length) {
+      ALL = [...ALL.filter(x => x.wk !== st.week), ...fallbackWeek];
+      isOfflineMode = true;
+    } else if (ALL.length === 0) {
+      const allCached = cache.getAllCached();
+      if (allCached.rows && allCached.rows.length) {
+        ALL = allCached.rows;
+        isOfflineMode = true;
+      }
+    }
+  }
+
+  // Manage Offline Cached Notice Banner
+  const offlineNotice = $('offlineNotice');
+  if (offlineNotice) {
+    if (isOfflineMode && ALL.length > 0) {
+      const lastSyncTime = parseInt(store.get('pt_last_sync_time', '0'), 10);
+      const meta = cache.getMeta('ptw_' + st.week);
+      const displayTime = (meta && meta.t) ? meta.t : lastSyncTime;
+      const timeFormatted = formatRelativeTime(displayTime);
+      const timeEl = $('offlineTimeText');
+      if (timeEl) timeEl.textContent = timeFormatted;
+      offlineNotice.hidden = false;
+      if (force) toast('تعذّر الاتصال بالإنترنت - يتم عرض البيانات المحفوظة');
+    } else {
+      offlineNotice.hidden = true;
+    }
   }
 
   $('loading').hidden = true;
   renderStats();
   updateTodayBadge();
   updateNextClassCard();
+  updateLastSyncDisplay();
   render(false);
 
-  // Queue remaining weeks to be loaded in background
-  backgroundFetchQueue = Array.from({ length: CONFIG.WEEKS }, (_, i) => i + 1)
-    .filter(n => n !== st.week && !ALL.some(x => x.wk === n));
-
-  processBackgroundQueue();
+  // Queue remaining weeks to be loaded in background only if online
+  if (navigator.onLine && !isOfflineMode) {
+    backgroundFetchQueue = Array.from({ length: CONFIG.WEEKS }, (_, i) => i + 1)
+      .filter(n => n !== st.week && !ALL.some(x => x.wk === n));
+    processBackgroundQueue();
+  }
 }
 
 // ==========================================================================
@@ -2904,7 +4120,8 @@ function matches(it, ignoreDay = false) {
   for (const r of st.res) {
     if (!isUrl(it[r])) return false;
   }
-  if (!ignoreDay && st.view === 'week' && st.day !== 'all' && it.dayKey !== st.day) return false;
+  // When searching with text (st.q), search across all days of the week regardless of selected day tab
+  if (!ignoreDay && !st.q && st.view === 'week' && st.day !== 'all' && it.dayKey !== st.day) return false;
   if (st.q) {
     const hay = `${it.subject} ${it.place} ${it.day} ${it.type} ${it.notes || ''}`.toLowerCase();
     if (!hay.includes(st.q.toLowerCase())) return false;
@@ -3268,7 +4485,7 @@ function renderFavs() {
     const actualTypes = Array.from(new Set(rows.map(r => r.type).filter(Boolean)));
     const typesHtml = actualTypes.map(t => {
       const tm = typeMeta(t);
-      return `<span class="stype" style="--tc:var(${tm.v})"><i class="dot"></i>${esc(t)}</span>`;
+      return `<span class="stype" style="--tc:var(${tm.v})"><i class="stype-dot"></i>${esc(t)}</span>`;
     }).join('');
 
     let booksBar = '';
@@ -3310,21 +4527,24 @@ function renderFavs() {
  * Builds HTML for a single resource chip with accessible title and click handling.
  * @param {Object} it
  * @param {Object} r
+ * @param {string} [ctx='']
  */
-function resChipHTML(it, r) {
+function resChipHTML(it, r, ctx = '') {
   const url = it[r.k];
   if (!isUrl(url)) {
     return `<button type="button" class="chip off" data-unavail="${r.l}" title="${r.l} لم يتم رفعه بعد — انقر للمزيد" aria-label="${r.l} (غير متاح بعد)">${ic(r.i)}${r.l}</button>`;
   }
 
-  // Segmented Chip for Audio: Listen in Browser + Direct Download to Device
+  // Segmented Chip for Audio: Listen in Floating Player + Direct Download to Device
   if (r.k === 'audio') {
     const dlUrl = getDirectDownloadUrl(url);
-    return `<div class="chip-split" role="group" aria-label="خيارات الريكورد">
-      <a class="chip-split-main" href="${esc(url)}" target="_blank" rel="noopener noreferrer" title="استماع للريكورد في المتصفح" aria-label="استماع للريكورد">
-        ${ic('headphones')}
+    const contextLabel = ctx || (it.day ? `${it.day} • الأسبوع ${it.wk}` : '');
+    const isPlayingThis = typeof AudioPlayer !== 'undefined' && AudioPlayer.currentTrack && AudioPlayer.currentTrack.url === url && !AudioPlayer.isPaused();
+    return `<div class="chip-split${isPlayingThis ? ' is-playing' : ''}" role="group" aria-label="خيارات الريكورد" data-audio-url="${esc(url)}">
+      <button type="button" class="chip-split-main playAudioBtn" data-url="${esc(url)}" data-title="${esc(it.subject)}" data-type="${esc(it.type || '')}" data-ctx="${esc(contextLabel)}" data-dl="${esc(dlUrl)}" title="تشغيل الريكورد في المشغل المدمج" aria-label="تشغيل ريكورد ${esc(it.subject)}">
+        <span class="chip-audio-icon">${ic('headphones')}</span>
         <span>${r.l}</span>
-      </a>
+      </button>
       <span class="chip-split-divider" aria-hidden="true"></span>
       <a class="chip-split-dl" href="${esc(dlUrl)}" target="_blank" rel="noopener noreferrer" download title="تحميل الريكورد مباشرة للجهاز" aria-label="تحميل الريكورد مباشرة للجهاز">
         <svg class="i" aria-hidden="true"><use href="#i-download"/></svg>
@@ -3371,7 +4591,7 @@ function cardHTML(it, ctx = '', showBook = true) {
       </div>
     </div>
     <div class="res">
-      ${CONFIG.RES.map(r => resChipHTML(it, r)).join('')}
+      ${CONFIG.RES.map(r => resChipHTML(it, r, ctx)).join('')}
       ${(showBook && bookUrl) ? `<a class="chip book" href="${esc(bookUrl)}" target="_blank" rel="noopener noreferrer">${ic('book')}كتاب المادة</a>` : ''}
     </div>
     ${it.notes ? `
@@ -3446,7 +4666,7 @@ function emptyHTML() {
     <b>لا توجد محاضرات مطابقة للبحث أو التصفية</b>
     <p>جرّب تعديل كلمات البحث، أو إزالة بعض خيارات التصفية المفعلة.</p>
     <div class="empty-acts">
-      <button class="btn ghost" data-act="clear">إزالة كافة الفلاتر</button>
+      <button class="btn ghost" data-act="clear">${st.q && (st.type !== 'all' || st.res.size > 0) ? 'إزالة الفلاتر مع الاحتفاظ بالبحث' : 'إزالة كافة الفلاتر'}</button>
     </div>
   </div>`;
 }
@@ -3458,10 +4678,22 @@ function emptyHTML() {
 function updateResultsCount(count) {
   const el = $('resultsCount');
   if (!el) return;
+  const wrap = el.closest('.results-info');
+
   if (!$('loading').hidden && ALL.length === 0) {
+    if (wrap) wrap.style.display = '';
+    el.hidden = false;
     el.textContent = 'جارٍ تحميل المحاضرات…';
     return;
   }
+  // When fetch failed or no data loaded at all, hide the counter so only the error card is visible
+  if (ALL.length === 0) {
+    el.textContent = '';
+    if (wrap) wrap.style.display = 'none';
+    return;
+  }
+  if (wrap) wrap.style.display = '';
+  el.hidden = false;
   if (count === 0) {
     el.textContent = 'لا توجد نتائج';
   } else if (count === 1) {
@@ -3486,7 +4718,7 @@ function renderWeek() {
   });
 
   document.querySelectorAll('.day').forEach(b => {
-    const isSel = b.dataset.d === st.day;
+    const isSel = !st.q && (b.dataset.d === st.day);
     b.setAttribute('aria-pressed', String(isSel));
     b.setAttribute('aria-selected', String(isSel));
   });
@@ -3502,13 +4734,13 @@ function renderWeek() {
     return;
   }
 
-  // When a specific day is selected
-  if (st.day !== 'all') {
+  // When a specific day is selected and NO search query is active
+  if (st.day !== 'all' && !st.q) {
     root.innerHTML = `<div class="panel">${items.map(it => cardHTML(it, '', true)).join('')}</div>`;
     return;
   }
 
-  // Group by days
+  // Group by days (when all days or when searching across days)
   const knownKeys = CONFIG.DAYS.map(d => d.k);
   const groups = CONFIG.DAYS.map(d => ({
     key: d.k,
@@ -3584,7 +4816,8 @@ function renderSubjects() {
 
     const actualTypes = Array.from(new Set(rows.map(r => r.type).filter(Boolean)));
     const typesHtml = actualTypes.map(t => {
-      return `<span class="stype"><i class="stype-dot"></i>${esc(t)}</span>`;
+      const tm = typeMeta(t);
+      return `<span class="stype" style="--tc:var(${tm.v})"><i class="stype-dot"></i>${esc(t)}</span>`;
     }).join('');
 
     let booksBar = '';
@@ -3713,6 +4946,8 @@ function renderCore(scrollToTop = false) {
   if (st.view === 'week') renderWeek();
   else if (st.view === 'subject') renderSubjects();
   else if (st.view === 'favs') renderFavs();
+
+  if (typeof AudioPlayer !== 'undefined') AudioPlayer.updateChips();
 
   if (scrollToTop) toTop();
 }
@@ -3869,17 +5104,25 @@ function selectWeek(weekNum) {
  * Resets all active search and filter constraints.
  */
 function clearAllFilters() {
-  st.q = '';
-  $('search').value = '';
-  $('searchClear').hidden = true;
-  st.type = 'all';
-  st.res.clear();
-  st.day = TODAY_KEY || 'sat';
+  const hadOtherFilters = (st.type !== 'all' || st.res.size > 0 || (st.day !== 'all' && st.day !== TODAY_KEY));
+  if (st.q && hadOtherFilters) {
+    st.type = 'all';
+    st.res.clear();
+    st.day = 'all';
+    toast('تمت إزالة الفلاتر مع الاحتفاظ بكلمة البحث');
+  } else {
+    st.q = '';
+    $('search').value = '';
+    $('searchClear').hidden = true;
+    st.type = 'all';
+    st.res.clear();
+    st.day = TODAY_KEY || 'sat';
+    toast('تمت إزالة جميع الفلاتر');
+  }
 
   document.querySelectorAll('.stat-item').forEach(b => b.classList.remove('active'));
   renderPills();
   render(true);
-  toast('تمت إزالة جميع الفلاتر');
 }
 
 /**
@@ -3954,6 +5197,11 @@ $('dayTabs').onclick = e => {
     void btn.offsetWidth;
     btn.classList.add('btn-scale-click');
     st.day = btn.dataset.d;
+    if (st.q) {
+      st.q = '';
+      $('search').value = '';
+      $('searchClear').hidden = true;
+    }
     render(true);
   }
 };
@@ -4057,9 +5305,631 @@ $('refreshBtn').onclick = () => {
   loadAll(true);
 };
 
+// ==========================================================================
+// Academic Audio Player Engine (Active & Fallback UX)
+// ==========================================================================
+const AudioPlayer = {
+  el: null,
+  audio: null,
+  currentTrack: null,
+  speeds: [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2],
+  currentSpeed: 1,
+  isSeeking: false,
+  waveBars: [],
+  totalBars: 38,
 
-// Delegated Content Actions (Copy & Unavailable & Retries & Next Class Goto)
+  // Organic heights for 38 waveform bars matching academic recording aesthetics
+  waveHeights: [
+    26, 34, 46, 52, 42, 36, 50, 62, 48, 32, 
+    24, 28, 42, 56, 68, 64, 52, 38, 28, 22, 
+    26, 32, 40, 52, 58, 48, 36, 26, 20, 24, 
+    36, 54, 62, 58, 46, 60, 68, 52
+  ],
+
+  init() {
+    this.el = $('audioPlayer');
+    this.audio = $('globalAudio');
+    if (!this.el || !this.audio) return;
+
+    // Build Waveform Bars
+    this.buildWaveform();
+
+    // Load saved preferences
+    const savedSpeed = parseFloat(localStorage.getItem('pt_audio_speed') || '1');
+    if (this.speeds.includes(savedSpeed)) {
+      this.currentSpeed = savedSpeed;
+    } else {
+      this.currentSpeed = 1;
+    }
+    this.updateSpeedUI();
+
+    const savedVol = parseFloat(localStorage.getItem('pt_audio_vol') || '1');
+    this.audio.volume = isNaN(savedVol) ? 1 : Math.max(0, Math.min(1, savedVol));
+    if ($('apVolume')) {
+      $('apVolume').value = this.audio.volume;
+      this.updateVolumeSliderStyle(this.audio.volume);
+    }
+    this.updateVolumeUI();
+
+    // Audio Element Event Listeners
+    this.audio.addEventListener('play', () => this.onPlayStateChange(true));
+    this.audio.addEventListener('pause', () => this.onPlayStateChange(false));
+    this.audio.addEventListener('ended', () => {
+      this.onPlayStateChange(false);
+      this.updateProgress(0, this.audio.duration || 0);
+    });
+    this.audio.addEventListener('timeupdate', () => {
+      if (!this.isSeeking) {
+        this.updateProgress(this.audio.currentTime, this.audio.duration);
+      }
+    });
+    this.audio.addEventListener('loadedmetadata', () => {
+      const dur = this.audio.duration;
+      if (!isNaN(dur) && dur > 0) {
+        if ($('apTimeLoading')) $('apTimeLoading').style.display = 'none';
+        if ($('apTimeText')) {
+          $('apTimeText').textContent = formatAudioTime(dur);
+          $('apTimeText').style.display = 'inline';
+        }
+      }
+      this.updateProgress(this.audio.currentTime, dur);
+      this.updateBookmarkUI();
+    });
+    this.audio.addEventListener('waiting', () => {
+      if ($('apTimeLoading') && isNaN(this.audio.duration)) {
+        $('apTimeLoading').style.display = 'inline';
+        if ($('apTimeText')) $('apTimeText').style.display = 'none';
+      }
+    });
+    this.audio.addEventListener('error', (e) => {
+      console.warn('Audio playback error:', e);
+      toast('تعذّر تشغيل الملف الصوتي');
+      this.onPlayStateChange(false);
+    });
+
+    // Waveform Click & Scrubbing (RTL: progress fills from right to left)
+    const waveWrap = $('apWaveformWrap');
+    if (waveWrap) {
+      const handleWaveSeek = (e) => {
+        const dur = this.audio.duration;
+        if (isNaN(dur) || dur <= 0) return;
+        const rect = waveWrap.getBoundingClientRect();
+        // In RTL, 0 is at rect.right, 1 is at rect.left
+        const xFromRight = rect.right - e.clientX;
+        const pct = Math.max(0, Math.min(1, xFromRight / rect.width));
+        this.audio.currentTime = pct * dur;
+        this.updateProgress(this.audio.currentTime, dur);
+      };
+
+      let isDragging = false;
+      waveWrap.addEventListener('pointerdown', (e) => {
+        isDragging = true;
+        this.isSeeking = true;
+        waveWrap.setPointerCapture?.(e.pointerId);
+        handleWaveSeek(e);
+      });
+      waveWrap.addEventListener('pointermove', (e) => {
+        if (isDragging) {
+          handleWaveSeek(e);
+        }
+      });
+      const endDrag = (e) => {
+        if (isDragging) {
+          isDragging = false;
+          this.isSeeking = false;
+          try { waveWrap.releasePointerCapture?.(e.pointerId); } catch (_) {}
+        }
+      };
+      waveWrap.addEventListener('pointerup', endDrag);
+      waveWrap.addEventListener('pointercancel', endDrag);
+    }
+
+    // Playback and Nav Buttons
+    $('apPlayBtn')?.addEventListener('click', () => this.togglePlay());
+    $('apMiniPlayBtn')?.addEventListener('click', () => this.togglePlay());
+    $('apRewindBtn')?.addEventListener('click', () => this.seekRelative(-10));
+    $('apForwardBtn')?.addEventListener('click', () => this.seekRelative(10));
+
+    // Bookmark Actions (حفظ واستئناف علامات الحفظ)
+    $('apBookmarkBtn')?.addEventListener('click', () => {
+      if (!this.currentTrack) return;
+      const curr = this.audio?.currentTime || 0;
+      const bm = this.saveBookmark(this.currentTrack, curr);
+      if (bm) {
+        this.updateBookmarkUI();
+        toast(`تم حفظ علامة عند ${bm.formatted} 🔖`);
+      }
+    });
+
+    $('apJumpBookmarkBtn')?.addEventListener('click', () => {
+      this.jumpToBookmark();
+    });
+
+    $('apBookmarkPin')?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      this.jumpToBookmark();
+    });
+
+    $('apDelBookmarkBtn')?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      this.deleteBookmark(this.currentTrack);
+      this.updateBookmarkUI();
+      toast('تم حذف علامة الحفظ');
+    });
+
+    // Speed Pill & Dropdown Menu
+    const speedBtn = $('apSpeedBtn');
+    const speedMenu = $('apSpeedMenu');
+    if (speedBtn && speedMenu) {
+      speedBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = speedMenu.style.display === 'flex';
+        speedMenu.style.display = isOpen ? 'none' : 'flex';
+      });
+
+      speedMenu.querySelectorAll('.ap-speed-opt').forEach(opt => {
+        opt.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const spd = parseFloat(opt.dataset.spd);
+          if (!isNaN(spd)) {
+            this.setSpeed(spd);
+          }
+          speedMenu.style.display = 'none';
+        });
+      });
+
+      document.addEventListener('click', (e) => {
+        if (speedMenu.style.display === 'flex' && !speedBtn.contains(e.target) && !speedMenu.contains(e.target)) {
+          speedMenu.style.display = 'none';
+        }
+      });
+    }
+
+    $('apMinBtn')?.addEventListener('click', () => this.minimize());
+    $('apExpandBtn')?.addEventListener('click', () => this.expand());
+    $('apMiniInfo')?.addEventListener('click', () => this.expand());
+    $('apMiniInfo')?.addEventListener('keydown', (e) => {
+      if (e.code === 'Enter' || e.code === 'Space') {
+        e.preventDefault();
+        this.expand();
+      }
+    });
+    $('apCloseBtn')?.addEventListener('click', () => this.close());
+    $('apMiniCloseBtn')?.addEventListener('click', () => this.close());
+
+    // Volume & Mute
+    $('apMuteBtn')?.addEventListener('click', () => this.toggleMute());
+    $('apVolume')?.addEventListener('input', (e) => {
+      const val = parseFloat(e.target.value);
+      this.audio.volume = val;
+      this.audio.muted = false;
+      this.updateVolumeSliderStyle(val);
+      this.updateVolumeUI();
+      try { localStorage.setItem('pt_audio_vol', String(val)); } catch (_) {}
+    });
+
+    // Global Keyboard Shortcuts
+    document.addEventListener('keydown', (e) => {
+      const tag = (document.activeElement?.tagName || '').toLowerCase();
+      if (tag === 'input' || tag === 'textarea' || document.activeElement?.isContentEditable) return;
+      if (!this.el || this.el.style.display === 'none') return;
+
+      if (e.code === 'Space') {
+        e.preventDefault();
+        this.togglePlay();
+      } else if (e.code === 'KeyB') {
+        e.preventDefault();
+        if (this.currentTrack) {
+          const curr = this.audio?.currentTime || 0;
+          const bm = this.saveBookmark(this.currentTrack, curr);
+          if (bm) {
+            this.updateBookmarkUI();
+            toast(`تم حفظ علامة عند ${bm.formatted} 🔖`);
+          }
+        }
+      } else if (e.code === 'ArrowRight') {
+        e.preventDefault();
+        this.seekRelative(10); // Forward +10s (matching right button)
+      } else if (e.code === 'ArrowLeft') {
+        e.preventDefault();
+        this.seekRelative(-10); // Rewind -10s (matching left button)
+      } else if (e.code === 'Escape') {
+        if (!this.el.classList.contains('minimized')) {
+          this.minimize();
+        }
+      }
+    });
+  },
+
+  buildWaveform() {
+    const container = $('apWaveform');
+    if (!container) return;
+    container.innerHTML = '';
+    this.waveBars = [];
+
+    // Create 38 bars with varying heights
+    for (let i = 0; i < this.totalBars; i++) {
+      const bar = document.createElement('div');
+      bar.className = 'ap-wave-bar';
+      const h = this.waveHeights[i % this.waveHeights.length];
+      bar.style.height = `${h}%`;
+      container.appendChild(bar);
+      this.waveBars.push(bar);
+    }
+  },
+
+  play(track) {
+    if (!this.el || !this.audio) return;
+    this.currentTrack = track;
+
+    // Update metadata
+    if ($('apTitle')) $('apTitle').textContent = track.title || 'تسجيل المحاضرة';
+    if ($('apMiniTitle')) $('apMiniTitle').textContent = track.title || 'تسجيل المحاضرة';
+    if ($('apSubtitle')) $('apSubtitle').textContent = track.ctx || track.type || 'محاضرات الفرقة الرابعة';
+
+    // Type Badge
+    const badge = $('apTypeBadge');
+    if (badge) {
+      const typeText = track.type || 'نظري';
+      badge.textContent = typeText;
+      badge.setAttribute('data-type', typeText);
+      const tm = typeMeta(typeText);
+      if (tm) {
+        badge.style.background = `rgba(var(${tm.v}), 0.16)`;
+        badge.style.color = `var(${tm.v})`;
+        badge.style.borderColor = `rgba(var(${tm.v}), 0.28)`;
+      }
+    }
+
+    // Direct and external links
+    const dlLink = track.dl || getDirectDownloadUrl(track.url) || '#';
+    const driveUrl = track.url || '#';
+
+    if ($('apExtLink')) $('apExtLink').href = driveUrl;
+    if ($('apDlLink')) $('apDlLink').href = dlLink;
+
+    // Reset progress UI
+    if ($('apCurrentTime')) $('apCurrentTime').textContent = '00:00';
+    if ($('apTimeLoading')) $('apTimeLoading').style.display = 'inline';
+    if ($('apTimeText')) $('apTimeText').style.display = 'none';
+    this.updateWaveformProgress(0);
+    this.updateBookmarkUI();
+
+    // Show Player & Expand
+    this.el.style.display = 'block';
+    document.body.classList.add('has-audio-player');
+    this.expand();
+
+    // Set Audio Source and Play
+    const streamUrl = getAudioStreamUrl(track.url);
+    if (this.audio.src !== streamUrl) {
+      this.audio.src = streamUrl;
+      this.audio.load();
+    }
+    this.audio.playbackRate = this.currentSpeed;
+
+    const playPromise = this.audio.play();
+    if (playPromise !== undefined) {
+      playPromise.catch(err => {
+        console.warn('Audio direct play notice:', err);
+      });
+    }
+
+    // Native MediaSession
+    if ('mediaSession' in navigator) {
+      try {
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title: track.title || 'تسجيل المحاضرة',
+          artist: track.type || 'العلاج الطبيعي',
+          album: track.ctx || 'محاضرات الفرقة الرابعة'
+        });
+        navigator.mediaSession.setActionHandler('play', () => this.togglePlay());
+        navigator.mediaSession.setActionHandler('pause', () => this.togglePlay());
+        navigator.mediaSession.setActionHandler('seekbackward', () => this.seekRelative(-10));
+        navigator.mediaSession.setActionHandler('seekforward', () => this.seekRelative(10));
+      } catch (_) {}
+    }
+
+    this.updateChips();
+    const existingBm = this.getBookmark(track);
+    if (existingBm && typeof existingBm.time === 'number' && existingBm.time > 0) {
+      toast(`تشغيل: ${track.title} • علامة محفوظة عند ${existingBm.formatted} 🔖`);
+    } else {
+      toast(`تشغيل المحاضرة: ${track.title}`);
+    }
+  },
+
+  togglePlay() {
+    if (!this.audio) return;
+    if (this.audio.paused) {
+      this.audio.play().catch(e => {
+        console.warn('Playback error on user click:', e);
+        toast('تعذّر تشغيل الملف');
+      });
+    } else {
+      this.audio.pause();
+    }
+  },
+
+  seekRelative(secs) {
+    if (!this.audio) return;
+    const dur = this.audio.duration;
+    if (!isNaN(dur) && dur > 0) {
+      this.audio.currentTime = Math.max(0, Math.min(dur, this.audio.currentTime + secs));
+    } else {
+      this.audio.currentTime = Math.max(0, this.audio.currentTime + secs);
+    }
+    this.updateProgress(this.audio.currentTime, dur);
+  },
+
+  setSpeed(spd) {
+    this.currentSpeed = spd;
+    if (this.audio) this.audio.playbackRate = spd;
+    this.updateSpeedUI();
+    try { localStorage.setItem('pt_audio_speed', String(spd)); } catch (_) {}
+  },
+
+  updateSpeedUI() {
+    if ($('apSpeedLabel')) $('apSpeedLabel').textContent = `${this.currentSpeed}x`;
+    if ($('apSpeedBtn')) $('apSpeedBtn').setAttribute('aria-label', `سرعة التشغيل ${this.currentSpeed}x`);
+
+    const speedMenu = $('apSpeedMenu');
+    if (speedMenu) {
+      speedMenu.querySelectorAll('.ap-speed-opt').forEach(opt => {
+        const val = parseFloat(opt.dataset.spd);
+        opt.classList.toggle('active', val === this.currentSpeed);
+      });
+    }
+  },
+
+  toggleMute() {
+    if (!this.audio) return;
+    this.audio.muted = !this.audio.muted;
+    this.updateVolumeUI();
+  },
+
+  updateVolumeUI() {
+    const isMuted = this.audio.muted || this.audio.volume === 0;
+    const iconHref = isMuted ? '#i-volume-x' : '#i-volume-2';
+    $('apMuteIcon')?.querySelector('use')?.setAttribute('href', iconHref);
+  },
+
+  updateVolumeSliderStyle(val) {
+    const slider = $('apVolume');
+    if (!slider) return;
+    const pct = Math.round(val * 100);
+    slider.style.background = `linear-gradient(to right, #4ecdc4 ${pct}%, #253734 ${pct}%)`;
+  },
+
+  updateProgress(curr, dur) {
+    if (!$('apCurrentTime')) return;
+    $('apCurrentTime').textContent = formatAudioTime(curr);
+
+    if (isNaN(dur) || dur <= 0) {
+      if ($('apTimeLoading')) $('apTimeLoading').style.display = 'inline';
+      if ($('apTimeText')) $('apTimeText').style.display = 'none';
+      this.updateWaveformProgress(0);
+    } else {
+      if ($('apTimeLoading')) $('apTimeLoading').style.display = 'none';
+      if ($('apTimeText')) {
+        $('apTimeText').textContent = formatAudioTime(dur);
+        $('apTimeText').style.display = 'inline';
+      }
+      const pct = Math.max(0, Math.min(1, curr / dur));
+      this.updateWaveformProgress(pct);
+
+      // Reposition pin on waveform if not positioned yet
+      const pin = $('apBookmarkPin');
+      if (pin && this.currentTrack) {
+        const bm = this.getBookmark(this.currentTrack);
+        if (bm && typeof bm.time === 'number') {
+          const bmPct = Math.max(0, Math.min(1, bm.time / dur));
+          pin.style.right = `${bmPct * 100}%`;
+          pin.style.display = 'flex';
+          pin.title = `علامة حفظ عند ${bm.formatted} - انقر للرجوع إليها`;
+        }
+      }
+    }
+  },
+
+  updateWaveformProgress(pct) {
+    if (!this.waveBars || this.waveBars.length === 0) return;
+    const activeCount = Math.round(pct * this.totalBars);
+    for (let i = 0; i < this.totalBars; i++) {
+      if (i < activeCount) {
+        this.waveBars[i].classList.add('active');
+      } else {
+        this.waveBars[i].classList.remove('active');
+      }
+    }
+  },
+
+  onPlayStateChange(isPlaying) {
+    this.el.classList.toggle('is-playing', isPlaying);
+    const playIconHref = isPlaying ? '#i-pause' : '#i-play';
+    $('apPlayIcon')?.querySelector('use')?.setAttribute('href', playIconHref);
+    $('apMiniPlayBtn')?.querySelector('use')?.setAttribute('href', playIconHref);
+    this.updateChips();
+  },
+
+  isPaused() {
+    return !this.audio || this.audio.paused;
+  },
+
+  minimize() {
+    if (!this.el) return;
+    this.el.classList.add('minimized');
+    document.body.classList.add('audio-minimized');
+  },
+
+  expand() {
+    if (!this.el) return;
+    this.el.classList.remove('minimized');
+    document.body.classList.remove('audio-minimized');
+  },
+
+  close() {
+    if (!this.audio || !this.el) return;
+    this.audio.pause();
+    this.audio.removeAttribute('src');
+    this.audio.load();
+    this.el.style.display = 'none';
+    this.el.classList.remove('is-playing', 'minimized');
+    document.body.classList.remove('has-audio-player', 'audio-minimized');
+    this.currentTrack = null;
+    this.updateBookmarkUI();
+    this.updateChips();
+  },
+
+  updateChips() {
+    const currentUrl = this.currentTrack?.url;
+    const isPlaying = !this.isPaused() && Boolean(currentUrl);
+    document.querySelectorAll('.chip-split[data-audio-url]').forEach(chip => {
+      const match = chip.dataset.audioUrl === currentUrl;
+      chip.classList.toggle('is-playing', match && isPlaying);
+    });
+  },
+
+  // ==========================================
+  // Local Bookmarks Management (علامات الحفظ)
+  // ==========================================
+  getBookmarks() {
+    try {
+      const data = localStorage.getItem('pt_lecture_bookmarks');
+      return data ? JSON.parse(data) : {};
+    } catch (_) {
+      return {};
+    }
+  },
+
+  getTrackKey(track) {
+    if (!track) return '';
+    return track.url || track.title || '';
+  },
+
+  getBookmark(track) {
+    const key = this.getTrackKey(track);
+    if (!key) return null;
+    const bookmarks = this.getBookmarks();
+    return bookmarks[key] || null;
+  },
+
+  saveBookmark(track, time) {
+    const key = this.getTrackKey(track);
+    if (!key || isNaN(time) || time < 0) return null;
+    const bookmarks = this.getBookmarks();
+    const formatted = formatAudioTime(time);
+    const bm = {
+      time: Math.round(time * 10) / 10,
+      formatted,
+      title: track.title || '',
+      updatedAt: Date.now()
+    };
+    bookmarks[key] = bm;
+    try {
+      localStorage.setItem('pt_lecture_bookmarks', JSON.stringify(bookmarks));
+    } catch (e) {
+      console.warn('LocalStorage bookmark save failed:', e);
+    }
+    return bm;
+  },
+
+  deleteBookmark(track) {
+    const key = this.getTrackKey(track);
+    if (!key) return false;
+    const bookmarks = this.getBookmarks();
+    if (bookmarks[key]) {
+      delete bookmarks[key];
+      try {
+        localStorage.setItem('pt_lecture_bookmarks', JSON.stringify(bookmarks));
+      } catch (_) {}
+      return true;
+    }
+    return false;
+  },
+
+  updateBookmarkUI() {
+    const btn = $('apBookmarkBtn');
+    const iconUse = $('apBookmarkIcon')?.querySelector('use');
+    const pin = $('apBookmarkPin');
+    const indicator = $('apBookmarkIndicator');
+    const timeLabel = $('apBookmarkTime');
+
+    if (!this.currentTrack) {
+      if (btn) {
+        btn.classList.remove('has-bookmark');
+        btn.title = 'حفظ علامة عند الوقت الحالي';
+      }
+      if (iconUse) iconUse.setAttribute('href', '#i-bookmark');
+      if (pin) pin.style.display = 'none';
+      if (indicator) indicator.style.display = 'none';
+      return;
+    }
+
+    const bm = this.getBookmark(this.currentTrack);
+    if (bm && typeof bm.time === 'number' && bm.time >= 0) {
+      if (btn) {
+        btn.classList.add('has-bookmark');
+        btn.title = `تحديث علامة الحفظ (محفوظة عند ${bm.formatted})`;
+      }
+      if (iconUse) iconUse.setAttribute('href', '#i-bookmark-filled');
+      if (indicator) indicator.style.display = 'inline-flex';
+      if (timeLabel) timeLabel.textContent = bm.formatted;
+
+      // Position pin on waveform if duration is known
+      const dur = this.audio ? this.audio.duration : 0;
+      if (pin) {
+        if (!isNaN(dur) && dur > 0) {
+          const pct = Math.max(0, Math.min(1, bm.time / dur));
+          pin.style.right = `${pct * 100}%`;
+          pin.style.display = 'flex';
+          pin.title = `علامة حفظ عند ${bm.formatted} - انقر للرجوع إليها`;
+        } else {
+          pin.style.display = 'none';
+        }
+      }
+    } else {
+      if (btn) {
+        btn.classList.remove('has-bookmark');
+        btn.title = 'حفظ علامة عند الوقت الحالي';
+      }
+      if (iconUse) iconUse.setAttribute('href', '#i-bookmark');
+      if (pin) pin.style.display = 'none';
+      if (indicator) indicator.style.display = 'none';
+    }
+  },
+
+  jumpToBookmark() {
+    if (!this.currentTrack || !this.audio) return;
+    const bm = this.getBookmark(this.currentTrack);
+    if (!bm || typeof bm.time !== 'number') return;
+    this.audio.currentTime = bm.time;
+    if (this.audio.paused) {
+      this.audio.play().catch(() => {});
+    }
+    this.updateProgress(bm.time, this.audio.duration);
+    toast(`تم الاستئناف من علامة الحفظ (${bm.formatted}) 🔖`);
+  }
+};
+
+// Delegated Content Actions (Copy & Unavailable & Retries & Next Class Goto & Audio Play)
 document.addEventListener('click', e => {
+  // Play audio in floating player
+  const playBtn = e.target.closest('.playAudioBtn');
+  if (playBtn) {
+    e.preventDefault();
+    e.stopPropagation();
+    const url = playBtn.dataset.url;
+    const title = playBtn.dataset.title;
+    const type = playBtn.dataset.type;
+    const ctx = playBtn.dataset.ctx;
+    const dl = playBtn.dataset.dl;
+    if (url && typeof AudioPlayer !== 'undefined') {
+      AudioPlayer.play({ url, title, type, ctx, dl });
+    }
+    return;
+  }
+
   // Favorite star button clicked
   const favBtn = e.target.closest('.fav-btn');
   if (favBtn) {
@@ -4327,11 +6197,60 @@ function initLiveCounter() {
 applyTheme(document.documentElement.dataset.theme || 'light');
 renderPills();
 updateFavBadge();
+
+// Pre-populate ALL from localStorage cache for instant offline-first rendering
+const initialCached = cache.getAllCached();
+if (initialCached.rows && initialCached.rows.length) {
+  ALL = initialCached.rows;
+}
+updateLastSyncDisplay();
+
 render(false);
+AudioPlayer.init();
 loadAll();
 startNextClassTimer();
 renderAdhkar();
 initLiveCounter();
+
+// Periodic timer to refresh relative time labels (every 30 seconds)
+setInterval(() => {
+  updateLastSyncDisplay();
+  if (isOfflineMode) {
+    const lastSync = parseInt(store.get('pt_last_sync_time', '0'), 10);
+    const offlineEl = $('offlineTimeText');
+    if (offlineEl && lastSync) {
+      offlineEl.textContent = formatRelativeTime(lastSync);
+    }
+  }
+}, 30000);
+
+// Online / Offline window listeners
+window.addEventListener('online', () => {
+  toast('تمت استعادة الاتصال بالإنترنت');
+  loadAll(true);
+});
+window.addEventListener('offline', () => {
+  isOfflineMode = true;
+  const offlineNotice = $('offlineNotice');
+  if (offlineNotice && ALL.length > 0) {
+    const lastSyncTime = parseInt(store.get('pt_last_sync_time', '0'), 10);
+    const timeEl = $('offlineTimeText');
+    if (timeEl) timeEl.textContent = formatRelativeTime(lastSyncTime);
+    offlineNotice.hidden = false;
+  }
+  toast('انقطع الاتصال بالإنترنت - يتم العمل في الوضع غير المتصل');
+});
+
+// Offline Banner Retry Button click
+$('offlineRetryBtn')?.addEventListener('click', () => {
+  toast('جارٍ محاولة الاتصال بالإنترنت…');
+  loadAll(true);
+});
+
+// Refresh Label Clickable Shortcut
+$('lastSyncLabel')?.addEventListener('click', () => {
+  $('refreshBtn')?.click();
+});
 
 // Restore previous session feedback
 if (hasRestoredSession) {

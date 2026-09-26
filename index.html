@@ -2130,112 +2130,241 @@ button.chip.off:hover {
   transform: scale(0.92);
 }
 
-/* 1. Header Row */
+/* 1. Header Row: Mixed LTR/RTL Layout (Requirement 1 & 7) */
 .ap-header {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
-  gap: 14px;
+  gap: 12px;
   padding-bottom: 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  direction: ltr; /* CRITICAL: Docks Lecture Info to the far left, Actions to the far right */
 }
+
+/* Far Left: Lecture Information */
 .ap-meta-group {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
   min-width: 0;
   flex: 1;
+  direction: ltr; /* Forces left-to-right alignment */
 }
 .ap-title-row {
   display: flex;
   align-items: center;
   gap: 8px;
   min-width: 0;
+  width: 100%;
+  direction: ltr;
 }
 .ap-title {
   margin: 0;
-  font-size: 16.5px;
+  font-size: 15.5px;
   font-weight: 700;
   color: #ffffff;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: 1.35;
+  text-align: left;
+  unicode-bidi: isolate; /* Requirement 7: Prevents bidi text bleed/line breaks */
 }
 .ap-badge {
-  font-size: 11.5px;
+  font-size: 11px;
   font-weight: 600;
-  padding: 2px 9px;
+  padding: 2px 8px;
   border-radius: 6px;
   background: rgba(78, 205, 196, 0.16);
   color: #4ecdc4;
-  border: 1px solid rgba(78, 205, 196, 0.28);
+  border: 1px solid rgba(78, 205, 196, 0.3);
   flex: none;
   letter-spacing: 0.2px;
+  unicode-bidi: isolate;
 }
 .ap-badge[data-type="عملي"] {
   background: rgba(240, 149, 171, 0.16);
   color: #f095ab;
-  border-color: rgba(240, 149, 171, 0.28);
+  border-color: rgba(240, 149, 171, 0.3);
 }
 .ap-badge[data-type="مستشفى"] {
   background: rgba(230, 190, 96, 0.16);
   color: #e6be60;
-  border-color: rgba(230, 190, 96, 0.28);
+  border-color: rgba(230, 190, 96, 0.3);
 }
 .ap-subtitle {
   margin: 3px 0 0;
-  font-size: 12.5px;
-  color: #78908c;
+  font-size: 12px;
+  color: #92a7a4;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-align: left;
+  align-self: flex-start;
+  unicode-bidi: isolate;
 }
 
-/* Toolbar Buttons */
+/* Far Right: Unified Actions Toolbar (Requirement 1 & 2) */
 .ap-toolbar {
   display: flex;
   align-items: center;
   gap: 4px;
   flex: none;
+  direction: ltr;
 }
+
+/* Requirement 2: Unified Icon Style (Outline, consistent sizing, no filled background on active bookmark) */
 .ap-tool-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  border-radius: 7px;
-  border: none;
+  width: 36px;
+  height: 36px;
+  min-width: 36px;
+  min-height: 36px;
+  border-radius: 8px;
+  border: 1px solid transparent;
   background: transparent;
-  color: #829a96;
+  color: #92a7a4;
   cursor: pointer;
   text-decoration: none;
-  transition: all 0.15s ease;
+  padding: 0;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  -webkit-tap-highlight-color: transparent;
+  position: relative;
+}
+/* Touch area expansion for accessibility (meets 44px hit-box) */
+.ap-tool-btn::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+}
+.ap-tool-btn .i {
+  width: 19px !important;
+  height: 19px !important;
+  stroke-width: 1.8px;
+  stroke: currentColor;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke 0.15s ease, color 0.15s ease, transform 0.15s ease;
 }
 .ap-tool-btn:hover {
   background: rgba(255, 255, 255, 0.08);
   color: #ffffff;
 }
+.ap-tool-btn:active {
+  transform: scale(0.92);
+}
 .ap-tool-btn.ap-close:hover {
-  background: rgba(229, 72, 77, 0.15);
-  color: #ff6b6b;
-}
-.ap-tool-btn.has-bookmark {
-  color: #f59e0b;
-  background: rgba(245, 158, 11, 0.14);
-}
-.ap-tool-btn.has-bookmark:hover {
-  background: rgba(245, 158, 11, 0.25);
-  color: #fbbf24;
-  box-shadow: 0 0 10px rgba(245, 158, 11, 0.35);
+  background: rgba(239, 68, 68, 0.14);
+  color: #f87171;
 }
 
-/* 2. Active Body: Waveform */
+/* Requirement 2: Active Bookmark state - ONLY icon color shifts to amber/orange. NO filled button background! */
+.ap-tool-btn.has-bookmark {
+  color: #f59e0b;
+  background: transparent; /* Strictly preserves outline transparency */
+}
+.ap-tool-btn.has-bookmark:hover {
+  background: rgba(245, 158, 11, 0.12);
+  color: #fbbf24;
+}
+.ap-tool-btn.has-bookmark .i {
+  color: #f59e0b;
+  stroke: #fbbf24;
+  fill: rgba(245, 158, 11, 0.22);
+}
+
+/* 2. Active Body */
 .ap-active-body {
   display: flex;
   flex-direction: column;
 }
 
+/* Requirement 3: Resume Banner (situated above waveform, non-overlapping, with Clock/History icon) */
+.ap-resume-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 10px;
+  margin-bottom: 2px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: rgba(245, 158, 11, 0.12);
+  border: 1px solid rgba(245, 158, 11, 0.28);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  animation: apBannerFadeIn 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  direction: rtl; /* Natural Arabic reading for resume notification */
+}
+@keyframes apBannerFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.ap-resume-jump-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: transparent;
+  border: none;
+  color: #fbbf24;
+  font-family: inherit;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  text-align: right;
+  transition: color 0.15s ease;
+}
+.ap-resume-jump-btn:hover {
+  color: #ffffff;
+}
+/* Requirement 3: Clock / History icon */
+.ap-resume-icon {
+  width: 15px !important;
+  height: 15px !important;
+  stroke: #fbbf24;
+  fill: none;
+  stroke-width: 2px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex: none;
+}
+.ap-resume-jump-btn strong {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: #ffffff;
+  text-decoration: underline;
+  text-underline-offset: 2.5px;
+}
+.ap-resume-del-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.08);
+  color: #92a7a4;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.15s ease;
+}
+.ap-resume-del-btn:hover {
+  background: rgba(239, 68, 68, 0.25);
+  color: #ef4444;
+  transform: scale(1.1);
+}
+.ap-resume-del-btn .i {
+  width: 12px !important;
+  height: 12px !important;
+}
+
+/* Waveform Progress Scrubber */
 .ap-waveform-wrap {
   position: relative;
   width: 100%;
@@ -2244,7 +2373,7 @@ button.chip.off:hover {
   align-items: center;
   cursor: pointer;
   padding: 4px 0;
-  margin-top: 14px;
+  margin-top: 8px;
   user-select: none;
   touch-action: none;
 }
@@ -2256,21 +2385,24 @@ button.chip.off:hover {
   justify-content: space-between;
   gap: 3.5px;
 }
+/* Requirement 4: High Contrast Waveform Bars */
 .ap-wave-bar {
   flex: 1;
   max-width: 4.5px;
   min-width: 2.5px;
   border-radius: 3px;
-  background: #253734;
+  background: #3a504c; /* Upgraded from dark #253734 for clear visibility in ambient light */
+  border: 0.5px solid rgba(255, 255, 255, 0.06);
   height: 10px;
-  transition: background 0.12s ease, transform 0.15s ease;
+  transition: background 0.12s ease, transform 0.15s ease, border-color 0.12s ease;
 }
 .ap-wave-bar.active {
   background: #4ecdc4;
-  box-shadow: 0 0 8px rgba(78, 205, 196, 0.4);
+  border-color: rgba(78, 205, 196, 0.4);
+  box-shadow: 0 0 10px rgba(78, 205, 196, 0.35);
 }
 .ap-waveform-wrap:hover .ap-wave-bar {
-  filter: brightness(1.15);
+  filter: brightness(1.2);
 }
 
 /* Bookmark Pin on Waveform */
@@ -2313,97 +2445,36 @@ button.chip.off:hover {
 .ap-bookmark-pin:hover {
   transform: translate(50%, -50%) scale(1.3);
 }
-.ap-bookmark-pin:hover::after {
-  background: #ffffff;
-  box-shadow: 0 0 12px #fbbf24;
-}
 
-/* Time Row & Bookmark Indicator */
+/* Requirement 4: High Contrast Time Row (exceeds WCAG AA) */
 .ap-time-row {
   display: flex;
   align-items: center;
   justify-content: space-between;
   font-size: 13px;
   font-weight: 600;
-  color: #78908c;
-  margin-top: 6px;
+  color: #c2d5d1; /* Elevated brightness (Contrast > 8.5:1) */
+  margin-top: 4px;
   font-variant-numeric: tabular-nums;
-  gap: 8px;
+  direction: rtl; /* البداية من اليمين (الوقت الحالي) والنهاية في اليسار (الوقت الكلي) */
+}
+.ap-time {
+  direction: ltr; /* Keeps numeric timestamp 08:22 / 2:02:33 formatted correctly */
+  unicode-bidi: isolate;
+}
+.ap-time.current {
+  color: #ffffff; /* Bright white primary time (Contrast > 14:1) */
+  font-weight: 700;
+  text-align: right;
+}
+.ap-time.total {
+  color: #a8beba; /* Crisp secondary time */
+  text-align: left;
 }
 .ap-time-loading {
   font-size: 11.5px;
-  color: #78908c;
+  color: #92a7a4;
   animation: pulseBrand 1.5s infinite;
-}
-
-.ap-bookmark-indicator {
-  display: inline-flex;
-  align-items: center;
-  background: rgba(245, 158, 11, 0.12);
-  border: 1px solid rgba(245, 158, 11, 0.28);
-  border-radius: 20px;
-  padding: 2px 4px 2px 8px;
-  gap: 5px;
-  font-size: 12px;
-  animation: fadeIn 0.2s ease-out;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-}
-.ap-bookmark-jump-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  background: transparent;
-  border: none;
-  color: #fbbf24;
-  font-weight: 600;
-  font-family: inherit;
-  font-size: 11.5px;
-  cursor: pointer;
-  padding: 2px 6px;
-  border-radius: 12px;
-  transition: all 0.15s ease;
-}
-.ap-bookmark-jump-btn:hover {
-  color: #ffffff;
-  background: rgba(245, 158, 11, 0.25);
-  transform: translateY(-1px);
-}
-.ap-bookmark-jump-btn:active {
-  transform: translateY(0);
-}
-.ap-bookmark-jump-btn .i {
-  width: 13px;
-  height: 13px;
-  color: #f59e0b;
-}
-.ap-bookmark-jump-btn strong {
-  font-variant-numeric: tabular-nums;
-  font-weight: 700;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-.ap-bookmark-del-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  border: none;
-  background: rgba(255, 255, 255, 0.08);
-  color: #9cb1ad;
-  cursor: pointer;
-  padding: 0;
-  transition: all 0.15s ease;
-}
-.ap-bookmark-del-btn:hover {
-  background: rgba(239, 68, 68, 0.25);
-  color: #ef4444;
-  transform: scale(1.1);
-}
-.ap-bookmark-del-btn .i {
-  width: 11px;
-  height: 11px;
 }
 
 /* Playback Controls Row */
@@ -2419,12 +2490,12 @@ button.chip.off:hover {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 46px;
-  height: 46px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.04);
-  color: #9cb1ad;
+  color: #c2d5d1;
   cursor: pointer;
   transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
 }
@@ -2445,8 +2516,8 @@ button.chip.off:hover {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 56px;
-  height: 56px;
+  width: 58px;
+  height: 58px;
   border-radius: 50%;
   border: none;
   background: #4ecdc4;
@@ -2458,7 +2529,7 @@ button.chip.off:hover {
 .ap-main-play:hover {
   background: #5fe1d8;
   transform: scale(1.06);
-  box-shadow: 0 6px 22px rgba(78, 205, 196, 0.5);
+  box-shadow: 0 6px 22px rgba(78, 205, 196, 0.55);
 }
 .ap-main-play:active {
   transform: scale(0.94);
@@ -2468,16 +2539,18 @@ button.chip.off:hover {
   height: 24px;
 }
 
-/* Footer Bar: Speed & Volume */
+/* Footer Bar: Requirement 6 (Speed Chevron) & Volume Control */
 .ap-footer-bar {
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-top: 10px;
   padding-top: 10px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  direction: ltr; /* Keeps speed pill left, volume controls right */
 }
 
+/* Requirement 6: Speed Pill with Chevron Down Indicator */
 .ap-speed-wrapper {
   position: relative;
 }
@@ -2485,21 +2558,38 @@ button.chip.off:hover {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 4px 12px;
-  border-radius: 8px;
+  gap: 6px;
+  height: 34px;
+  padding: 0 12px 0 14px;
+  border-radius: 999px;
   background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  color: #d0e0dc;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #e7f1ee;
   font-size: 13px;
   font-weight: 700;
   font-family: inherit;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
 }
-.ap-speed-pill:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: #4ecdc4;
+.ap-speed-pill:hover,
+.ap-speed-pill[aria-expanded="true"] {
+  background: rgba(78, 205, 196, 0.12);
+  border-color: rgba(78, 205, 196, 0.4);
   color: #4ecdc4;
+}
+.ap-speed-chevron {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  stroke-width: 2.2px;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.ap-speed-pill[aria-expanded="true"] .ap-speed-chevron {
+  transform: rotate(180deg);
 }
 
 .ap-speed-menu {
@@ -2509,23 +2599,23 @@ button.chip.off:hover {
   background: #14221f;
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 10px;
-  padding: 5px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  padding: 6px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  min-width: 105px;
-  z-index: 10;
+  gap: 3px;
+  min-width: 120px;
+  z-index: 20;
 }
 .ap-speed-opt {
   display: block;
   width: 100%;
   text-align: right;
-  padding: 6px 10px;
+  padding: 7px 12px;
   border-radius: 6px;
   background: transparent;
   border: none;
-  color: #8fa6a3;
+  color: #92a7a4;
   font-size: 12.5px;
   font-weight: 600;
   cursor: pointer;
@@ -2542,11 +2632,13 @@ button.chip.off:hover {
   font-weight: 700;
 }
 
+/* Volume Control: Sleek, Elegant, Slim 4px Track */
 .ap-volume-box {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px;
   direction: ltr; /* Volume 0 on left, 100% on right */
+  height: 34px;
 }
 .ap-vol-btn {
   display: inline-flex;
@@ -2554,11 +2646,14 @@ button.chip.off:hover {
   justify-content: center;
   width: 32px;
   height: 32px;
+  min-width: 32px;
+  min-height: 32px;
   border-radius: 50%;
   border: none;
   background: transparent;
-  color: #829a96;
+  color: #92a7a4;
   cursor: pointer;
+  padding: 0;
   transition: color 0.15s ease, background-color 0.15s ease;
 }
 .ap-vol-btn:hover {
@@ -2566,55 +2661,69 @@ button.chip.off:hover {
   background: rgba(255, 255, 255, 0.08);
 }
 .ap-vol-btn .i {
-  width: 19px;
-  height: 19px;
+  width: 18px;
+  height: 18px;
+}
+.ap-vol-slider-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 32px;
+  width: 85px;
 }
 .ap-vol-slider {
-  width: 95px;
-  height: 6px;
-  border-radius: 999px;
+  width: 100%;
+  height: 24px;
   -webkit-appearance: none;
   appearance: none;
-  background: linear-gradient(to right, #4ecdc4 100%, #253734 100%);
+  background: transparent !important; /* Prevents any blocky background */
   cursor: pointer;
   outline: none;
+  margin: 0;
+  padding: 0;
 }
+/* Webkit Slider Track: Slim, sleek 4px rounded line */
 .ap-vol-slider::-webkit-slider-runnable-track {
-  height: 6px;
+  height: 4px;
   border-radius: 999px;
-  background: transparent;
+  background: linear-gradient(to right, #4ecdc4 var(--vol-fill, 80%), rgba(255, 255, 255, 0.16) var(--vol-fill, 80%));
 }
+/* Webkit Slider Thumb: Small, delicate 13px circle */
 .ap-vol-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 14px;
-  height: 14px;
+  width: 13px;
+  height: 13px;
   border-radius: 50%;
   background: #ffffff;
   border: 2px solid #4ecdc4;
-  margin-top: -4px;
-  box-shadow: 0 0 8px rgba(78, 205, 196, 0.5), 0 2px 4px rgba(0, 0, 0, 0.3);
+  margin-top: -4.5px; /* Centers 13px thumb on 4px track */
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
   transition: transform 0.12s ease;
 }
-.ap-vol-slider:hover::-webkit-slider-thumb {
-  transform: scale(1.2);
+.ap-vol-slider:hover::-webkit-slider-thumb,
+.ap-vol-slider:active::-webkit-slider-thumb {
+  transform: scale(1.25);
+  box-shadow: 0 0 8px rgba(78, 205, 196, 0.6);
 }
 .ap-vol-slider::-moz-range-track {
-  height: 6px;
+  height: 4px;
   border-radius: 999px;
-  background: transparent;
+  background: rgba(255, 255, 255, 0.16);
+}
+.ap-vol-slider::-moz-range-progress {
+  height: 4px;
+  border-radius: 999px;
+  background: #4ecdc4;
 }
 .ap-vol-slider::-moz-range-thumb {
-  width: 14px;
-  height: 14px;
+  width: 13px;
+  height: 13px;
   border-radius: 50%;
   background: #ffffff;
   border: 2px solid #4ecdc4;
-  box-shadow: 0 0 8px rgba(78, 205, 196, 0.5);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
   transition: transform 0.12s ease;
-}
-.ap-vol-slider:hover::-moz-range-thumb {
-  transform: scale(1.2);
 }
 
 /* Wave Animation inside mini pill */
@@ -2654,10 +2763,21 @@ button.chip.off:hover {
     padding: 14px 16px;
   }
   .ap-title {
-    font-size: 15px;
+    font-size: 14.5px;
   }
-  .ap-vol-slider {
-    display: none;
+  .ap-vol-slider-wrap {
+    width: 65px;
+  }
+  .ap-ctrl-row {
+    gap: 22px;
+  }
+  .ap-step-btn {
+    width: 44px;
+    height: 44px;
+  }
+  .ap-main-play {
+    width: 54px;
+    height: 54px;
   }
   .ap-fallback-actions {
     flex-direction: column-reverse;
@@ -3069,37 +3189,53 @@ body.has-audio-player.audio-minimized .back-to-top {
 
   <!-- Full / Standard Expanded Player Card -->
   <div class="ap-card" id="apCard">
-    <!-- Top Header: Title & Badge on right, Actions on left -->
+    <!-- Top Header: Mixed Layout (Left: Info, Right: Controls Toolbar) -->
     <div class="ap-header">
       <div class="ap-meta-group">
         <div class="ap-title-row">
-          <h3 class="ap-title" id="apTitle">—</h3>
-          <span class="ap-badge" id="apTypeBadge">نظري</span>
+          <h3 class="ap-title" id="apTitle" dir="auto">Obstetrics &amp; Gynecology</h3>
+          <span class="ap-badge" id="apTypeBadge" dir="auto">نظري</span>
         </div>
-        <p class="ap-subtitle" id="apSubtitle">—</p>
+        <p class="ap-subtitle" id="apSubtitle" dir="auto">الإسبوع 1 • الإثنين</p>
       </div>
 
       <div class="ap-toolbar" role="toolbar" aria-label="أدوات المشغل">
-        <button type="button" class="ap-tool-btn ap-close" id="apCloseBtn" title="إغلاق المشغل" aria-label="إغلاق المشغل">
-          <svg class="i"><use href="#i-x"/></svg>
+        <!-- 1. Chevron Minimize -->
+        <button type="button" class="ap-tool-btn" id="apMinBtn" title="تصغير المشغل" aria-label="تصغير المشغل">
+          <svg class="i"><use href="#i-chevron-down"/></svg>
         </button>
-        <button type="button" class="ap-tool-btn" id="apBookmarkBtn" title="حفظ علامة عند الوقت الحالي" aria-label="حفظ علامة عند الوقت الحالي">
-          <svg class="i" id="apBookmarkIcon"><use href="#i-bookmark"/></svg>
-        </button>
-        <a class="ap-tool-btn" id="apExtLink" href="#" target="_blank" rel="noopener noreferrer" title="فتح الملف خارجيًا" aria-label="فتح خارجي">
-          <svg class="i"><use href="#i-external"/></svg>
-        </a>
+        <!-- 2. Download -->
         <a class="ap-tool-btn" id="apDlLink" href="#" target="_blank" rel="noopener noreferrer" download title="تنزيل الملف للجهاز" aria-label="تنزيل الريكورد">
           <svg class="i"><use href="#i-download"/></svg>
         </a>
-        <button type="button" class="ap-tool-btn" id="apMinBtn" title="تصغير المشغل" aria-label="تصغير المشغل">
-          <svg class="i"><use href="#i-chevron-down"/></svg>
+        <!-- 3. Share -->
+        <button type="button" class="ap-tool-btn" id="apShareBtn" title="مشاركة رابط المحاضرة" aria-label="مشاركة المحاضرة">
+          <svg class="i"><use href="#i-share"/></svg>
+        </button>
+        <!-- 4. Bookmark (Outline unified) -->
+        <button type="button" class="ap-tool-btn" id="apBookmarkBtn" title="حفظ علامة عند الوقت الحالي" aria-label="حفظ علامة عند الوقت الحالي">
+          <svg class="i" id="apBookmarkIcon"><use href="#i-bookmark"/></svg>
+        </button>
+        <!-- 5. Close -->
+        <button type="button" class="ap-tool-btn ap-close" id="apCloseBtn" title="إغلاق المشغل" aria-label="إغلاق المشغل">
+          <svg class="i"><use href="#i-x"/></svg>
         </button>
       </div>
     </div>
 
     <!-- Active Playing State -->
     <div class="ap-active-body" id="apActiveBody">
+      <!-- Resume Banner (Requirement 3: Positioned above waveform to eliminate overlap, with clock icon) -->
+      <div class="ap-resume-banner" id="apBookmarkIndicator" style="display:none;">
+        <button type="button" class="ap-resume-jump-btn" id="apJumpBookmarkBtn" title="الاستئناف من نقطة التوقف المحفوظة">
+          <svg class="i ap-resume-icon" aria-hidden="true"><use href="#i-clock"/></svg>
+          <span>استئناف من <strong id="apBookmarkTime">00:00</strong></span>
+        </button>
+        <button type="button" class="ap-resume-del-btn" id="apDelBookmarkBtn" title="حذف نقطة التوقف" aria-label="حذف نقطة التوقف">
+          <svg class="i" aria-hidden="true"><use href="#i-x"/></svg>
+        </button>
+      </div>
+
       <!-- Waveform Progress Scrubber -->
       <div class="ap-waveform-wrap" id="apWaveformWrap" title="انقر أو اسحب للتقديم والتأخير">
         <div class="ap-waveform" id="apWaveform"></div>
@@ -3109,15 +3245,6 @@ body.has-audio-player.audio-minimized .back-to-top {
       <!-- Time Display Row -->
       <div class="ap-time-row">
         <span class="ap-time current" id="apCurrentTime">00:00</span>
-        <div class="ap-bookmark-indicator" id="apBookmarkIndicator" style="display:none;">
-          <button type="button" class="ap-bookmark-jump-btn" id="apJumpBookmarkBtn" title="الرجوع للعلامة المحفوظة">
-            <svg class="i"><use href="#i-bookmark-filled"/></svg>
-            <span>استئناف من <strong id="apBookmarkTime">00:00</strong></span>
-          </button>
-          <button type="button" class="ap-bookmark-del-btn" id="apDelBookmarkBtn" title="حذف علامة الحفظ" aria-label="حذف علامة الحفظ">
-            <svg class="i"><use href="#i-x"/></svg>
-          </button>
-        </div>
         <span class="ap-time total" id="apDuration">
           <span id="apTimeLoading" class="ap-time-loading">جارٍ التحميل…</span>
           <span id="apTimeText" style="display:none;">00:00</span>
@@ -3142,8 +3269,9 @@ body.has-audio-player.audio-minimized .back-to-top {
       <!-- Footer Bar: Speed Pill (Left) & Volume Control (Right) -->
       <div class="ap-footer-bar">
         <div class="ap-speed-wrapper">
-          <button type="button" class="ap-speed-pill" id="apSpeedBtn" title="سرعة التشغيل" aria-label="سرعة التشغيل 1x">
+          <button type="button" class="ap-speed-pill" id="apSpeedBtn" title="سرعة التشغيل" aria-label="سرعة التشغيل 1x" aria-haspopup="menu" aria-expanded="false">
             <span id="apSpeedLabel">1x</span>
+            <svg class="ap-speed-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
           </button>
           <div class="ap-speed-menu" id="apSpeedMenu" style="display:none;" role="menu">
             <button type="button" class="ap-speed-opt" data-spd="0.5">0.5x</button>
@@ -3160,7 +3288,9 @@ body.has-audio-player.audio-minimized .back-to-top {
           <button type="button" class="ap-vol-btn" id="apMuteBtn" title="كتم / تشغيل الصوت" aria-label="كتم الصوت">
             <svg class="i" id="apMuteIcon"><use href="#i-volume-2"/></svg>
           </button>
-          <input type="range" id="apVolume" class="ap-vol-slider" min="0" max="1" step="0.05" value="1" title="مستوى الصوت" aria-label="مستوى الصوت">
+          <div class="ap-vol-slider-wrap">
+            <input type="range" id="apVolume" class="ap-vol-slider" min="0" max="1" step="0.05" value="1" title="مستوى الصوت" aria-label="مستوى الصوت">
+          </div>
         </div>
       </div>
     </div>
@@ -5457,7 +5587,7 @@ const AudioPlayer = {
       toast('تم حذف علامة الحفظ');
     });
 
-    // Speed Pill & Dropdown Menu
+    // Speed Pill & Dropdown Menu (Requirement 6: Dropdown affordance & Chevron)
     const speedBtn = $('apSpeedBtn');
     const speedMenu = $('apSpeedMenu');
     if (speedBtn && speedMenu) {
@@ -5465,6 +5595,7 @@ const AudioPlayer = {
         e.stopPropagation();
         const isOpen = speedMenu.style.display === 'flex';
         speedMenu.style.display = isOpen ? 'none' : 'flex';
+        speedBtn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
       });
 
       speedMenu.querySelectorAll('.ap-speed-opt').forEach(opt => {
@@ -5475,15 +5606,40 @@ const AudioPlayer = {
             this.setSpeed(spd);
           }
           speedMenu.style.display = 'none';
+          speedBtn.setAttribute('aria-expanded', 'false');
         });
       });
 
       document.addEventListener('click', (e) => {
         if (speedMenu.style.display === 'flex' && !speedBtn.contains(e.target) && !speedMenu.contains(e.target)) {
           speedMenu.style.display = 'none';
+          speedBtn.setAttribute('aria-expanded', 'false');
         }
       });
     }
+
+    // Share Button (Requirement 1: Toolbar Actions)
+    $('apShareBtn')?.addEventListener('click', async (e) => {
+      e.stopPropagation();
+      if (!this.currentTrack) return;
+      const shareData = {
+        title: this.currentTrack.title || 'تسجيل المحاضرة',
+        text: `${this.currentTrack.title || 'محاضرة'} - ${this.currentTrack.ctx || 'بوابة العلاج الطبيعي'}`,
+        url: this.currentTrack.url || window.location.href
+      };
+      if (navigator.share && navigator.canShare && navigator.canShare(shareData)) {
+        try {
+          await navigator.share(shareData);
+          return;
+        } catch (_) {}
+      }
+      try {
+        await navigator.clipboard.writeText(shareData.url);
+        toast('تم نسخ رابط المحاضرة بنجاح 📋');
+      } catch (_) {
+        toast('رابط المحاضرة جاهز للمشاركة');
+      }
+    });
 
     $('apMinBtn')?.addEventListener('click', () => this.minimize());
     $('apExpandBtn')?.addEventListener('click', () => this.expand());
@@ -5698,7 +5854,8 @@ const AudioPlayer = {
     const slider = $('apVolume');
     if (!slider) return;
     const pct = Math.round(val * 100);
-    slider.style.background = `linear-gradient(to right, #4ecdc4 ${pct}%, #253734 ${pct}%)`;
+    slider.style.setProperty('--vol-fill', `${pct}%`);
+    slider.style.background = 'transparent';
   },
 
   updateProgress(curr, dur) {
@@ -5872,8 +6029,7 @@ const AudioPlayer = {
         btn.classList.add('has-bookmark');
         btn.title = `تحديث علامة الحفظ (محفوظة عند ${bm.formatted})`;
       }
-      if (iconUse) iconUse.setAttribute('href', '#i-bookmark-filled');
-      if (indicator) indicator.style.display = 'inline-flex';
+      if (indicator) indicator.style.display = 'flex';
       if (timeLabel) timeLabel.textContent = bm.formatted;
 
       // Position pin on waveform if duration is known
@@ -5883,7 +6039,7 @@ const AudioPlayer = {
           const pct = Math.max(0, Math.min(1, bm.time / dur));
           pin.style.right = `${pct * 100}%`;
           pin.style.display = 'flex';
-          pin.title = `علامة حفظ عند ${bm.formatted} - انقر للرجوع إليها`;
+          pin.title = `نقطة توقف محفوظة عند ${bm.formatted} - انقر للرجوع إليها`;
         } else {
           pin.style.display = 'none';
         }

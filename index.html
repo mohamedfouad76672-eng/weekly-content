@@ -3437,7 +3437,7 @@ body.has-audio-player.audio-minimized .back-to-top {
             <svg class="i" id="apMuteIcon"><use href="#i-volume-2"/></svg>
           </button>
           <div class="ap-vol-slider-wrap">
-            <input type="range" id="apVolume" class="ap-vol-slider" min="0" max="4" step="0.05" value="1" title="مستوى ومضاعف الصوت حتى 400%" aria-label="مستوى الصوت">
+            <input type="range" id="apVolume" class="ap-vol-slider" min="0" max="1" step="0.05" value="1" title="مستوى الصوت" aria-label="مستوى الصوت">
           </div>
           <span id="apVolPercent" class="ap-vol-percent" title="نسبة الصوت ومضاعف الصوت">100%</span>
         </div>
@@ -5865,86 +5865,6 @@ const audioDB = {
 };
 
 // ==========================================================================
-// Web Audio API Booster & Filter Chain (Problem 4: Gain up to 400%, Highpass, Presence, Compressor)
-// ==========================================================================
-const WebAudioBooster = {
-  ctx: null,
-  source: null,
-  gainNode: null,
-  compressor: null,
-  highpass: null,
-  presence: null,
-  isInitialized: false,
-
-  init(audioEl, isBlob = false) {
-    if (this.isInitialized || !audioEl) return;
-    // Only connect Web Audio API if stream is a local Blob or same-origin to prevent browser from muting cross-origin audio
-    if (!isBlob && audioEl.src && !audioEl.src.startsWith('blob:') && !audioEl.src.startsWith(window.location.origin)) {
-      return;
-    }
-    try {
-      const AudioCtx = window.AudioContext || window.webkitAudioContext;
-      if (!AudioCtx) return;
-      this.ctx = new AudioCtx();
-
-      // Create nodes
-      this.source = this.ctx.createMediaElementSource(audioEl);
-      this.gainNode = this.ctx.createGain();
-      this.compressor = this.ctx.createDynamicsCompressor();
-      this.highpass = this.ctx.createBiquadFilter();
-      this.presence = this.ctx.createBiquadFilter();
-
-      // High-pass filter cuts rumble and low-end distortion below 80 Hz
-      this.highpass.type = 'highpass';
-      this.highpass.frequency.value = 80;
-
-      // Presence boost: +3dB at 3000 Hz to highlight speech frequencies
-      this.presence.type = 'peaking';
-      this.presence.frequency.value = 3000;
-      this.presence.gain.value = 3;
-      this.presence.Q.value = 1.0;
-
-      // Dynamics Compressor to prevent distortion when gain is boosted up to 4x
-      this.compressor.threshold.value = -12;
-      this.compressor.knee.value = 30;
-      this.compressor.ratio.value = 12;
-      this.compressor.attack.value = 0.003;
-      this.compressor.release.value = 0.25;
-
-      // Complete Audio Chain: source -> highpass -> presence -> gain -> compressor -> destination
-      this.source.connect(this.highpass);
-      this.highpass.connect(this.presence);
-      this.presence.connect(this.gainNode);
-      this.gainNode.connect(this.compressor);
-      this.compressor.connect(this.ctx.destination);
-
-      this.isInitialized = true;
-
-      // Apply shared gain setting
-      const savedGain = parseFloat(store.get('pt_gain', '1'));
-      this.setGain(isNaN(savedGain) ? 1 : savedGain);
-    } catch (err) {
-      console.warn('Web Audio Booster initialization notice:', err);
-    }
-  },
-
-  resume() {
-    if (this.ctx && this.ctx.state === 'suspended') {
-      this.ctx.resume().catch(() => {});
-    }
-  },
-
-  setGain(val) {
-    const clamped = Math.max(0, Math.min(4, val));
-    if (this.gainNode && this.ctx) {
-      this.gainNode.gain.setValueAtTime(clamped, this.ctx.currentTime);
-    }
-    store.set('pt_gain', String(clamped));
-    return clamped;
-  }
-};
-
-// ==========================================================================
 // Academic Audio Player Engine (Active & Fallback UX)
 // ==========================================================================
 const AudioPlayer = {
@@ -5980,10 +5900,10 @@ const AudioPlayer = {
     this.currentSpeed = (!isNaN(savedSpeed) && savedSpeed >= 0.5 && savedSpeed <= 3) ? (Math.round(savedSpeed * 10) / 10) : 1;
     this.updateSpeedUI();
 
-    // Load Volume & 400% Booster settings (Problem 4)
-    const savedGain = parseFloat(store.get('pt_gain', '1'));
-    this.currentGain = (!isNaN(savedGain) && savedGain >= 0 && savedGain <= 4) ? savedGain : 1;
-    this.updateGainUI(this.currentGain);
+    // Load Volume Settings (Direct clean audio output)
+    const savedVol = parseFloat(localStorage.getItem('pt_audio_vol') || '1');
+    this.audio.volume = (!isNaN(savedVol) && savedVol >= 0 && savedVol <= 1) ? savedVol : 1;
+    this.audio.muted = false;
     this.updateVolumeUI();
 
     // Audio Element Event Listeners
@@ -6180,17 +6100,16 @@ const AudioPlayer = {
     $('apCloseBtn')?.addEventListener('click', () => this.close());
     $('apMiniCloseBtn')?.addEventListener('click', () => this.close());
 
-    // Volume & 400% Web Audio Booster (Problem 4)
+    // Volume & Mute Controls
     $('apMuteBtn')?.addEventListener('click', () => this.toggleMute());
     $('apVolume')?.addEventListener('input', (e) => {
-      WebAudioBooster.init(this.audio);
-      WebAudioBooster.resume();
       const val = parseFloat(e.target.value);
-      this.currentGain = val;
-      WebAudioBooster.setGain(val);
-      if (this.audio) this.audio.muted = false;
-      this.updateGainUI(val);
+      if (this.audio) {
+        this.audio.volume = Math.max(0, Math.min(1, val));
+        this.audio.muted = false;
+      }
       this.updateVolumeUI();
+      try { localStorage.setItem('pt_audio_vol', String(val)); } catch (_) {}
     });
 
     // Global Keyboard Shortcuts
@@ -6285,10 +6204,7 @@ const AudioPlayer = {
     document.body.classList.add('has-audio-player');
     this.expand();
 
-    // Init Web Audio Booster (safe for blobs and same-origin)
-    const isBlobStream = Boolean(track.isOfflineBlob || (track.streamUrl && track.streamUrl.startsWith('blob:')));
-    WebAudioBooster.init(this.audio, isBlobStream);
-    WebAudioBooster.resume();
+
 
     // Problem 3: Load speed saved specifically for this audio record (pt_speed_${audioId})
     const audioId = this.getAudioId(track);
@@ -6302,6 +6218,11 @@ const AudioPlayer = {
       this.audio.load();
     }
     this.audio.playbackRate = this.currentSpeed;
+    this.audio.muted = false;
+    if (this.audio.volume === 0) {
+      this.audio.volume = 1;
+    }
+    this.updateVolumeUI();
 
     const playPromise = this.audio.play();
     if (playPromise !== undefined) {
@@ -6408,45 +6329,32 @@ const AudioPlayer = {
     }
   },
 
-  updateGainUI(val) {
-    const slider = $('apVolume');
-    if (slider) {
-      slider.value = val;
-      const pct = Math.round((val / 4) * 100);
-      slider.style.setProperty('--vol-fill', `${pct}%`);
-      slider.style.background = 'transparent';
-    }
-    const label = $('apVolPercent');
-    if (label) {
-      const pctNum = Math.round(val * 100);
-      label.textContent = `${pctNum}%`;
-      label.classList.toggle('is-boosted', val > 1);
-    }
-    if (this.audio) {
-      // Standard audio volume (clamped 0 to 1) for cross-origin streams
-      this.audio.volume = Math.max(0, Math.min(1, val));
-    }
-  },
-
   toggleMute() {
     if (!this.audio) return;
     this.audio.muted = !this.audio.muted;
-    if (this.audio.muted) {
-      WebAudioBooster.setGain(0);
-      this.updateGainUI(0);
-    } else {
-      const savedGain = parseFloat(store.get('pt_gain', '1'));
-      const gainToRestore = isNaN(savedGain) ? 1 : savedGain;
-      WebAudioBooster.setGain(gainToRestore);
-      this.updateGainUI(gainToRestore);
-    }
     this.updateVolumeUI();
   },
 
   updateVolumeUI() {
-    const isMuted = this.audio ? this.audio.muted : false;
+    if (!this.audio) return;
+    const isMuted = this.audio.muted || this.audio.volume === 0;
     const iconHref = isMuted ? '#i-volume-x' : '#i-volume-2';
     $('apMuteIcon')?.querySelector('use')?.setAttribute('href', iconHref);
+
+    const slider = $('apVolume');
+    const label = $('apVolPercent');
+    const currentVal = isMuted ? 0 : this.audio.volume;
+    const pct = Math.round(currentVal * 100);
+
+    if (slider) {
+      slider.value = currentVal;
+      slider.style.setProperty('--vol-fill', `${pct}%`);
+      slider.style.background = 'transparent';
+    }
+    if (label) {
+      label.textContent = `${pct}%`;
+      label.classList.toggle('is-boosted', pct > 90);
+    }
   },
 
   updateProgress(curr, dur) {

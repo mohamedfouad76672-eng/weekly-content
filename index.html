@@ -1573,7 +1573,7 @@ button.chip.off:hover {
 .chip-split-dl:hover .dl-progress {
   color: var(--on-brand);
 }
-/* When audio is saved in IndexedDB: ⬇️ icon turns to --brand */
+/* When audio is saved in IndexedDB / Cache: ⬇️ icon turns to --brand */
 .chip-split.is-saved .chip-split-dl .i,
 .chip-split-dl.is-saved .i {
   color: var(--brand) !important;
@@ -1582,6 +1582,28 @@ button.chip.off:hover {
 .chip-split.is-saved .chip-split-dl:hover .i {
   color: var(--on-brand) !important;
   stroke: var(--on-brand) !important;
+}
+.chip-split.is-saved {
+  border-color: var(--brand) !important;
+}
+.chip-split.is-saved .chip-split-dl {
+  background: var(--soft);
+}
+.toast-action-btn {
+  background: var(--brand);
+  color: var(--on-brand);
+  border: none;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-inline-start: 8px;
+  transition: opacity 0.15s ease;
+}
+.toast-action-btn:hover {
+  opacity: 0.9;
 }
 
 /* ==========================================================================
@@ -4105,15 +4127,35 @@ function parseTimeRange(str) {
 }
 
 /**
- * Toast notifications with auto-dismissal.
+ * Toast notifications with auto-dismissal and optional action button.
  * @param {string} msg
+ * @param {string} [actionLabel]
+ * @param {Function} [onAction]
  */
-function toast(msg) {
+function toast(msg, actionLabel = null, onAction = null) {
   const el = $('toast');
-  el.textContent = msg;
+  if (!el) return;
+  if (actionLabel && onAction) {
+    el.innerHTML = '';
+    const textSpan = document.createElement('span');
+    textSpan.textContent = msg + ' ';
+    el.appendChild(textSpan);
+    const actionBtn = document.createElement('button');
+    actionBtn.type = 'button';
+    actionBtn.className = 'toast-action-btn';
+    actionBtn.textContent = actionLabel;
+    actionBtn.onclick = (e) => {
+      e.stopPropagation();
+      el.classList.remove('show');
+      onAction();
+    };
+    el.appendChild(actionBtn);
+  } else {
+    el.textContent = msg;
+  }
   el.classList.add('show');
   clearTimeout(toast.timer);
-  toast.timer = setTimeout(() => el.classList.remove('show'), 2500);
+  toast.timer = setTimeout(() => el.classList.remove('show'), actionLabel ? 7000 : 2500);
 }
 
 /**
@@ -5310,6 +5352,66 @@ async function downloadAndSaveAudio(url, meta = {}, isBackground = false) {
   return p;
 }
 
+async function cacheAudioUrlInBackground(url) {
+  if (!url || typeof url !== 'string') return;
+  try {
+    localStorage.setItem('pt_audio_saved_' + url, '1');
+    refreshSavedAudioBadges();
+    if ('caches' in window) {
+      const cache = await caches.open('pt-recordings-v1');
+      const match = await cache.match(url, { ignoreSearch: true });
+      if (!match) {
+        const cleanReq = new Request(url, { method: 'GET', mode: 'no-cors' });
+        const res = await fetch(cleanReq);
+        if (res) {
+          await cache.put(url, res);
+        }
+      }
+    }
+  } catch (err) {
+    console.warn('Background cache error:', err);
+  }
+}
+
+function promptLocalAudioFile(url, title, type, ctx, dl, id) {
+  let fileInput = $('offlineAudioPicker');
+  if (!fileInput) {
+    fileInput = document.createElement('input');
+    fileInput.type = 'file';
+    fileInput.id = 'offlineAudioPicker';
+    fileInput.accept = 'audio/*, .mp3, .m4a, .aac, .ogg, .wav';
+    fileInput.style.display = 'none';
+    document.body.appendChild(fileInput);
+  }
+
+  fileInput.onchange = async () => {
+    const file = fileInput.files && fileInput.files[0];
+    if (!file) return;
+    toast('جارٍ تشغيل الريكورد من جهازك…');
+    try {
+      // 1. حفظ في IndexedDB ليصبح متاحاً دائماً بلمسة واحدة دون اتصال
+      await audioDB.save(url, file, { title, type, id });
+      localStorage.setItem('pt_audio_saved_' + url, '1');
+      refreshSavedAudioBadges();
+
+      // 2. تشغيل فوري في المشغل عبر Blob URL
+      const blobUrl = URL.createObjectURL(file);
+      AudioPlayer.play({ url, title, type, ctx, dl, id, streamUrl: blobUrl, isOfflineBlob: true });
+      toast('تم تشغيل وحفظ الريكورد في الموقع بنجاح ✓');
+    } catch (err) {
+      console.warn('Local audio save error:', err);
+      const blobUrl = URL.createObjectURL(file);
+      AudioPlayer.play({ url, title, type, ctx, dl, id, streamUrl: blobUrl, isOfflineBlob: true });
+    }
+  };
+
+  toast(
+    'الريكورد مش مخزن في المتصفح. لو حملته على جهازك يمكنك تشغيله الآن:',
+    '📂 تشغيل من الجهاز',
+    () => fileInput.click()
+  );
+}
+
 async function handleAudioListen(playBtn) {
   const url = playBtn.dataset.url;
   const title = playBtn.dataset.title;
@@ -5320,7 +5422,7 @@ async function handleAudioListen(playBtn) {
 
   if (!url || typeof AudioPlayer === 'undefined') return;
 
-  // 1. لو محفوظ في IndexedDB -> شغل من IndexedDB مباشرة (صفر نت)
+  // 1. فحص هل هو محفوظ في IndexedDB كـ Blob
   const savedBlob = await audioDB.get(url);
   if (savedBlob) {
     const blobUrl = URL.createObjectURL(savedBlob);
@@ -5328,15 +5430,33 @@ async function handleAudioListen(playBtn) {
     return;
   }
 
-  // 2. لو مش محفوظ + مفيش نت -> Toast
-  if (!navigator.onLine) {
-    toast('الريكورد مش محفوظ — لازم نت أول مرة');
+  // 2. إذا كنا أونلاين: نبدأ الكاش في الخلفية تلقائياً + تشغيل فوري Progressive Streaming
+  if (navigator.onLine) {
+    cacheAudioUrlInBackground(url);
+    AudioPlayer.play({ url, title, type, ctx, dl, id });
     return;
   }
 
-  // 3. لو مش محفوظ + فيه نت -> تشغيل فوري Progressive Streaming!
-  // المستخدم يسمع الجزء اللي بيحمل عادي بدون انتظار انتهاء التحميل
-  AudioPlayer.play({ url, title, type, ctx, dl, id });
+  // 3. إذا كنا أوفلاين:
+  // نفحص هل الريكورد مخزن في كاش الـ Service Worker
+  let isCached = false;
+  if ('caches' in window) {
+    try {
+      const cache = await caches.open('pt-recordings-v1');
+      const match = await cache.match(url, { ignoreSearch: true });
+      if (match) isCached = true;
+    } catch (_) {}
+  }
+
+  const isSavedFlag = localStorage.getItem('pt_audio_saved_' + url) === '1';
+
+  if (isCached || isSavedFlag) {
+    // تشغيل من كاش الـ Service Worker
+    AudioPlayer.play({ url, title, type, ctx, dl, id });
+  } else {
+    // الملف غير مخزن في المتصفح والنت مفصول -> إتاحة تشغيله مباشرة من مجلد التنزيلات بالجهاز
+    promptLocalAudioFile(url, title, type, ctx, dl, id);
+  }
 }
 
 async function handleAudioDownload(e, dlBtn) {
@@ -5354,10 +5474,9 @@ async function handleAudioDownload(e, dlBtn) {
     return;
   }
 
-  // 2. لو مش محفوظ: الرابط <a> مع download يقوم بالتنزيل المباشر للموبايل والجهاز
-  // بدون منع المتصفح، لتفادي مشاكل الـ CORS وضمان التنزيل 100%
-  toast('جارٍ تنزيل الريكورد على جهازك ✓');
-  // المتصفح ينفذ التحميل المباشر تلقائياً
+  // 2. حفظ في الكاش ليعمل أوفلاين في الموقع + بدء التنزيل للموبايل
+  cacheAudioUrlInBackground(url);
+  toast('جارٍ تنزيل الريكورد لجهازك وحفظه للاستماع أوفلاين ✓');
 }
 
 async function refreshSavedAudioBadges() {
@@ -5366,9 +5485,15 @@ async function refreshSavedAudioBadges() {
     document.querySelectorAll('.chip-split[data-audio-url]').forEach(chip => {
       const url = chip.getAttribute('data-audio-url');
       const dlBtn = chip.querySelector('.chip-split-dl');
-      if (savedKeys.has(url)) {
+      const isSavedInStorage = localStorage.getItem('pt_audio_saved_' + url) === '1';
+      const isSavedInDB = savedKeys.has(url);
+
+      if (isSavedInStorage || isSavedInDB) {
         chip.classList.add('is-saved');
-        if (dlBtn) dlBtn.classList.add('is-saved');
+        if (dlBtn) {
+          dlBtn.classList.add('is-saved');
+          dlBtn.setAttribute('title', 'محفوظ للاستماع دون اتصال ✓ (انقر للتنزيل مجدداً)');
+        }
       } else {
         chip.classList.remove('is-saved');
         if (dlBtn) dlBtn.classList.remove('is-saved');
@@ -5942,7 +6067,22 @@ const AudioPlayer = {
     });
     this.audio.addEventListener('error', (e) => {
       console.warn('Audio playback error:', e);
-      toast('تعذّر تشغيل الملف الصوتي');
+      if (!navigator.onLine) {
+        if (this.currentTrack) {
+          promptLocalAudioFile(
+            this.currentTrack.url,
+            this.currentTrack.title,
+            this.currentTrack.type,
+            this.currentTrack.ctx,
+            this.currentTrack.dl,
+            this.currentTrack.id
+          );
+        } else {
+          toast('تعذّر تشغيل الريكورد دون اتصال — تأكد من حفظه مسبقاً');
+        }
+      } else {
+        toast('تعذّر تشغيل الملف الصوتي');
+      }
       this.onPlayStateChange(false);
     });
 
@@ -6190,7 +6330,14 @@ const AudioPlayer = {
     const driveUrl = track.url || '#';
 
     if ($('apExtLink')) $('apExtLink').href = driveUrl;
-    if ($('apDlLink')) $('apDlLink').href = dlLink;
+    if ($('apDlLink')) {
+      $('apDlLink').href = dlLink;
+      $('apDlLink').onclick = () => {
+        if (this.currentTrack && this.currentTrack.url) {
+          cacheAudioUrlInBackground(this.currentTrack.url);
+        }
+      };
+    }
 
     // Reset progress UI
     if ($('apCurrentTime')) $('apCurrentTime').textContent = '00:00';

@@ -1605,6 +1605,77 @@ button.chip.off:hover {
 .toast-action-btn:hover {
   opacity: 0.9;
 }
+/* Audio Link Persistent Bottom Sheet */
+.audio-link-sheet {
+  position: fixed;
+  bottom: 24px;
+  right: 50%;
+  transform: translateX(50%);
+  width: min(92%, 460px);
+  background: var(--surface-raised);
+  border: 1.5px solid var(--brand);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.28);
+  z-index: 10000;
+  padding: 16px;
+  animation: linkSheetSlideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+@keyframes linkSheetSlideUp {
+  from { transform: translateX(50%) translateY(30px); opacity: 0; }
+  to { transform: translateX(50%) translateY(0); opacity: 1; }
+}
+.audio-link-sheet-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.audio-link-sheet-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.audio-link-sheet-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+.audio-link-sheet-text {
+  flex: 1;
+}
+.audio-link-sheet-text h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--ink);
+  font-weight: 700;
+}
+.audio-link-sheet-text p {
+  margin: 4px 0 0;
+  font-size: 0.82rem;
+  color: var(--mute);
+  line-height: 1.45;
+}
+.audio-link-sheet-close {
+  background: transparent;
+  border: none;
+  color: var(--mute);
+  cursor: pointer;
+  padding: 4px 8px;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+.audio-link-sheet-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+.audio-link-sheet-actions .btn {
+  width: 100%;
+  justify-content: center;
+  background: var(--brand);
+  color: var(--on-brand);
+  gap: 8px;
+  font-weight: 600;
+  height: 42px;
+  border-radius: var(--radius-sm);
+}
 @media (max-width: 600px) {
   #bulkLinkAudioBtn span {
     display: none;
@@ -3399,7 +3470,7 @@ body.has-audio-player.audio-minimized .back-to-top {
           <svg class="i"><use href="#i-chevron-down"/></svg>
         </button>
         <!-- 2. Download -->
-        <a class="ap-tool-btn" id="apDlLink" href="#" target="_blank" rel="noopener noreferrer" download title="تنزيل الملف للجهاز" aria-label="تنزيل الريكورد">
+        <a class="ap-tool-btn" id="apDlLink" href="#" download title="تنزيل الملف للجهاز" aria-label="تنزيل الريكورد">
           <svg class="i"><use href="#i-download"/></svg>
         </a>
         <!-- 2.5 Link Audio File -->
@@ -3512,6 +3583,26 @@ body.has-audio-player.audio-minimized .back-to-top {
 
 <!-- Accessible Live Toast Message -->
 <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<!-- Persistent Audio Link Bottom Sheet (حل مشكلة التنزيل التلقائي والربط الفوري) -->
+<div id="audioLinkSheet" class="audio-link-sheet" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="linkSheetTitle">
+  <div class="audio-link-sheet-content">
+    <div class="audio-link-sheet-header">
+      <span class="audio-link-sheet-icon">⬇️</span>
+      <div class="audio-link-sheet-text">
+        <h4 id="linkSheetTitle">جارٍ تنزيل الريكورد على جهازك…</h4>
+        <p id="linkSheetDesc">بمجرد اكتمال التنزيل في هاتفك، اضغط الزر أدناه لاختيار الملف لربطه وتشغيله دون نت للأبد:</p>
+      </div>
+      <button type="button" class="audio-link-sheet-close" id="linkSheetCloseBtn" aria-label="إغلاق">✕</button>
+    </div>
+    <div class="audio-link-sheet-actions">
+      <button type="button" class="btn" id="linkSheetActionBtn">
+        <svg class="i"><use href="#i-link"/></svg>
+        <span>🔗 اضغط هنا لربط الملف المحمل بالموقع</span>
+      </button>
+    </div>
+  </div>
+</div>
 
 <!-- Noscript Fallback -->
 <noscript>
@@ -4906,7 +4997,7 @@ function resChipHTML(it, r, ctx = '') {
         <span>${r.l}</span>
       </button>
       <span class="chip-split-divider" aria-hidden="true"></span>
-      <a class="chip-split-dl downloadAudioBtn" href="${esc(dlUrl)}" download="${esc(it.subject || 'تسجيل')}.mp3" target="_blank" rel="noopener noreferrer" data-url="${esc(url)}" data-title="${esc(it.subject)}" data-type="${esc(it.type || '')}" data-ctx="${esc(contextLabel)}" data-dl="${esc(dlUrl)}" data-id="${esc(it.id || '')}" title="تحميل الريكورد للجهاز" aria-label="تحميل الريكورد للجهاز">
+      <a class="chip-split-dl downloadAudioBtn" href="${esc(dlUrl)}" download="${esc(it.subject || 'تسجيل')}.mp3" data-url="${esc(url)}" data-title="${esc(it.subject)}" data-type="${esc(it.type || '')}" data-ctx="${esc(contextLabel)}" data-dl="${esc(dlUrl)}" data-id="${esc(it.id || '')}" title="تحميل الريكورد للجهاز" aria-label="تحميل الريكورد للجهاز">
         <span class="dl-progress" style="display:none;"></span>
         <svg class="i" aria-hidden="true"><use href="#i-download"/></svg>
       </a>
@@ -5393,6 +5484,127 @@ async function downloadAndSaveAudio(url, meta = {}, isBackground = false) {
  * Matches a chosen local audio file to the corresponding lecture item
  * by comparing filenames and subject titles.
  */
+let currentLinkTrack = null;
+
+/**
+ * Triggers native device download in the SAME page without opening a blank tab.
+ */
+function startNativeDownload(url, filename) {
+  let iframe = $('hiddenDownloadFrame');
+  if (!iframe) {
+    iframe = document.createElement('iframe');
+    iframe.id = 'hiddenDownloadFrame';
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+  }
+  iframe.src = url;
+}
+
+/**
+ * Shows the persistent bottom sheet prompting the user to link the downloaded audio file.
+ */
+function showAudioLinkSheet(url, title, type, ctx, dl, id, isOfflinePrompt = false) {
+  currentLinkTrack = { url, title, type, ctx, dl, id, isOfflinePrompt };
+  const sheet = $('audioLinkSheet');
+  if (!sheet) return;
+
+  const titleEl = $('linkSheetTitle');
+  const descEl = $('linkSheetDesc');
+  const actionBtn = $('linkSheetActionBtn');
+
+  if (isOfflinePrompt) {
+    if (titleEl) titleEl.textContent = 'تشغيل الريكورد دون اتصال بالإنترنت';
+    if (descEl) descEl.textContent = `إذا كنت قد حمّلت "${title || 'المحاضرة'}" على جهازك، اضغط لتحديده وتشغيله فوراً:`;
+    if (actionBtn) {
+      const span = actionBtn.querySelector('span');
+      if (span) span.textContent = '📂 اختيار الملف وتشغيله فوراً';
+    }
+  } else {
+    if (titleEl) titleEl.textContent = `جارٍ تنزيل: ${title || 'الريكورد'} على جهازك…`;
+    if (descEl) descEl.textContent = 'بمجرد اكتمال التنزيل في هاتفك، اضغط الزر أدناه لاختيار الملف لربطه وتشغيله دون نت للأبد:';
+    if (actionBtn) {
+      const span = actionBtn.querySelector('span');
+      if (span) span.textContent = '🔗 اضغط هنا لربط الملف المحمل بالموقع';
+    }
+  }
+
+  sheet.style.display = 'block';
+}
+
+function hideAudioLinkSheet() {
+  const sheet = $('audioLinkSheet');
+  if (sheet) sheet.style.display = 'none';
+  currentLinkTrack = null;
+}
+
+function initLinkSheet() {
+  const actionBtn = $('linkSheetActionBtn');
+  const closeBtn = $('linkSheetCloseBtn');
+  if (!actionBtn) return;
+
+  let picker = $('sheetAudioPicker');
+  if (!picker) {
+    picker = document.createElement('input');
+    picker.type = 'file';
+    picker.id = 'sheetAudioPicker';
+    picker.accept = 'audio/*, .mp3, .m4a, .aac, .ogg, .wav';
+    picker.style.display = 'none';
+    document.body.appendChild(picker);
+  }
+
+  actionBtn.onclick = () => {
+    picker.value = '';
+    picker.click();
+  };
+
+  if (closeBtn) {
+    closeBtn.onclick = () => {
+      hideAudioLinkSheet();
+    };
+  }
+
+  picker.onchange = async () => {
+    const file = picker.files && picker.files[0];
+    if (!file || !currentLinkTrack) return;
+
+    const track = currentLinkTrack;
+    hideAudioLinkSheet();
+    toast('جارٍ ربط الملف بالموقع…');
+
+    try {
+      await audioDB.save(track.url, file, {
+        title: track.title,
+        type: track.type,
+        id: track.id
+      });
+      localStorage.setItem('pt_audio_saved_' + track.url, '1');
+      await refreshSavedAudioBadges();
+      toast('تم ربط الريكورد بنجاح ✓ — يعمل الآن دون إنترنت في أي وقت!');
+
+      if (track.isOfflinePrompt) {
+        const blobUrl = URL.createObjectURL(file);
+        AudioPlayer.play({
+          url: track.url,
+          title: track.title,
+          type: track.type,
+          ctx: track.ctx,
+          dl: track.dl,
+          id: track.id,
+          streamUrl: blobUrl,
+          isOfflineBlob: true
+        });
+      }
+    } catch (err) {
+      console.warn('Sheet audio link error:', err);
+      toast('تعذّر حفظ الملف، يرجى المحاولة مرة أخرى');
+    }
+  };
+}
+
+/**
+ * Matches a chosen local audio file to the corresponding lecture item
+ * by comparing filenames and subject titles.
+ */
 function findMatchingLectureForFile(fileName, audioItems) {
   if (!fileName || !audioItems || !audioItems.length) return null;
   const cleanName = fileName.toLowerCase().replace(/\.(mp3|m4a|aac|ogg|wav)$/i, '').replace(/[_s.\-–—]+/g, ' ').trim();
@@ -5430,61 +5642,17 @@ function findMatchingLectureForFile(fileName, audioItems) {
 }
 
 /**
- * Prompts user to pick a downloaded audio file from their device,
- * permanently binds it to the lecture in IndexedDB, and optionally plays it.
- */
-function promptLinkLocalAudio(url, title, type, ctx, dl, id, autoPlayAfterLink = false) {
-  let fileInput = $('singleAudioPicker');
-  if (!fileInput) {
-    fileInput = document.createElement('input');
-    fileInput.type = 'file';
-    fileInput.id = 'singleAudioPicker';
-    fileInput.accept = 'audio/*, .mp3, .m4a, .aac, .ogg, .wav';
-    fileInput.style.display = 'none';
-    document.body.appendChild(fileInput);
-  }
-
-  fileInput.onchange = async () => {
-    const file = fileInput.files && fileInput.files[0];
-    if (!file) return;
-    toast('جارٍ ربط الملف بالموقع…');
-    try {
-      // حفظ في IndexedDB ليصبح متاحاً فوراً بلمسة واحدة دون اتصال للأبد
-      await audioDB.save(url, file, { title, type, id });
-      localStorage.setItem('pt_audio_saved_' + url, '1');
-      await refreshSavedAudioBadges();
-      toast('تم ربط الريكورد بنجاح ✓ — يعمل الآن دون إنترنت في أي وقت');
-
-      if (autoPlayAfterLink) {
-        const blobUrl = URL.createObjectURL(file);
-        AudioPlayer.play({ url, title, type, ctx, dl, id, streamUrl: blobUrl, isOfflineBlob: true });
-      }
-    } catch (err) {
-      console.warn('Audio link error:', err);
-      toast('تعذّر حفظ الريكورد، يرجى المحاولة مجدداً');
-    }
-  };
-
-  const actionText = autoPlayAfterLink ? '📂 اختيار الملف والتشغيل' : '🔗 ربط الملف المحمل';
-  const msg = autoPlayAfterLink
-    ? `الريكورد محمل على جهازك؟ اضغط لتحديده والتشغيل فوراً:`
-    : `لربط ريكورد "${title || 'المحاضرة'}" ليعمل دون نت للأبد:`;
-
-  toast(msg, actionText, () => fileInput.click());
-}
-
-/**
  * Handles Listen click:
  * 1. If saved in IndexedDB -> instant play offline
  * 2. If online -> instant streaming
- * 3. If offline and unlinked -> opens file picker to link and play
+ * 3. If offline and unlinked -> opens link sheet
  */
 async function handleAudioListen(playBtn) {
   const url = playBtn.dataset.url;
   const title = playBtn.dataset.title;
   const type = playBtn.dataset.type;
   const ctx = playBtn.dataset.ctx;
-  const dl = playBtn.dataset.dl;
+  const dl = playBtn.dataset.dl || url;
   const id = playBtn.dataset.id;
 
   if (!url || typeof AudioPlayer === 'undefined') return;
@@ -5503,21 +5671,23 @@ async function handleAudioListen(playBtn) {
     return;
   }
 
-  // 3. إذا كنا دون اتصال والريكورد مش مربوط -> طلب اختيار الملف للربط والتشغيل الفوري
-  promptLinkLocalAudio(url, title, type, ctx, dl, id, true);
+  // 3. إذا كنا دون اتصال والريكورد مش مربوط -> طلب اختيار الملف عبر الـ Bottom Sheet
+  showAudioLinkSheet(url, title, type, ctx, dl, id, true);
 }
 
 /**
  * Handles Download click:
- * 1. If already in IndexedDB -> save copy to Downloads
- * 2. If not -> browser downloads via <a> and prompts user to link file
+ * Downloads in the same page without navigating or opening a new tab,
+ * and displays the persistent linking bottom sheet.
  */
 async function handleAudioDownload(e, dlBtn) {
+  e.preventDefault();
+
   const url = dlBtn.dataset.url;
   const title = dlBtn.dataset.title || 'تسجيل_المحاضرة';
   const type = dlBtn.dataset.type;
   const ctx = dlBtn.dataset.ctx;
-  const dl = dlBtn.dataset.dl;
+  const dl = dlBtn.dataset.dl || url;
   const id = dlBtn.dataset.id;
 
   if (!url) return;
@@ -5525,17 +5695,16 @@ async function handleAudioDownload(e, dlBtn) {
   // 1. لو مربوط بالفعل في IndexedDB -> تنزيل فوري للجهاز
   const savedBlob = await audioDB.get(url);
   if (savedBlob) {
-    e.preventDefault();
     saveBlobToDevice(savedBlob, title);
-    toast('الريكورد مربوط بالفعل ومحفوظ أوفلاين ✓ — تم حفظ نسخة في مجلد التنزيلات');
+    toast('الريكورد مربوط ومحفوظ أوفلاين ✓ — تم تنزيل نسخة لجهازك');
     return;
   }
 
-  // 2. يبدأ التنزيل الطبيعي للجهاز عبر الرابط <a>
-  toast('جارٍ تنزيل الريكورد لجهازك…');
-  setTimeout(() => {
-    promptLinkLocalAudio(url, title, type, ctx, dl, id, false);
-  }, 1200);
+  // 2. بدء التنزيل المباشر في نفس الصفحة بدون فتح أي تبويب جديد
+  startNativeDownload(dl, (title || 'تسجيل') + '.mp3');
+
+  // 3. إظهار شريط الربط المستمر لربط الملف بعد اكتمال التنزيل
+  showAudioLinkSheet(url, title, type, ctx, dl, id, false);
 }
 
 /**
@@ -5554,7 +5723,7 @@ async function refreshSavedAudioBadges() {
         chip.classList.add('is-saved');
         if (dlBtn) {
           dlBtn.classList.add('is-saved');
-          dlBtn.setAttribute('title', 'مربوط ومحفوظ للاستماع دون اتصال ✓ (انقر للتنزيل أو إعادة الربط)');
+          dlBtn.setAttribute('title', 'مربوط ومحفوظ للاستماع دون اتصال ✓ (انقر لتنزيل نسخة مجدداً)');
           if (dlUse) dlUse.setAttribute('href', '#i-check');
         }
       } else {
@@ -6485,9 +6654,19 @@ const AudioPlayer = {
     if ($('apExtLink')) $('apExtLink').href = driveUrl;
     if ($('apDlLink')) {
       $('apDlLink').href = dlLink;
-      $('apDlLink').onclick = () => {
+      $('apDlLink').onclick = (e) => {
+        e.preventDefault();
         if (this.currentTrack && this.currentTrack.url) {
-          cacheAudioUrlInBackground(this.currentTrack.url);
+          startNativeDownload(dlLink, (this.currentTrack.title || 'تسجيل') + '.mp3');
+          showAudioLinkSheet(
+            this.currentTrack.url,
+            this.currentTrack.title,
+            this.currentTrack.type,
+            this.currentTrack.ctx,
+            dlLink,
+            this.currentTrack.id,
+            false
+          );
         }
       };
     }
@@ -7187,6 +7366,7 @@ updateLastSyncDisplay();
 render(false);
 AudioPlayer.init();
 initBulkLinker();
+initLinkSheet();
 loadAll();
 startNextClassTimer();
 renderAdhkar();

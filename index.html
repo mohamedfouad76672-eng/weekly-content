@@ -1523,6 +1523,21 @@ button.chip.off:hover {
   margin: 6px 0;
   flex: none;
 }
+/* Split Chip Enhancements: Progress bar, Saved State, Download Handler */
+.chip-split {
+  position: relative;
+}
+.chip-split-progress-bar {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 2px;
+  background: var(--brand);
+  width: 0%;
+  transition: width 120ms linear;
+  pointer-events: none;
+  z-index: 2;
+}
 .chip-split-dl {
   display: inline-flex;
   align-items: center;
@@ -1530,7 +1545,13 @@ button.chip.off:hover {
   width: 34px;
   color: inherit;
   text-decoration: none;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  font-family: inherit;
   transition: background-color 150ms ease, color 150ms ease;
+  position: relative;
 }
 .chip-split-dl:hover {
   background: var(--brand);
@@ -1541,6 +1562,26 @@ button.chip.off:hover {
 }
 .chip-split-dl:hover .i {
   transform: translateY(1.5px);
+}
+.chip-split-dl .dl-progress {
+  font-size: 10px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--brand);
+  line-height: 1;
+}
+.chip-split-dl:hover .dl-progress {
+  color: var(--on-brand);
+}
+/* When audio is saved in IndexedDB: ⬇️ icon turns to --brand */
+.chip-split.is-saved .chip-split-dl .i,
+.chip-split-dl.is-saved .i {
+  color: var(--brand) !important;
+  stroke: var(--brand) !important;
+}
+.chip-split.is-saved .chip-split-dl:hover .i {
+  color: var(--on-brand) !important;
+  stroke: var(--on-brand) !important;
 }
 
 /* ==========================================================================
@@ -2396,9 +2437,14 @@ button.chip.off:hover {
   height: 10px;
   transition: background 0.12s ease, transform 0.15s ease, border-color 0.12s ease;
 }
+/* Buffered loaded portion (الجزء اللي اتحمّل) */
+.ap-wave-bar.buffered {
+  background: #235852;
+  border-color: rgba(78, 205, 196, 0.3);
+}
 .ap-wave-bar.active {
   background: #4ecdc4;
-  border-color: rgba(78, 205, 196, 0.4);
+  border-color: rgba(78, 205, 196, 0.7);
   box-shadow: 0 0 10px rgba(78, 205, 196, 0.35);
 }
 .ap-waveform-wrap:hover .ap-wave-bar {
@@ -2597,39 +2643,132 @@ button.chip.off:hover {
   bottom: calc(100% + 8px);
   inset-inline-start: 0;
   background: #14221f;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 10px;
-  padding: 6px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 12px;
+  padding: 10px;
+  box-shadow: 0 14px 35px rgba(0, 0, 0, 0.65);
   display: flex;
   flex-direction: column;
-  gap: 3px;
-  min-width: 120px;
-  z-index: 20;
+  gap: 8px;
+  min-width: 175px;
+  z-index: 25;
+}
+.ap-speed-adjust-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  direction: ltr;
+}
+.ap-speed-step {
+  width: 30px;
+  height: 30px;
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s ease;
+  user-select: none;
+}
+.ap-speed-step:hover {
+  background: rgba(78, 205, 196, 0.2);
+  border-color: #4ecdc4;
+  color: #4ecdc4;
+}
+.ap-speed-step:active {
+  transform: scale(0.92);
+}
+.ap-speed-display {
+  font-size: 15px;
+  font-weight: 700;
+  color: #4ecdc4;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.5px;
+}
+.ap-speed-slider-wrap {
+  width: 100%;
+}
+.ap-speed-slider {
+  width: 100%;
+  height: 20px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent !important;
+  cursor: pointer;
+  outline: none;
+  margin: 0;
+  padding: 0;
+}
+.ap-speed-slider::-webkit-slider-runnable-track {
+  height: 4px;
+  border-radius: 999px;
+  background: linear-gradient(to right, #4ecdc4 var(--spd-fill, 20%), rgba(255, 255, 255, 0.16) var(--spd-fill, 20%));
+}
+.ap-speed-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid #4ecdc4;
+  margin-top: -5px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+  transition: transform 0.12s ease;
+}
+.ap-speed-slider:hover::-webkit-slider-thumb {
+  transform: scale(1.2);
+}
+.ap-speed-presets {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  direction: ltr;
 }
 .ap-speed-opt {
   display: block;
   width: 100%;
-  text-align: right;
-  padding: 7px 12px;
+  text-align: center;
+  padding: 5px 6px;
   border-radius: 6px;
-  background: transparent;
-  border: none;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   color: #92a7a4;
-  font-size: 12.5px;
+  font-size: 11.5px;
   font-weight: 600;
   cursor: pointer;
   font-family: inherit;
   transition: all 0.12s ease;
 }
 .ap-speed-opt:hover {
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.1);
   color: #fff;
 }
 .ap-speed-opt.active {
-  background: rgba(78, 205, 196, 0.16);
+  background: rgba(78, 205, 196, 0.2);
+  border-color: rgba(78, 205, 196, 0.4);
   color: #4ecdc4;
   font-weight: 700;
+}
+.ap-vol-percent {
+  font-size: 11px;
+  font-weight: 700;
+  color: #92a7a4;
+  font-variant-numeric: tabular-nums;
+  min-width: 36px;
+  text-align: center;
+  user-select: none;
+  transition: color 0.15s ease;
+}
+.ap-vol-percent.is-boosted {
+  color: #4ecdc4;
+  font-weight: 800;
 }
 
 /* Volume Control: Sleek, Elegant, Slim 4px Track */
@@ -3162,7 +3301,7 @@ body.has-audio-player.audio-minimized .back-to-top {
 <!-- Floating Mini Audio Player (Docked Bottom Center) -->
 <div id="audioPlayer" class="audio-player" role="region" aria-label="مشغل الصوت المدمج" style="display:none;">
   <!-- Hidden HTML5 Audio Element -->
-  <audio id="globalAudio" preload="metadata"></audio>
+  <audio id="globalAudio" preload="auto"></audio>
   
   <!-- Minimized Bar (Visible when .minimized) -->
   <div class="ap-mini" id="apMini">
@@ -3266,21 +3405,30 @@ body.has-audio-player.audio-minimized .back-to-top {
         </button>
       </div>
 
-      <!-- Footer Bar: Speed Pill (Left) & Volume Control (Right) -->
+      <!-- Footer Bar: Speed Pill (Left) & Volume Control with 400% Booster (Right) -->
       <div class="ap-footer-bar">
         <div class="ap-speed-wrapper">
           <button type="button" class="ap-speed-pill" id="apSpeedBtn" title="سرعة التشغيل" aria-label="سرعة التشغيل 1x" aria-haspopup="menu" aria-expanded="false">
             <span id="apSpeedLabel">1x</span>
             <svg class="ap-speed-chevron" viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg>
           </button>
-          <div class="ap-speed-menu" id="apSpeedMenu" style="display:none;" role="menu">
-            <button type="button" class="ap-speed-opt" data-spd="0.5">0.5x</button>
-            <button type="button" class="ap-speed-opt" data-spd="0.75">0.75x</button>
-            <button type="button" class="ap-speed-opt active" data-spd="1">1x (طبيعي)</button>
-            <button type="button" class="ap-speed-opt" data-spd="1.25">1.25x</button>
-            <button type="button" class="ap-speed-opt" data-spd="1.5">1.5x</button>
-            <button type="button" class="ap-speed-opt" data-spd="1.75">1.75x</button>
-            <button type="button" class="ap-speed-opt" data-spd="2">2x</button>
+          <div class="ap-speed-menu" id="apSpeedMenu" style="display:none;" role="menu" aria-label="خيارات سرعة التشغيل">
+            <div class="ap-speed-adjust-row">
+              <button type="button" class="ap-speed-step" id="apSpeedMinus" title="تقليل السرعة 0.1" aria-label="تقليل السرعة 0.1">−</button>
+              <div class="ap-speed-display" id="apSpeedValDisplay">1.0×</div>
+              <button type="button" class="ap-speed-step" id="apSpeedPlus" title="زيادة السرعة 0.1" aria-label="زيادة السرعة 0.1">+</button>
+            </div>
+            <div class="ap-speed-slider-wrap">
+              <input type="range" id="apSpeedSlider" min="0.5" max="3" step="0.1" value="1" class="ap-speed-slider" title="مؤشر سرعة التشغيل من 0.5 إلى 3" aria-label="مؤشر سرعة التشغيل">
+            </div>
+            <div class="ap-speed-presets">
+              <button type="button" class="ap-speed-opt speed-preset" data-spd="1">1×</button>
+              <button type="button" class="ap-speed-opt speed-preset" data-spd="1.2">1.2×</button>
+              <button type="button" class="ap-speed-opt speed-preset" data-spd="1.5">1.5×</button>
+              <button type="button" class="ap-speed-opt speed-preset" data-spd="1.8">1.8×</button>
+              <button type="button" class="ap-speed-opt speed-preset" data-spd="2">2×</button>
+              <button type="button" class="ap-speed-opt speed-preset" data-spd="2.5">2.5×</button>
+            </div>
           </div>
         </div>
 
@@ -3289,8 +3437,9 @@ body.has-audio-player.audio-minimized .back-to-top {
             <svg class="i" id="apMuteIcon"><use href="#i-volume-2"/></svg>
           </button>
           <div class="ap-vol-slider-wrap">
-            <input type="range" id="apVolume" class="ap-vol-slider" min="0" max="1" step="0.05" value="1" title="مستوى الصوت" aria-label="مستوى الصوت">
+            <input type="range" id="apVolume" class="ap-vol-slider" min="0" max="4" step="0.05" value="1" title="مستوى ومضاعف الصوت حتى 400%" aria-label="مستوى الصوت">
           </div>
+          <span id="apVolPercent" class="ap-vol-percent" title="نسبة الصوت ومضاعف الصوت">100%</span>
         </div>
       </div>
     </div>
@@ -3869,11 +4018,15 @@ function getGoogleDrivePreviewUrl(url) {
  */
 function getAudioStreamUrl(url) {
   if (!url || typeof url !== 'string') return '';
+  const trimmed = url.trim();
+  // GitHub Raw link normalization
+  if (trimmed.includes('github.com') && trimmed.includes('/blob/')) {
+    return trimmed.replace('github.com', 'raw.githubusercontent.com').replace('/blob/', '/');
+  }
   const id = getGoogleDriveId(url);
   if (id) {
     return `https://drive.usercontent.google.com/download?id=${id}&export=download&confirm=t`;
   }
-  const trimmed = url.trim();
   if (trimmed.includes('dropbox.com')) {
     return trimmed.replace('dl=0', 'raw=1');
   }
@@ -3981,124 +4134,122 @@ function toTop() {
  * @param {boolean} [bypassCache=false] Force network request
  * @returns {Promise<Array|null>}
  */
-function fetchWeek(n, signal, bypassCache = false) {
+function parseGvizText(text) {
+  const start = text.indexOf('{');
+  const end = text.lastIndexOf('}');
+  if (start !== -1 && end !== -1) {
+    return JSON.parse(text.substring(start, end + 1));
+  }
+  throw new Error('Invalid GViz response');
+}
+
+function processGvizData(resp, n) {
+  const rawRows = (resp && resp.table && resp.table.rows) || [];
+  let notesColIdx = 11;
+  if (rawRows.length > 0) {
+    const headerCells = rawRows[0].c || [];
+    for (let i = 0; i < headerCells.length; i++) {
+      const hText = (headerCells[i] && headerCells[i].v) ? String(headerCells[i].v).trim().toLowerCase() : '';
+      if (hText.includes('ملاحظ') || hText.includes('note')) {
+        notesColIdx = i;
+        break;
+      }
+    }
+  }
+
+  return rawRows.map((row, rowIdx) => {
+    const c = row.c || [];
+    const v = i => (c[i] && c[i].v != null) ? String(c[i].v).trim() : '';
+    const rawDay = v(0);
+    const rawKey = v(10) || rawDay;
+    const rawNotes = v(notesColIdx);
+    const cleanNotes = (rawNotes && rawNotes !== 'undefined' && rawNotes !== '-' && !rawNotes.includes('ملاحظ') && !rawNotes.includes('note')) ? rawNotes : '';
+    return {
+      id: `lec-${n}-${rowIdx}`,
+      wk: n,
+      day: rawDay,
+      subject: v(1),
+      type: v(2),
+      place: v(3),
+      time: v(4),
+      audio: v(5),
+      pdf: v(6),
+      summary: v(7),
+      transcript: v(8),
+      quiz: v(9),
+      dayKey: validateDayKey(rawKey),
+      notes: cleanNotes
+    };
+  }).filter(x => {
+    const s = (x.subject || '').trim().toLowerCase();
+    return s && s !== 'المادة (subject)' && s !== 'المادة' && s !== 'غير محدد' && s !== 'بدون مادة' && s !== 'undefined' && s !== '-';
+  });
+}
+
+/**
+ * Loads a week with Stale-While-Revalidate caching via fetch() and Cache Storage
+ */
+async function fetchWeek(n, signal, bypassCache = false) {
   const cacheKey = 'ptw_' + n;
   if (!bypassCache) {
     const cached = cache.get(cacheKey);
-    if (cached) return Promise.resolve(cached);
+    if (cached) return cached;
   }
 
-  if (signal && signal.aborted) {
-    return Promise.resolve(null);
-  }
+  if (signal && signal.aborted) return null;
 
-  return new Promise(resolve => {
-    const cb = 'gviz_cb_' + n + '_' + Math.random().toString(36).substring(2, 8);
-    const sheetName = 'Week ' + String(n).padStart(2, '0');
-    const script = document.createElement('script');
+  const sheetName = 'Week ' + String(n).padStart(2, '0');
+  const url = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?sheet=${encodeURIComponent(sheetName)}`;
 
-    let completed = false;
-    const cleanup = () => {
-      completed = true;
-      if (window[cb]) delete window[cb];
-      if (script.parentNode) script.remove();
-      if (signal) signal.removeEventListener('abort', onAbort);
-    };
-
-    const onAbort = () => {
-      if (!completed) {
-        cleanup();
-        resolve(null);
-      }
-    };
-
-    if (signal) {
-      signal.addEventListener('abort', onAbort);
-    }
-
-    const timeout = setTimeout(() => {
-      if (!completed) {
-        cleanup();
-        // Fallback to durable localStorage cache if network timed out
-        const fallback = cache.get(cacheKey, true);
-        if (fallback) isOfflineMode = true;
-        resolve(fallback || null);
-      }
-    }, 10000);
-
-    window[cb] = function(resp) {
-      clearTimeout(timeout);
-      if (completed) return;
-      try {
-        const rawRows = (resp && resp.table && resp.table.rows) || [];
-        let notesColIdx = 11;
-        if (rawRows.length > 0) {
-          const headerCells = rawRows[0].c || [];
-          for (let i = 0; i < headerCells.length; i++) {
-            const hText = (headerCells[i] && headerCells[i].v) ? String(headerCells[i].v).trim().toLowerCase() : '';
-            if (hText.includes('ملاحظ') || hText.includes('note')) {
-              notesColIdx = i;
-              break;
+  // 1. Try modern fetch (supports Service Worker & Cache Storage)
+  if (navigator.onLine) {
+    try {
+      const res = await fetch(url, { signal });
+      if (res.ok) {
+        const text = await res.text();
+        const resp = parseGvizText(text);
+        const rows = processGvizData(resp, n);
+        if (rows && rows.length) {
+          cache.set(cacheKey, rows);
+          try {
+            if ('caches' in window) {
+              const sc = await caches.open('pt-sheets-v1');
+              await sc.put(new Request(url), new Response(text, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } }));
             }
-          }
+          } catch (_) {}
+          return rows;
         }
-
-        const rows = rawRows.map((row, rowIdx) => {
-          const c = row.c || [];
-          const v = i => (c[i] && c[i].v != null) ? String(c[i].v).trim() : '';
-          const rawDay = v(0);
-          const rawKey = v(10) || rawDay;
-          const rawNotes = v(notesColIdx);
-          const cleanNotes = (rawNotes && rawNotes !== 'undefined' && rawNotes !== '-' && !rawNotes.includes('ملاحظ') && !rawNotes.includes('note')) ? rawNotes : '';
-          return {
-            id: `lec-${n}-${rowIdx}`,
-            wk: n,
-            day: rawDay,
-            subject: v(1),
-            type: v(2),
-            place: v(3),
-            time: v(4),
-            audio: v(5),
-            pdf: v(6),
-            summary: v(7),
-            transcript: v(8),
-            quiz: v(9),
-            dayKey: validateDayKey(rawKey),
-            notes: cleanNotes
-          };
-        }).filter(x => {
-          const s = (x.subject || '').trim().toLowerCase();
-          // Exclude header rows and empty records
-          return s && s !== 'المادة (subject)' && s !== 'المادة' && s !== 'غير محدد' && s !== 'بدون مادة' && s !== 'undefined' && s !== '-';
-        });
-
-        cache.set(cacheKey, rows);
-        cleanup();
-        resolve(rows);
-      } catch (err) {
-        cleanup();
-        const fallback = cache.get(cacheKey, true);
-        if (fallback) isOfflineMode = true;
-        resolve(fallback || null);
       }
-    };
+    } catch (err) {
+      console.warn(`Network fetch failed for week ${n}:`, err);
+    }
+  }
 
-    script.onerror = function() {
-      clearTimeout(timeout);
-      cleanup();
-      // Fallback to durable localStorage cache if network errored
-      const fallback = cache.get(cacheKey, true);
-      if (fallback) isOfflineMode = true;
-      resolve(fallback || null);
-    };
+  // 2. Fallback to Cache Storage (Offline)
+  try {
+    if ('caches' in window) {
+      const sc = await caches.open('pt-sheets-v1');
+      const cachedRes = await sc.match(url);
+      if (cachedRes) {
+        const text = await cachedRes.text();
+        const resp = parseGvizText(text);
+        const rows = processGvizData(resp, n);
+        if (rows && rows.length) {
+          isOfflineMode = true;
+          return rows;
+        }
+      }
+    }
+  } catch (_) {}
 
-    const params = new URLSearchParams({
-      sheet: sheetName,
-      tqx: `responseHandler:${cb}`
-    });
-    script.src = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?${params.toString()}`;
-    document.body.appendChild(script);
-  });
+  // 3. Fallback to durable localStorage cache
+  const fallback = cache.get(cacheKey, true);
+  if (fallback) {
+    isOfflineMode = true;
+    return fallback;
+  }
+
+  return null;
 }
 
 /**
@@ -4665,20 +4816,22 @@ function resChipHTML(it, r, ctx = '') {
     return `<button type="button" class="chip off" data-unavail="${r.l}" title="${r.l} لم يتم رفعه بعد — انقر للمزيد" aria-label="${r.l} (غير متاح بعد)">${ic(r.i)}${r.l}</button>`;
   }
 
-  // Segmented Chip for Audio: Listen in Floating Player + Direct Download to Device
+  // Segmented Chip for Audio: Listen in Floating Player + Offline Download & IndexedDB
   if (r.k === 'audio') {
     const dlUrl = getDirectDownloadUrl(url);
     const contextLabel = ctx || (it.day ? `${it.day} • الأسبوع ${it.wk}` : '');
     const isPlayingThis = typeof AudioPlayer !== 'undefined' && AudioPlayer.currentTrack && AudioPlayer.currentTrack.url === url && !AudioPlayer.isPaused();
     return `<div class="chip-split${isPlayingThis ? ' is-playing' : ''}" role="group" aria-label="خيارات الريكورد" data-audio-url="${esc(url)}">
-      <button type="button" class="chip-split-main playAudioBtn" data-url="${esc(url)}" data-title="${esc(it.subject)}" data-type="${esc(it.type || '')}" data-ctx="${esc(contextLabel)}" data-dl="${esc(dlUrl)}" title="تشغيل الريكورد في المشغل المدمج" aria-label="تشغيل ريكورد ${esc(it.subject)}">
+      <button type="button" class="chip-split-main playAudioBtn" data-url="${esc(url)}" data-title="${esc(it.subject)}" data-type="${esc(it.type || '')}" data-ctx="${esc(contextLabel)}" data-dl="${esc(dlUrl)}" data-id="${esc(it.id || '')}" title="تشغيل الريكورد في المشغل المدمج" aria-label="تشغيل ريكورد ${esc(it.subject)}">
         <span class="chip-audio-icon">${ic('headphones')}</span>
         <span>${r.l}</span>
       </button>
       <span class="chip-split-divider" aria-hidden="true"></span>
-      <a class="chip-split-dl" href="${esc(dlUrl)}" target="_blank" rel="noopener noreferrer" download title="تحميل الريكورد مباشرة للجهاز" aria-label="تحميل الريكورد مباشرة للجهاز">
+      <a class="chip-split-dl downloadAudioBtn" href="${esc(dlUrl)}" download="${esc(it.subject || 'تسجيل')}.mp3" target="_blank" rel="noopener noreferrer" data-url="${esc(url)}" data-title="${esc(it.subject)}" data-type="${esc(it.type || '')}" data-ctx="${esc(contextLabel)}" data-dl="${esc(dlUrl)}" data-id="${esc(it.id || '')}" title="تحميل الريكورد للجهاز" aria-label="تحميل الريكورد للجهاز">
+        <span class="dl-progress" style="display:none;"></span>
         <svg class="i" aria-hidden="true"><use href="#i-download"/></svg>
       </a>
+      <div class="chip-split-progress-bar" style="width:0%;"></div>
     </div>`;
   }
 
@@ -5048,6 +5201,182 @@ function renderWithTransition(renderAction, scrollToTop = false) {
   }, 90);
 }
 
+// ==========================================================================
+// Offline Audio Playback & Download Handlers (Problem 2)
+// ==========================================================================
+const activeDownloads = new Map();
+
+function saveBlobToDevice(blob, title) {
+  try {
+    const blobUrl = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = blobUrl;
+    let safeName = (title || 'تسجيل_المحاضرة').trim().replace(/[/\\?%*:|"<>]/g, '_');
+    if (!safeName.toLowerCase().endsWith('.mp3')) safeName += '.mp3';
+    a.download = safeName;
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+      a.remove();
+      URL.revokeObjectURL(blobUrl);
+    }, 25000);
+  } catch (err) {
+    console.warn('saveBlobToDevice error:', err);
+  }
+}
+
+function updateDownloadProgressUI(url, pct, isDone = false, isError = false) {
+  document.querySelectorAll('.chip-split[data-audio-url]').forEach(chip => {
+    if (chip.getAttribute('data-audio-url') !== url) return;
+    const dlBtn = chip.querySelector('.chip-split-dl');
+    const progText = dlBtn?.querySelector('.dl-progress');
+    const icon = dlBtn?.querySelector('.i');
+    const bar = chip.querySelector('.chip-split-progress-bar');
+
+    if (isDone) {
+      if (bar) {
+        bar.style.width = '100%';
+        setTimeout(() => { bar.style.width = '0%'; }, 500);
+      }
+      if (progText) progText.style.display = 'none';
+      if (icon) icon.style.display = 'inline-block';
+      chip.classList.add('is-saved');
+      if (dlBtn) dlBtn.classList.add('is-saved');
+    } else if (isError) {
+      if (bar) bar.style.width = '0%';
+      if (progText) progText.style.display = 'none';
+      if (icon) icon.style.display = 'inline-block';
+    } else {
+      if (bar) bar.style.width = `${pct}%`;
+      if (progText) {
+        progText.textContent = `${pct}%`;
+        progText.style.display = 'inline';
+      }
+      if (icon) icon.style.display = 'none';
+    }
+  });
+}
+
+async function downloadAndSaveAudio(url, meta = {}, isBackground = false) {
+  if (!url) return null;
+  if (activeDownloads.has(url)) {
+    return activeDownloads.get(url);
+  }
+
+  const p = (async () => {
+    try {
+      const streamUrl = getAudioStreamUrl(url);
+      const res = await fetch(streamUrl);
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+
+      const contentLength = +res.headers.get('Content-Length');
+      const reader = res.body?.getReader();
+      let blob;
+
+      if (reader && contentLength) {
+        let received = 0;
+        const chunks = [];
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          chunks.push(value);
+          received += value.length;
+          const pct = Math.round((received / contentLength) * 100);
+          updateDownloadProgressUI(url, pct);
+        }
+        blob = new Blob(chunks, { type: 'audio/mpeg' });
+      } else {
+        blob = await res.blob();
+      }
+
+      await audioDB.save(url, blob, meta);
+      updateDownloadProgressUI(url, 100, true);
+      refreshSavedAudioBadges();
+      return blob;
+    } catch (err) {
+      console.warn('Audio download failed:', err);
+      updateDownloadProgressUI(url, 0, false, true);
+      if (!isBackground) {
+        toast('تعذّر حفظ الريكورد — تحقق من الاتصال');
+      }
+      return null;
+    } finally {
+      activeDownloads.delete(url);
+    }
+  })();
+
+  activeDownloads.set(url, p);
+  return p;
+}
+
+async function handleAudioListen(playBtn) {
+  const url = playBtn.dataset.url;
+  const title = playBtn.dataset.title;
+  const type = playBtn.dataset.type;
+  const ctx = playBtn.dataset.ctx;
+  const dl = playBtn.dataset.dl;
+  const id = playBtn.dataset.id;
+
+  if (!url || typeof AudioPlayer === 'undefined') return;
+
+  // 1. لو محفوظ في IndexedDB -> شغل من IndexedDB مباشرة (صفر نت)
+  const savedBlob = await audioDB.get(url);
+  if (savedBlob) {
+    const blobUrl = URL.createObjectURL(savedBlob);
+    AudioPlayer.play({ url, title, type, ctx, dl, id, streamUrl: blobUrl, isOfflineBlob: true });
+    return;
+  }
+
+  // 2. لو مش محفوظ + مفيش نت -> Toast
+  if (!navigator.onLine) {
+    toast('الريكورد مش محفوظ — لازم نت أول مرة');
+    return;
+  }
+
+  // 3. لو مش محفوظ + فيه نت -> تشغيل فوري Progressive Streaming!
+  // المستخدم يسمع الجزء اللي بيحمل عادي بدون انتظار انتهاء التحميل
+  AudioPlayer.play({ url, title, type, ctx, dl, id });
+}
+
+async function handleAudioDownload(e, dlBtn) {
+  const url = dlBtn.dataset.url;
+  const title = dlBtn.dataset.title || 'تسجيل_المحاضرة';
+
+  if (!url) return;
+
+  // 1. لو محفوظ في IndexedDB -> تنزيل فوري من الـ Blob المحفوظ
+  const savedBlob = await audioDB.get(url);
+  if (savedBlob) {
+    e.preventDefault();
+    saveBlobToDevice(savedBlob, title);
+    toast('محفوظ بالفعل ✓ — تم حفظ نسخة في مجلد التنزيلات');
+    return;
+  }
+
+  // 2. لو مش محفوظ: الرابط <a> مع download يقوم بالتنزيل المباشر للموبايل والجهاز
+  // بدون منع المتصفح، لتفادي مشاكل الـ CORS وضمان التنزيل 100%
+  toast('جارٍ تنزيل الريكورد على جهازك ✓');
+  // المتصفح ينفذ التحميل المباشر تلقائياً
+}
+
+async function refreshSavedAudioBadges() {
+  try {
+    const savedKeys = await audioDB.getAllKeys();
+    document.querySelectorAll('.chip-split[data-audio-url]').forEach(chip => {
+      const url = chip.getAttribute('data-audio-url');
+      const dlBtn = chip.querySelector('.chip-split-dl');
+      if (savedKeys.has(url)) {
+        chip.classList.add('is-saved');
+        if (dlBtn) dlBtn.classList.add('is-saved');
+      } else {
+        chip.classList.remove('is-saved');
+        if (dlBtn) dlBtn.classList.remove('is-saved');
+      }
+    });
+  } catch (_) {}
+}
+
 function renderCore(scrollToTop = false) {
   // Persist session state
   store.set('pt_view', st.view);
@@ -5078,6 +5407,7 @@ function renderCore(scrollToTop = false) {
   else if (st.view === 'favs') renderFavs();
 
   if (typeof AudioPlayer !== 'undefined') AudioPlayer.updateChips();
+  if (typeof refreshSavedAudioBadges === 'function') refreshSavedAudioBadges();
 
   if (scrollToTop) toTop();
 }
@@ -5436,6 +5766,185 @@ $('refreshBtn').onclick = () => {
 };
 
 // ==========================================================================
+// IndexedDB Engine for Offline Audio Recordings (Problem 2)
+// ==========================================================================
+const audioDB = {
+  dbName: 'pt_recordings_store',
+  storeName: 'recordings',
+  _db: null,
+
+  async getDB() {
+    if (this._db) return this._db;
+    return new Promise((resolve, reject) => {
+      const req = indexedDB.open(this.dbName, 1);
+      req.onupgradeneeded = e => {
+        const db = e.target.result;
+        if (!db.objectStoreNames.contains(this.storeName)) {
+          db.createObjectStore(this.storeName, { keyPath: 'url' });
+        }
+      };
+      req.onsuccess = () => {
+        this._db = req.result;
+        resolve(this._db);
+      };
+      req.onerror = () => reject(req.error);
+    });
+  },
+
+  async get(url) {
+    if (!url) return null;
+    try {
+      const db = await this.getDB();
+      return new Promise(resolve => {
+        const tx = db.transaction(this.storeName, 'readonly');
+        const store = tx.objectStore(this.storeName);
+        const req = store.get(url);
+        req.onsuccess = () => resolve(req.result ? req.result.blob : null);
+        req.onerror = () => resolve(null);
+      });
+    } catch (_) {
+      return null;
+    }
+  },
+
+  async has(url) {
+    if (!url) return false;
+    try {
+      const db = await this.getDB();
+      return new Promise(resolve => {
+        const tx = db.transaction(this.storeName, 'readonly');
+        const store = tx.objectStore(this.storeName);
+        const req = store.getKey(url);
+        req.onsuccess = () => resolve(req.result !== undefined);
+        req.onerror = () => resolve(false);
+      });
+    } catch (_) {
+      return false;
+    }
+  },
+
+  async save(url, blob, meta = {}) {
+    if (!url || !blob) return;
+    try {
+      const db = await this.getDB();
+      return new Promise((resolve, reject) => {
+        const tx = db.transaction(this.storeName, 'readwrite');
+        const store = tx.objectStore(this.storeName);
+        const item = {
+          url,
+          blob,
+          size: blob.size,
+          title: meta.title || '',
+          type: meta.type || '',
+          id: meta.id || '',
+          savedAt: Date.now()
+        };
+        const req = store.put(item);
+        req.onsuccess = () => resolve(true);
+        req.onerror = () => reject(req.error);
+      });
+    } catch (err) {
+      console.warn('audioDB save notice:', err);
+    }
+  },
+
+  async getAllKeys() {
+    try {
+      const db = await this.getDB();
+      return new Promise(resolve => {
+        const tx = db.transaction(this.storeName, 'readonly');
+        const store = tx.objectStore(this.storeName);
+        const req = store.getAllKeys();
+        req.onsuccess = () => resolve(new Set(req.result || []));
+        req.onerror = () => resolve(new Set());
+      });
+    } catch (_) {
+      return new Set();
+    }
+  }
+};
+
+// ==========================================================================
+// Web Audio API Booster & Filter Chain (Problem 4: Gain up to 400%, Highpass, Presence, Compressor)
+// ==========================================================================
+const WebAudioBooster = {
+  ctx: null,
+  source: null,
+  gainNode: null,
+  compressor: null,
+  highpass: null,
+  presence: null,
+  isInitialized: false,
+
+  init(audioEl, isBlob = false) {
+    if (this.isInitialized || !audioEl) return;
+    // Only connect Web Audio API if stream is a local Blob or same-origin to prevent browser from muting cross-origin audio
+    if (!isBlob && audioEl.src && !audioEl.src.startsWith('blob:') && !audioEl.src.startsWith(window.location.origin)) {
+      return;
+    }
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      if (!AudioCtx) return;
+      this.ctx = new AudioCtx();
+
+      // Create nodes
+      this.source = this.ctx.createMediaElementSource(audioEl);
+      this.gainNode = this.ctx.createGain();
+      this.compressor = this.ctx.createDynamicsCompressor();
+      this.highpass = this.ctx.createBiquadFilter();
+      this.presence = this.ctx.createBiquadFilter();
+
+      // High-pass filter cuts rumble and low-end distortion below 80 Hz
+      this.highpass.type = 'highpass';
+      this.highpass.frequency.value = 80;
+
+      // Presence boost: +3dB at 3000 Hz to highlight speech frequencies
+      this.presence.type = 'peaking';
+      this.presence.frequency.value = 3000;
+      this.presence.gain.value = 3;
+      this.presence.Q.value = 1.0;
+
+      // Dynamics Compressor to prevent distortion when gain is boosted up to 4x
+      this.compressor.threshold.value = -12;
+      this.compressor.knee.value = 30;
+      this.compressor.ratio.value = 12;
+      this.compressor.attack.value = 0.003;
+      this.compressor.release.value = 0.25;
+
+      // Complete Audio Chain: source -> highpass -> presence -> gain -> compressor -> destination
+      this.source.connect(this.highpass);
+      this.highpass.connect(this.presence);
+      this.presence.connect(this.gainNode);
+      this.gainNode.connect(this.compressor);
+      this.compressor.connect(this.ctx.destination);
+
+      this.isInitialized = true;
+
+      // Apply shared gain setting
+      const savedGain = parseFloat(store.get('pt_gain', '1'));
+      this.setGain(isNaN(savedGain) ? 1 : savedGain);
+    } catch (err) {
+      console.warn('Web Audio Booster initialization notice:', err);
+    }
+  },
+
+  resume() {
+    if (this.ctx && this.ctx.state === 'suspended') {
+      this.ctx.resume().catch(() => {});
+    }
+  },
+
+  setGain(val) {
+    const clamped = Math.max(0, Math.min(4, val));
+    if (this.gainNode && this.ctx) {
+      this.gainNode.gain.setValueAtTime(clamped, this.ctx.currentTime);
+    }
+    store.set('pt_gain', String(clamped));
+    return clamped;
+  }
+};
+
+// ==========================================================================
 // Academic Audio Player Engine (Active & Fallback UX)
 // ==========================================================================
 const AudioPlayer = {
@@ -5456,6 +5965,8 @@ const AudioPlayer = {
     36, 54, 62, 58, 46, 60, 68, 52
   ],
 
+  currentGain: 1,
+
   init() {
     this.el = $('audioPlayer');
     this.audio = $('globalAudio');
@@ -5464,21 +5975,15 @@ const AudioPlayer = {
     // Build Waveform Bars
     this.buildWaveform();
 
-    // Load saved preferences
+    // Load initial speed preference
     const savedSpeed = parseFloat(localStorage.getItem('pt_audio_speed') || '1');
-    if (this.speeds.includes(savedSpeed)) {
-      this.currentSpeed = savedSpeed;
-    } else {
-      this.currentSpeed = 1;
-    }
+    this.currentSpeed = (!isNaN(savedSpeed) && savedSpeed >= 0.5 && savedSpeed <= 3) ? (Math.round(savedSpeed * 10) / 10) : 1;
     this.updateSpeedUI();
 
-    const savedVol = parseFloat(localStorage.getItem('pt_audio_vol') || '1');
-    this.audio.volume = isNaN(savedVol) ? 1 : Math.max(0, Math.min(1, savedVol));
-    if ($('apVolume')) {
-      $('apVolume').value = this.audio.volume;
-      this.updateVolumeSliderStyle(this.audio.volume);
-    }
+    // Load Volume & 400% Booster settings (Problem 4)
+    const savedGain = parseFloat(store.get('pt_gain', '1'));
+    this.currentGain = (!isNaN(savedGain) && savedGain >= 0 && savedGain <= 4) ? savedGain : 1;
+    this.updateGainUI(this.currentGain);
     this.updateVolumeUI();
 
     // Audio Element Event Listeners
@@ -5492,6 +5997,10 @@ const AudioPlayer = {
       if (!this.isSeeking) {
         this.updateProgress(this.audio.currentTime, this.audio.duration);
       }
+      this.updateBufferedProgress();
+    });
+    this.audio.addEventListener('progress', () => {
+      this.updateBufferedProgress();
     });
     this.audio.addEventListener('loadedmetadata', () => {
       const dur = this.audio.duration;
@@ -5587,7 +6096,7 @@ const AudioPlayer = {
       toast('تم حذف علامة الحفظ');
     });
 
-    // Speed Pill & Dropdown Menu (Requirement 6: Dropdown affordance & Chevron)
+    // Speed Controls with 0.1 Increments, Slider & Presets (Problem 3)
     const speedBtn = $('apSpeedBtn');
     const speedMenu = $('apSpeedMenu');
     if (speedBtn && speedMenu) {
@@ -5598,13 +6107,31 @@ const AudioPlayer = {
         speedBtn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
       });
 
-      speedMenu.querySelectorAll('.ap-speed-opt').forEach(opt => {
+      // − button: decrement speed by 0.1
+      $('apSpeedMinus')?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.setSpeed(this.currentSpeed - 0.1);
+      });
+
+      // + button: increment speed by 0.1
+      $('apSpeedPlus')?.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.setSpeed(this.currentSpeed + 0.1);
+      });
+
+      // Slider: 0.5 to 3 with step 0.1
+      $('apSpeedSlider')?.addEventListener('input', (e) => {
+        e.stopPropagation();
+        const val = parseFloat(e.target.value);
+        if (!isNaN(val)) this.setSpeed(val);
+      });
+
+      // Presets (1x, 1.2x, 1.5x, 1.8x, 2x, 2.5x)
+      speedMenu.querySelectorAll('.speed-preset').forEach(opt => {
         opt.addEventListener('click', (e) => {
           e.stopPropagation();
           const spd = parseFloat(opt.dataset.spd);
-          if (!isNaN(spd)) {
-            this.setSpeed(spd);
-          }
+          if (!isNaN(spd)) this.setSpeed(spd);
           speedMenu.style.display = 'none';
           speedBtn.setAttribute('aria-expanded', 'false');
         });
@@ -5653,15 +6180,17 @@ const AudioPlayer = {
     $('apCloseBtn')?.addEventListener('click', () => this.close());
     $('apMiniCloseBtn')?.addEventListener('click', () => this.close());
 
-    // Volume & Mute
+    // Volume & 400% Web Audio Booster (Problem 4)
     $('apMuteBtn')?.addEventListener('click', () => this.toggleMute());
     $('apVolume')?.addEventListener('input', (e) => {
+      WebAudioBooster.init(this.audio);
+      WebAudioBooster.resume();
       const val = parseFloat(e.target.value);
-      this.audio.volume = val;
-      this.audio.muted = false;
-      this.updateVolumeSliderStyle(val);
+      this.currentGain = val;
+      WebAudioBooster.setGain(val);
+      if (this.audio) this.audio.muted = false;
+      this.updateGainUI(val);
       this.updateVolumeUI();
-      try { localStorage.setItem('pt_audio_vol', String(val)); } catch (_) {}
     });
 
     // Global Keyboard Shortcuts
@@ -5756,8 +6285,18 @@ const AudioPlayer = {
     document.body.classList.add('has-audio-player');
     this.expand();
 
-    // Set Audio Source and Play
-    const streamUrl = getAudioStreamUrl(track.url);
+    // Init Web Audio Booster (safe for blobs and same-origin)
+    const isBlobStream = Boolean(track.isOfflineBlob || (track.streamUrl && track.streamUrl.startsWith('blob:')));
+    WebAudioBooster.init(this.audio, isBlobStream);
+    WebAudioBooster.resume();
+
+    // Problem 3: Load speed saved specifically for this audio record (pt_speed_${audioId})
+    const audioId = this.getAudioId(track);
+    const savedSpeed = parseFloat(localStorage.getItem('pt_speed_' + audioId) || localStorage.getItem('pt_audio_speed') || '1');
+    this.setSpeed(savedSpeed, false);
+
+    // Set Audio Source and Play (supports offline blob URL or remote stream)
+    const streamUrl = track.streamUrl || getAudioStreamUrl(track.url);
     if (this.audio.src !== streamUrl) {
       this.audio.src = streamUrl;
       this.audio.load();
@@ -5818,44 +6357,96 @@ const AudioPlayer = {
     this.updateProgress(this.audio.currentTime, dur);
   },
 
-  setSpeed(spd) {
+  getAudioId(track) {
+    if (!track) return 'default';
+    if (track.id) return track.id;
+    if (track.title) return encodeURIComponent(track.title).replace(/[^a-zA-Z0-9_-]/g, '_').substring(0, 40);
+    if (track.url) {
+      const parts = track.url.split('/');
+      return parts[parts.length - 1].replace(/\.[^/.]+$/, '');
+    }
+    return 'default';
+  },
+
+  setSpeed(spd, saveForRecord = true) {
+    spd = Math.round(Math.max(0.5, Math.min(3, spd)) * 10) / 10;
     this.currentSpeed = spd;
-    if (this.audio) this.audio.playbackRate = spd;
+    if (this.audio) {
+      this.audio.playbackRate = spd;
+    }
     this.updateSpeedUI();
-    try { localStorage.setItem('pt_audio_speed', String(spd)); } catch (_) {}
+
+    if (saveForRecord) {
+      try {
+        localStorage.setItem('pt_audio_speed', String(spd));
+        if (this.currentTrack) {
+          const audioId = this.getAudioId(this.currentTrack);
+          localStorage.setItem('pt_speed_' + audioId, String(spd));
+        }
+      } catch (_) {}
+    }
   },
 
   updateSpeedUI() {
     if ($('apSpeedLabel')) $('apSpeedLabel').textContent = `${this.currentSpeed}x`;
     if ($('apSpeedBtn')) $('apSpeedBtn').setAttribute('aria-label', `سرعة التشغيل ${this.currentSpeed}x`);
+    if ($('apSpeedValDisplay')) $('apSpeedValDisplay').textContent = `${this.currentSpeed}×`;
+
+    const slider = $('apSpeedSlider');
+    if (slider) {
+      slider.value = this.currentSpeed;
+      const pct = Math.round(((this.currentSpeed - 0.5) / 2.5) * 100);
+      slider.style.setProperty('--spd-fill', `${pct}%`);
+    }
 
     const speedMenu = $('apSpeedMenu');
     if (speedMenu) {
-      speedMenu.querySelectorAll('.ap-speed-opt').forEach(opt => {
+      speedMenu.querySelectorAll('.speed-preset').forEach(opt => {
         const val = parseFloat(opt.dataset.spd);
-        opt.classList.toggle('active', val === this.currentSpeed);
+        opt.classList.toggle('active', Math.abs(val - this.currentSpeed) < 0.05);
       });
+    }
+  },
+
+  updateGainUI(val) {
+    const slider = $('apVolume');
+    if (slider) {
+      slider.value = val;
+      const pct = Math.round((val / 4) * 100);
+      slider.style.setProperty('--vol-fill', `${pct}%`);
+      slider.style.background = 'transparent';
+    }
+    const label = $('apVolPercent');
+    if (label) {
+      const pctNum = Math.round(val * 100);
+      label.textContent = `${pctNum}%`;
+      label.classList.toggle('is-boosted', val > 1);
+    }
+    if (this.audio) {
+      // Standard audio volume (clamped 0 to 1) for cross-origin streams
+      this.audio.volume = Math.max(0, Math.min(1, val));
     }
   },
 
   toggleMute() {
     if (!this.audio) return;
     this.audio.muted = !this.audio.muted;
+    if (this.audio.muted) {
+      WebAudioBooster.setGain(0);
+      this.updateGainUI(0);
+    } else {
+      const savedGain = parseFloat(store.get('pt_gain', '1'));
+      const gainToRestore = isNaN(savedGain) ? 1 : savedGain;
+      WebAudioBooster.setGain(gainToRestore);
+      this.updateGainUI(gainToRestore);
+    }
     this.updateVolumeUI();
   },
 
   updateVolumeUI() {
-    const isMuted = this.audio.muted || this.audio.volume === 0;
+    const isMuted = this.audio ? this.audio.muted : false;
     const iconHref = isMuted ? '#i-volume-x' : '#i-volume-2';
     $('apMuteIcon')?.querySelector('use')?.setAttribute('href', iconHref);
-  },
-
-  updateVolumeSliderStyle(val) {
-    const slider = $('apVolume');
-    if (!slider) return;
-    const pct = Math.round(val * 100);
-    slider.style.setProperty('--vol-fill', `${pct}%`);
-    slider.style.background = 'transparent';
   },
 
   updateProgress(curr, dur) {
@@ -5889,16 +6480,40 @@ const AudioPlayer = {
     }
   },
 
-  updateWaveformProgress(pct) {
-    if (!this.waveBars || this.waveBars.length === 0) return;
-    const activeCount = Math.round(pct * this.totalBars);
-    for (let i = 0; i < this.totalBars; i++) {
-      if (i < activeCount) {
-        this.waveBars[i].classList.add('active');
-      } else {
-        this.waveBars[i].classList.remove('active');
+  updateBufferedProgress() {
+    if (!this.audio || !this.waveBars || this.waveBars.length === 0) return;
+    const dur = this.audio.duration;
+    if (isNaN(dur) || dur <= 0) return;
+
+    let maxBuffered = 0;
+    const b = this.audio.buffered;
+    if (b && b.length > 0) {
+      for (let i = 0; i < b.length; i++) {
+        if (b.start(i) <= this.audio.currentTime && b.end(i) >= this.audio.currentTime) {
+          maxBuffered = Math.max(maxBuffered, b.end(i));
+        } else if (b.end(i) > maxBuffered) {
+          maxBuffered = b.end(i);
+        }
       }
     }
+
+    const bufferedPct = Math.max(0, Math.min(1, maxBuffered / dur));
+    const bufferedCount = Math.round(bufferedPct * this.totalBars);
+    const activeCount = Math.round(Math.max(0, Math.min(1, this.audio.currentTime / dur)) * this.totalBars);
+
+    for (let i = 0; i < this.totalBars; i++) {
+      if (i < activeCount) {
+        this.waveBars[i].className = 'ap-wave-bar active';
+      } else if (i < bufferedCount) {
+        this.waveBars[i].className = 'ap-wave-bar buffered';
+      } else {
+        this.waveBars[i].className = 'ap-wave-bar';
+      }
+    }
+  },
+
+  updateWaveformProgress(pct) {
+    this.updateBufferedProgress();
   },
 
   onPlayStateChange(isPlaying) {
@@ -6070,19 +6685,19 @@ const AudioPlayer = {
 
 // Delegated Content Actions (Copy & Unavailable & Retries & Next Class Goto & Audio Play)
 document.addEventListener('click', e => {
-  // Play audio in floating player
+  // 🎧 Problem 2: Listen to Audio (.chip-split-main)
   const playBtn = e.target.closest('.playAudioBtn');
   if (playBtn) {
     e.preventDefault();
     e.stopPropagation();
-    const url = playBtn.dataset.url;
-    const title = playBtn.dataset.title;
-    const type = playBtn.dataset.type;
-    const ctx = playBtn.dataset.ctx;
-    const dl = playBtn.dataset.dl;
-    if (url && typeof AudioPlayer !== 'undefined') {
-      AudioPlayer.play({ url, title, type, ctx, dl });
-    }
+    handleAudioListen(playBtn);
+    return;
+  }
+
+  // ⬇️ Download Audio (.chip-split-dl): Native device download without CORS interruption
+  const dlBtn = e.target.closest('.downloadAudioBtn');
+  if (dlBtn) {
+    handleAudioDownload(e, dlBtn);
     return;
   }
 
@@ -6380,9 +6995,12 @@ setInterval(() => {
   }
 }, 30000);
 
-// Online / Offline window listeners
+// Online / Offline window listeners (Problem 1)
 window.addEventListener('online', () => {
-  toast('تمت استعادة الاتصال بالإنترنت');
+  isOfflineMode = false;
+  const offlineNotice = $('offlineNotice');
+  if (offlineNotice) offlineNotice.hidden = true;
+  toast('تمت استعادة الاتصال بالإنترنت ✓ — جارٍ التحديث في الخلفية');
   loadAll(true);
 });
 window.addEventListener('offline', () => {
@@ -6394,8 +7012,17 @@ window.addEventListener('offline', () => {
     if (timeEl) timeEl.textContent = formatRelativeTime(lastSyncTime);
     offlineNotice.hidden = false;
   }
-  toast('انقطع الاتصال بالإنترنت - يتم العمل في الوضع غير المتصل');
+  toast('انقطع الاتصال بالإنترنت — يتم استخدام البيانات المحفوظة offline');
 });
+
+// Register Service Worker with Stale-While-Revalidate (Problem 1)
+if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./sw.js').catch(err => {
+      console.warn('Service worker registration notice:', err);
+    });
+  });
+}
 
 // Offline Banner Retry Button click
 $('offlineRetryBtn')?.addEventListener('click', () => {

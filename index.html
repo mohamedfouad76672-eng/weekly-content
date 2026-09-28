@@ -5484,331 +5484,167 @@ async function downloadAndSaveAudio(url, meta = {}, isBackground = false) {
  * Matches a chosen local audio file to the corresponding lecture item
  * by comparing filenames and subject titles.
  */
-let currentLinkTrack = null;
+
+// ─── Telegram-style Audio Logic ──────────────────────────────────────────────
+// The Service Worker handles ALL caching automatically:
+//   - On first play  → SW streams + caches full file in background silently
+//   - On offline play → SW serves from cache instantly (zero network)
+//   - On download    → device save + SW pre-caches for offline use
+// No IndexedDB blobs needed for GitHub audio. audioDB kept only for legacy compatibility.
+// ─────────────────────────────────────────────────────────────────────────────
 
 /**
- * Triggers native device download in the SAME page without opening a blank tab.
+ * Tell Service Worker to pre-cache this audio URL in the background.
+ * Triggered after download completes (or during first play).
  */
-function startNativeDownload(url, filename) {
-  let iframe = $('hiddenDownloadFrame');
-  if (!iframe) {
-    iframe = document.createElement('iframe');
-    iframe.id = 'hiddenDownloadFrame';
-    iframe.style.display = 'none';
-    document.body.appendChild(iframe);
+function swPrecacheAudio(url) {
+  if (!url) return;
+  if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+    navigator.serviceWorker.controller.postMessage({ type: 'PRECACHE_AUDIO', url });
   }
-  iframe.src = url;
 }
 
 /**
- * Shows the persistent bottom sheet prompting the user to link the downloaded audio file.
+ * Listen for SW messages: when a file finishes caching, update badges.
  */
-function showAudioLinkSheet(url, title, type, ctx, dl, id, isOfflinePrompt = false) {
-  currentLinkTrack = { url, title, type, ctx, dl, id, isOfflinePrompt };
-  const sheet = $('audioLinkSheet');
-  if (!sheet) return;
-
-  const titleEl = $('linkSheetTitle');
-  const descEl = $('linkSheetDesc');
-  const actionBtn = $('linkSheetActionBtn');
-
-  if (isOfflinePrompt) {
-    if (titleEl) titleEl.textContent = 'تشغيل الريكورد دون اتصال بالإنترنت';
-    if (descEl) descEl.textContent = `إذا كنت قد حمّلت "${title || 'المحاضرة'}" على جهازك، اضغط لتحديده وتشغيله فوراً:`;
-    if (actionBtn) {
-      const span = actionBtn.querySelector('span');
-      if (span) span.textContent = '📂 اختيار الملف وتشغيله فوراً';
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.addEventListener('message', event => {
+    if (event.data && event.data.type === 'AUDIO_CACHED') {
+      const cachedUrl = event.data.url;
+      // Mark as saved in localStorage so badge persists across refreshes
+      try { localStorage.setItem('pt_audio_cached_' + cachedUrl, '1'); } catch (_) {}
+      refreshSavedAudioBadges();
     }
-  } else {
-    if (titleEl) titleEl.textContent = `جارٍ تنزيل: ${title || 'الريكورد'} على جهازك…`;
-    if (descEl) descEl.textContent = 'بمجرد اكتمال التنزيل في هاتفك، اضغط الزر أدناه لاختيار الملف لربطه وتشغيله دون نت للأبد:';
-    if (actionBtn) {
-      const span = actionBtn.querySelector('span');
-      if (span) span.textContent = '🔗 اضغط هنا لربط الملف المحمل بالموقع';
-    }
-  }
-
-  sheet.style.display = 'block';
-}
-
-function hideAudioLinkSheet() {
-  const sheet = $('audioLinkSheet');
-  if (sheet) sheet.style.display = 'none';
-  currentLinkTrack = null;
-}
-
-function initLinkSheet() {
-  const actionBtn = $('linkSheetActionBtn');
-  const closeBtn = $('linkSheetCloseBtn');
-  if (!actionBtn) return;
-
-  let picker = $('sheetAudioPicker');
-  if (!picker) {
-    picker = document.createElement('input');
-    picker.type = 'file';
-    picker.id = 'sheetAudioPicker';
-    picker.accept = 'audio/*, .mp3, .m4a, .aac, .ogg, .wav';
-    picker.style.display = 'none';
-    document.body.appendChild(picker);
-  }
-
-  actionBtn.onclick = () => {
-    picker.value = '';
-    picker.click();
-  };
-
-  if (closeBtn) {
-    closeBtn.onclick = () => {
-      hideAudioLinkSheet();
-    };
-  }
-
-  picker.onchange = async () => {
-    const file = picker.files && picker.files[0];
-    if (!file || !currentLinkTrack) return;
-
-    const track = currentLinkTrack;
-    hideAudioLinkSheet();
-    toast('جارٍ ربط الملف بالموقع…');
-
-    try {
-      await audioDB.save(track.url, file, {
-        title: track.title,
-        type: track.type,
-        id: track.id
-      });
-      localStorage.setItem('pt_audio_saved_' + track.url, '1');
-      await refreshSavedAudioBadges();
-      toast('تم ربط الريكورد بنجاح ✓ — يعمل الآن دون إنترنت في أي وقت!');
-
-      if (track.isOfflinePrompt) {
-        const blobUrl = URL.createObjectURL(file);
-        AudioPlayer.play({
-          url: track.url,
-          title: track.title,
-          type: track.type,
-          ctx: track.ctx,
-          dl: track.dl,
-          id: track.id,
-          streamUrl: blobUrl,
-          isOfflineBlob: true
-        });
-      }
-    } catch (err) {
-      console.warn('Sheet audio link error:', err);
-      toast('تعذّر حفظ الملف، يرجى المحاولة مرة أخرى');
-    }
-  };
+  });
 }
 
 /**
- * Matches a chosen local audio file to the corresponding lecture item
- * by comparing filenames and subject titles.
- */
-function findMatchingLectureForFile(fileName, audioItems) {
-  if (!fileName || !audioItems || !audioItems.length) return null;
-  const cleanName = fileName.toLowerCase().replace(/\.(mp3|m4a|aac|ogg|wav)$/i, '').replace(/[_s.\-–—]+/g, ' ').trim();
-
-  // 1. Direct match with URL filename
-  for (const item of audioItems) {
-    if (!item.url) continue;
-    const urlParts = item.url.split('/');
-    const rawUrlName = urlParts[urlParts.length - 1];
-    const cleanUrlName = rawUrlName.toLowerCase().replace(/\.(mp3|m4a|aac|ogg|wav)$/i, '').replace(/[_s.\-–—]+/g, ' ').trim();
-    if (cleanUrlName && (cleanName.includes(cleanUrlName) || cleanUrlName.includes(cleanName))) {
-      return item;
-    }
-  }
-
-  // 2. Direct match with subject title
-  for (const item of audioItems) {
-    if (!item.subject) continue;
-    const cleanSubj = item.subject.toLowerCase().replace(/[_s.\-–—]+/g, ' ').trim();
-    if (cleanSubj && (cleanName.includes(cleanSubj) || cleanSubj.includes(cleanName))) {
-      return item;
-    }
-  }
-
-  // 3. Keyword / partial token match
-  const words = cleanName.split(' ').filter(w => w.length > 2);
-  for (const item of audioItems) {
-    for (const w of words) {
-      if (item.url && item.url.toLowerCase().includes(w)) return item;
-      if (item.subject && item.subject.toLowerCase().includes(w)) return item;
-    }
-  }
-
-  return null;
-}
-
-/**
- * Handles Listen click:
- * 1. If saved in IndexedDB -> instant play offline
- * 2. If online -> instant streaming
- * 3. If offline and unlinked -> opens link sheet
+ * handleAudioListen — Telegram-style:
+ * Just play. SW handles cache. If offline & not cached, <audio> will fire error.
  */
 async function handleAudioListen(playBtn) {
-  const url = playBtn.dataset.url;
+  const url   = playBtn.dataset.url;
   const title = playBtn.dataset.title;
-  const type = playBtn.dataset.type;
-  const ctx = playBtn.dataset.ctx;
-  const dl = playBtn.dataset.dl || url;
-  const id = playBtn.dataset.id;
+  const type  = playBtn.dataset.type;
+  const ctx   = playBtn.dataset.ctx;
+  const dl    = playBtn.dataset.dl || url;
+  const id    = playBtn.dataset.id;
 
   if (!url || typeof AudioPlayer === 'undefined') return;
 
-  // 1. لو محفوظ في IndexedDB -> تشغيل فوري بدون أي نت
-  const savedBlob = await audioDB.get(url);
-  if (savedBlob) {
-    const blobUrl = URL.createObjectURL(savedBlob);
-    AudioPlayer.play({ url, title, type, ctx, dl, id, streamUrl: blobUrl, isOfflineBlob: true });
-    return;
-  }
-
-  // 2. إذا كنا متصلين بالإنترنت -> تشغيل فوري Progressive Streaming
-  if (navigator.onLine) {
+  // If offline: first check audioDB (legacy blobs), then rely on SW cache.
+  if (!navigator.onLine) {
+    const savedBlob = await audioDB.get(url);
+    if (savedBlob) {
+      const blobUrl = URL.createObjectURL(savedBlob);
+      AudioPlayer.play({ url, title, type, ctx, dl, id, streamUrl: blobUrl, isOfflineBlob: true });
+      return;
+    }
+    // Check whether SW has it cached using Cache API
+    if ('caches' in window) {
+      try {
+        const cache = await caches.open('pt-audio-v1');
+        const isCached = !!(await cache.match(url, { ignoreSearch: true }));
+        if (!isCached) {
+          toast('الريكورد مش محفوظ على الجهاز — لازم تفتح الريكورد دة وانت متصل بالنت الأول');
+          return;
+        }
+      } catch (_) {}
+    }
+    // SW has it — just play, SW will intercept and serve from cache
     AudioPlayer.play({ url, title, type, ctx, dl, id });
     return;
   }
 
-  // 3. إذا كنا دون اتصال والريكورد مش مربوط -> طلب اختيار الملف عبر الـ Bottom Sheet
-  showAudioLinkSheet(url, title, type, ctx, dl, id, true);
+  // Online: play immediately + tell SW to cache in background
+  AudioPlayer.play({ url, title, type, ctx, dl, id });
+  swPrecacheAudio(url);
 }
 
 /**
- * Handles Download click:
- * Downloads in the same page without navigating or opening a new tab,
- * and displays the persistent linking bottom sheet.
+ * handleAudioDownload — downloads to device AND tells SW to cache.
+ * No new tab opened. Uses native <a> download (stays in same page).
  */
 async function handleAudioDownload(e, dlBtn) {
   e.preventDefault();
 
-  const url = dlBtn.dataset.url;
+  const url   = dlBtn.dataset.url;
   const title = dlBtn.dataset.title || 'تسجيل_المحاضرة';
-  const type = dlBtn.dataset.type;
-  const ctx = dlBtn.dataset.ctx;
-  const dl = dlBtn.dataset.dl || url;
-  const id = dlBtn.dataset.id;
+  const dl    = dlBtn.dataset.dl || url;
 
   if (!url) return;
 
-  // 1. لو مربوط بالفعل في IndexedDB -> تنزيل فوري للجهاز
+  // If already saved as blob in audioDB → save to device from blob
   const savedBlob = await audioDB.get(url);
   if (savedBlob) {
     saveBlobToDevice(savedBlob, title);
-    toast('الريكورد مربوط ومحفوظ أوفلاين ✓ — تم تنزيل نسخة لجهازك');
+    toast('الريكورد محفوظ مسبقاً ✓ — تم تنزيل نسخة لجهازك');
     return;
   }
 
-  // 2. بدء التنزيل المباشر في نفس الصفحة بدون فتح أي تبويب جديد
-  startNativeDownload(dl, (title || 'تسجيل') + '.mp3');
+  // Trigger device download via invisible <a> (no new tab)
+  const dlUrl = dl || url;
+  const a = document.createElement('a');
+  a.href    = dlUrl;
+  a.download = (title || 'تسجيل') + '.mp3';
+  a.style.display = 'none';
+  document.body.appendChild(a);
+  a.click();
+  setTimeout(() => a.remove(), 1000);
 
-  // 3. إظهار شريط الربط المستمر لربط الملف بعد اكتمال التنزيل
-  showAudioLinkSheet(url, title, type, ctx, dl, id, false);
+  // Tell SW to also pre-cache for offline in-browser playback
+  swPrecacheAudio(url);
+
+  toast('⬇️ جارٍ التنزيل… الريكورد سيعمل دون اتصال تلقائياً بعد التنزيل');
 }
 
 /**
- * Updates UI badges for all audio chips according to IndexedDB saved keys
+ * refreshSavedAudioBadges — checks SW cache + localStorage flags to show ✓ badges.
  */
 async function refreshSavedAudioBadges() {
-  try {
-    const savedKeys = await audioDB.getAllKeys();
-    document.querySelectorAll('.chip-split[data-audio-url]').forEach(chip => {
-      const url = chip.getAttribute('data-audio-url');
-      const dlBtn = chip.querySelector('.chip-split-dl');
-      const dlUse = dlBtn?.querySelector('use');
-      const isSaved = savedKeys.has(url);
+  // Combine IndexedDB keys (legacy) and localStorage flags
+  let dbKeys = new Set();
+  try { dbKeys = await audioDB.getAllKeys(); } catch (_) {}
 
-      if (isSaved) {
-        chip.classList.add('is-saved');
-        if (dlBtn) {
-          dlBtn.classList.add('is-saved');
-          dlBtn.setAttribute('title', 'مربوط ومحفوظ للاستماع دون اتصال ✓ (انقر لتنزيل نسخة مجدداً)');
-          if (dlUse) dlUse.setAttribute('href', '#i-check');
-        }
-      } else {
-        chip.classList.remove('is-saved');
-        if (dlBtn) {
-          dlBtn.classList.remove('is-saved');
-          dlBtn.setAttribute('title', 'تحميل الريكورد للجهاز');
-          if (dlUse) dlUse.setAttribute('href', '#i-download');
-        }
-      }
-    });
-  } catch (_) {}
-}
+  const chips = document.querySelectorAll('.chip-split[data-audio-url]');
+  const urls  = Array.from(chips).map(c => c.getAttribute('data-audio-url')).filter(Boolean);
 
-/**
- * Initializes the Bulk Linker button in the top navigation bar.
- * Allows students to select multiple downloaded MP3 files at once.
- */
-function initBulkLinker() {
-  const btn = $('bulkLinkAudioBtn');
-  if (!btn) return;
-
-  let bulkInput = $('bulkAudioPicker');
-  if (!bulkInput) {
-    bulkInput = document.createElement('input');
-    bulkInput.type = 'file';
-    bulkInput.id = 'bulkAudioPicker';
-    bulkInput.multiple = true;
-    bulkInput.accept = 'audio/*, .mp3, .m4a, .aac, .ogg, .wav';
-    bulkInput.style.display = 'none';
-    document.body.appendChild(bulkInput);
+  // Check SW cache for all audio URLs at once
+  const swCached = new Set();
+  if ('caches' in window) {
+    try {
+      const cache = await caches.open('pt-audio-v1');
+      await Promise.all(urls.map(async url => {
+        const m = await cache.match(url, { ignoreSearch: true });
+        if (m) swCached.add(url);
+      }));
+    } catch (_) {}
   }
 
-  btn.onclick = () => {
-    bulkInput.value = '';
-    bulkInput.click();
-  };
+  chips.forEach(chip => {
+    const url   = chip.getAttribute('data-audio-url');
+    const dlBtn = chip.querySelector('.chip-split-dl');
+    const dlUse = dlBtn?.querySelector('use');
 
-  bulkInput.onchange = async () => {
-    const files = Array.from(bulkInput.files || []);
-    if (!files.length) return;
+    const lsFlag  = localStorage.getItem('pt_audio_cached_' + url) === '1';
+    const isSaved = dbKeys.has(url) || swCached.has(url) || lsFlag;
 
-    toast(`جارٍ فحص وربط ${files.length} ملف…`);
-    let linkedCount = 0;
-
-    // Gather all audio items from ALL
-    const audioItems = [];
-    if (typeof ALL !== 'undefined' && Array.isArray(ALL)) {
-      ALL.forEach(item => {
-        if (item.audio) {
-          audioItems.push({
-            url: item.audio,
-            subject: item.subject || '',
-            type: item.type || '',
-            id: item.id || ''
-          });
-        }
-      });
-    }
-
-    for (const file of files) {
-      const match = findMatchingLectureForFile(file.name, audioItems);
-      if (match) {
-        try {
-          await audioDB.save(match.url, file, {
-            title: match.subject,
-            type: match.type,
-            id: match.id
-          });
-          localStorage.setItem('pt_audio_saved_' + match.url, '1');
-          linkedCount++;
-        } catch (e) {
-          console.warn('Bulk link save error:', e);
-        }
+    if (isSaved) {
+      chip.classList.add('is-saved');
+      if (dlBtn) {
+        dlBtn.classList.add('is-saved');
+        dlBtn.setAttribute('title', 'محفوظ للاستماع دون اتصال ✓');
+        if (dlUse) dlUse.setAttribute('href', '#i-check');
+      }
+    } else {
+      chip.classList.remove('is-saved');
+      if (dlBtn) {
+        dlBtn.classList.remove('is-saved');
+        dlBtn.setAttribute('title', 'تحميل الريكورد للجهاز');
+        if (dlUse) dlUse.setAttribute('href', '#i-download');
       }
     }
-
-    await refreshSavedAudioBadges();
-
-    if (linkedCount > 0) {
-      toast(`تم ربط ${linkedCount} ريكورد بنجاح ✓ — تعمل الآن دون اتصال بالإنترنت!`);
-    } else {
-      toast('تم اختيار الملفات. يمكنك ربط كل ريكورد مباشرة بالضغط عليه');
-    }
-  };
+  });
 }
 
 function renderCore(scrollToTop = false) {
@@ -6549,15 +6385,8 @@ const AudioPlayer = {
     $('apCloseBtn')?.addEventListener('click', () => this.close());
     $('apLinkBtn')?.addEventListener('click', () => {
       if (this.currentTrack) {
-        promptLinkLocalAudio(
-          this.currentTrack.url,
-          this.currentTrack.title,
-          this.currentTrack.type,
-          this.currentTrack.ctx,
-          this.currentTrack.dl,
-          this.currentTrack.id,
-          true
-        );
+        swPrecacheAudio(this.currentTrack.url);
+        toast('جارٍ حفظ الريكورد للاستماع دون اتصال…');
       }
     });
     $('apMiniCloseBtn')?.addEventListener('click', () => this.close());
@@ -6656,18 +6485,16 @@ const AudioPlayer = {
       $('apDlLink').href = dlLink;
       $('apDlLink').onclick = (e) => {
         e.preventDefault();
-        if (this.currentTrack && this.currentTrack.url) {
-          startNativeDownload(dlLink, (this.currentTrack.title || 'تسجيل') + '.mp3');
-          showAudioLinkSheet(
-            this.currentTrack.url,
-            this.currentTrack.title,
-            this.currentTrack.type,
-            this.currentTrack.ctx,
-            dlLink,
-            this.currentTrack.id,
-            false
-          );
-        }
+        if (!this.currentTrack) return;
+        const a = document.createElement('a');
+        a.href     = dlLink;
+        a.download = (this.currentTrack.title || 'تسجيل') + '.mp3';
+        a.style.display = 'none';
+        document.body.appendChild(a);
+        a.click();
+        setTimeout(() => a.remove(), 1000);
+        swPrecacheAudio(this.currentTrack.url);
+        toast('⬇️ جارٍ التنزيل… الريكورد سيعمل دون اتصال تلقائياً');
       };
     }
 
@@ -7365,8 +7192,7 @@ updateLastSyncDisplay();
 
 render(false);
 AudioPlayer.init();
-initBulkLinker();
-initLinkSheet();
+requestIdleCallback(() => refreshSavedAudioBadges(), { timeout: 2000 });
 loadAll();
 startNextClassTimer();
 renderAdhkar();
@@ -7407,7 +7233,7 @@ window.addEventListener('offline', () => {
 // Register Service Worker with Stale-While-Revalidate (Problem 1)
 if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js').catch(err => {
+    navigator.serviceWorker.register('./sw.js?v=2').catch(err => {
       console.warn('Service worker registration notice:', err);
     });
   });

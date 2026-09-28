@@ -1573,6 +1573,52 @@ button.chip.off:hover {
 .chip-split-dl:hover .dl-progress {
   color: var(--on-brand);
 }
+/* Telegram-style Circular Download Indicator around the button */
+.chip-split.is-caching .chip-split-dl {
+  position: relative;
+  pointer-events: none;
+}
+.chip-split.is-caching .chip-split-dl::before {
+  content: '';
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 2px solid color-mix(in srgb, var(--brand) 22%, transparent);
+  box-sizing: border-box;
+  pointer-events: none;
+}
+.chip-split.is-caching .chip-split-dl::after {
+  content: '';
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 2px solid transparent;
+  border-top-color: var(--brand);
+  border-right-color: var(--brand);
+  animation: tg-dl-spin 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+@keyframes tg-dl-spin {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+.chip-split.is-caching .chip-split-dl .i {
+  opacity: 0.5;
+  transform: scale(0.9);
+}
+.chip-split.is-caching .chip-split-dl:hover::after {
+  border-top-color: var(--on-brand);
+  border-right-color: var(--on-brand);
+}
+
 /* When audio is saved in IndexedDB / Cache: ⬇️ icon turns to --brand */
 .chip-split.is-saved .chip-split-dl .i,
 .chip-split-dl.is-saved .i {
@@ -5494,13 +5540,115 @@ async function downloadAndSaveAudio(url, meta = {}, isBackground = false) {
 // ─────────────────────────────────────────────────────────────────────────────
 
 /**
- * Tell Service Worker to pre-cache this audio URL in the background.
- * Triggered after download completes (or during first play).
+ * Canonical audio cache key helper matching sw.js
+ */
+function audioKey(url) {
+  try {
+    const u = new URL(url);
+    if (u.hostname.includes('githubusercontent') || u.hostname.includes('github')) {
+      return u.origin + u.pathname;
+    }
+    return u.origin + u.pathname;
+  } catch (_) {
+    return url;
+  }
+}
+
+/** Check if audio has already been cached offline */
+function isAudioSaved(url) {
+  if (!url) return false;
+  try {
+    if (localStorage.getItem('pt_audio_cached_' + url) === '1') return true;
+    if (localStorage.getItem('pt_audio_cached_' + audioKey(url)) === '1') return true;
+  } catch (_) {}
+  return false;
+}
+
+/** Mark audio as successfully saved offline */
+function markAudioSaved(url) {
+  try {
+    localStorage.setItem('pt_audio_cached_' + url, '1');
+    localStorage.setItem('pt_audio_cached_' + audioKey(url), '1');
+  } catch (_) {}
+  setChipCaching(url, false);
+  refreshSavedAudioBadges();
+}
+
+/** Set or clear the Telegram circular caching indicator state on all chips matching this URL */
+function setChipCaching(url, caching) {
+  document.querySelectorAll('.chip-split[data-audio-url]').forEach(chip => {
+    if (chip.getAttribute('data-audio-url') === url) {
+      if (caching) {
+        chip.classList.add('is-caching');
+        const dlBtn = chip.querySelector('.chip-split-dl');
+        if (dlBtn) dlBtn.setAttribute('title', 'جارٍ الحفظ في الخلفية للاستماع دون اتصال…');
+        clearTimeout(chip._cachingTimer);
+        chip._cachingTimer = setTimeout(() => {
+          chip.classList.remove('is-caching');
+        }, 120000);
+      } else {
+        clearTimeout(chip._cachingTimer);
+        chip.classList.remove('is-caching');
+      }
+    }
+  });
+}
+
+const activeBgCaches = new Set();
+
+/**
+ * Telegram-style background precache:
+ * Downloads the full audio file in background and stores in offline Cache Storage.
+ * Shows circular indicator around download button during caching.
  */
 function swPrecacheAudio(url) {
   if (!url) return;
-  if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
-    navigator.serviceWorker.controller.postMessage({ type: 'PRECACHE_AUDIO', url });
+  if (isAudioSaved(url)) return;
+  if (activeBgCaches.has(url)) return;
+  activeBgCaches.add(url);
+
+  // Show Telegram circular indicator
+  setChipCaching(url, true);
+
+  // 1. Notify Service Worker to fetch and cache in background
+  if ('serviceWorker' in navigator) {
+    if (navigator.serviceWorker.controller) {
+      navigator.serviceWorker.controller.postMessage({ type: 'PRECACHE_AUDIO', url });
+    } else {
+      navigator.serviceWorker.ready.then(reg => {
+        if (reg.active) reg.active.postMessage({ type: 'PRECACHE_AUDIO', url });
+      }).catch(() => {});
+    }
+  }
+
+  // 2. Also cache directly via Cache Storage in page for immediate reliability
+  if ('caches' in window) {
+    caches.open('pt-audio-v1').then(async cache => {
+      const key = audioKey(url);
+      const existing = await cache.match(key, { ignoreSearch: true }) || await cache.match(url, { ignoreSearch: true });
+      if (existing) {
+        markAudioSaved(url);
+        activeBgCaches.delete(url);
+        return;
+      }
+      try {
+        const res = await fetch(url, { mode: 'no-cors' });
+        if (res && (res.ok || res.type === 'opaque')) {
+          await Promise.all([
+            cache.put(key, res.clone()).catch(() => {}),
+            cache.put(url, res).catch(() => {})
+          ]);
+          markAudioSaved(url);
+        }
+      } catch (err) {
+        console.warn('Background caching notice:', err);
+      } finally {
+        setChipCaching(url, false);
+        activeBgCaches.delete(url);
+      }
+    }).catch(() => {
+      activeBgCaches.delete(url);
+    });
   }
 }
 
@@ -5511,16 +5659,15 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.addEventListener('message', event => {
     if (event.data && event.data.type === 'AUDIO_CACHED') {
       const cachedUrl = event.data.url;
-      // Mark as saved in localStorage so badge persists across refreshes
-      try { localStorage.setItem('pt_audio_cached_' + cachedUrl, '1'); } catch (_) {}
-      refreshSavedAudioBadges();
+      markAudioSaved(cachedUrl);
     }
   });
 }
 
 /**
  * handleAudioListen — Telegram-style:
- * Just play. SW handles cache. If offline & not cached, <audio> will fire error.
+ * Plays immediately. Starts background download if online.
+ * When offline, serves from cache without requiring network or saving to device disk.
  */
 async function handleAudioListen(playBtn) {
   const url   = playBtn.dataset.url;
@@ -5532,7 +5679,7 @@ async function handleAudioListen(playBtn) {
 
   if (!url || typeof AudioPlayer === 'undefined') return;
 
-  // If offline: first check audioDB (legacy blobs), then rely on SW cache.
+  // If offline: check if saved/cached
   if (!navigator.onLine) {
     const savedBlob = await audioDB.get(url);
     if (savedBlob) {
@@ -5540,82 +5687,68 @@ async function handleAudioListen(playBtn) {
       AudioPlayer.play({ url, title, type, ctx, dl, id, streamUrl: blobUrl, isOfflineBlob: true });
       return;
     }
-    // Check whether SW has it cached using Cache API
-    if ('caches' in window) {
+
+    let isAvailable = isAudioSaved(url);
+    if (!isAvailable && 'caches' in window) {
       try {
         const cache = await caches.open('pt-audio-v1');
-        const isCached = !!(await cache.match(url, { ignoreSearch: true }));
-        if (!isCached) {
-          toast('الريكورد مش محفوظ على الجهاز — لازم تفتح الريكورد دة وانت متصل بالنت الأول');
-          return;
-        }
+        const k = audioKey(url);
+        isAvailable = !!(await cache.match(k, { ignoreSearch: true }) || await cache.match(url, { ignoreSearch: true }));
       } catch (_) {}
     }
-    // SW has it — just play, SW will intercept and serve from cache
+
+    if (!isAvailable) {
+      toast('الريكورد غير متاح دون اتصال — يرجى تشغيله أثناء الاتصال بالإنترنت لحفظه تلقائياً');
+      return;
+    }
+
+    // SW serves from cache instantly
     AudioPlayer.play({ url, title, type, ctx, dl, id });
     return;
   }
 
-  // Online: play immediately + tell SW to cache in background
+  // Online: play immediately + start Telegram-style background download
   AudioPlayer.play({ url, title, type, ctx, dl, id });
   swPrecacheAudio(url);
 }
 
 /**
- * handleAudioDownload — downloads to device AND tells SW to cache.
- * No new tab opened. Uses native <a> download (stays in same page).
+ * handleAudioDownload — Telegram-style "Make available offline":
+ * Caches in background without saving file to device filesystem.
  */
 async function handleAudioDownload(e, dlBtn) {
   e.preventDefault();
+  e.stopPropagation();
 
   const url   = dlBtn.dataset.url;
-  const title = dlBtn.dataset.title || 'تسجيل_المحاضرة';
-  const dl    = dlBtn.dataset.dl || url;
-
   if (!url) return;
 
-  // If already saved as blob in audioDB → save to device from blob
-  const savedBlob = await audioDB.get(url);
-  if (savedBlob) {
-    saveBlobToDevice(savedBlob, title);
-    toast('الريكورد محفوظ مسبقاً ✓ — تم تنزيل نسخة لجهازك');
+  if (isAudioSaved(url)) {
+    toast('الريكورد متاح للاستماع دون اتصال ✓');
     return;
   }
 
-  // Trigger device download via invisible <a> (no new tab)
-  const dlUrl = dl || url;
-  const a = document.createElement('a');
-  a.href    = dlUrl;
-  a.download = (title || 'تسجيل') + '.mp3';
-  a.style.display = 'none';
-  document.body.appendChild(a);
-  a.click();
-  setTimeout(() => a.remove(), 1000);
-
-  // Tell SW to also pre-cache for offline in-browser playback
   swPrecacheAudio(url);
-
-  toast('⬇️ جارٍ التنزيل… الريكورد سيعمل دون اتصال تلقائياً بعد التنزيل');
+  toast('جارٍ حفظ الريكورد للاستماع دون اتصال…');
 }
 
 /**
  * refreshSavedAudioBadges — checks SW cache + localStorage flags to show ✓ badges.
  */
 async function refreshSavedAudioBadges() {
-  // Combine IndexedDB keys (legacy) and localStorage flags
   let dbKeys = new Set();
   try { dbKeys = await audioDB.getAllKeys(); } catch (_) {}
 
   const chips = document.querySelectorAll('.chip-split[data-audio-url]');
   const urls  = Array.from(chips).map(c => c.getAttribute('data-audio-url')).filter(Boolean);
 
-  // Check SW cache for all audio URLs at once
   const swCached = new Set();
   if ('caches' in window) {
     try {
       const cache = await caches.open('pt-audio-v1');
       await Promise.all(urls.map(async url => {
-        const m = await cache.match(url, { ignoreSearch: true });
+        const k = audioKey(url);
+        const m = await cache.match(k, { ignoreSearch: true }) || await cache.match(url, { ignoreSearch: true });
         if (m) swCached.add(url);
       }));
     } catch (_) {}
@@ -5626,11 +5759,11 @@ async function refreshSavedAudioBadges() {
     const dlBtn = chip.querySelector('.chip-split-dl');
     const dlUse = dlBtn?.querySelector('use');
 
-    const lsFlag  = localStorage.getItem('pt_audio_cached_' + url) === '1';
-    const isSaved = dbKeys.has(url) || swCached.has(url) || lsFlag;
+    const isSaved = dbKeys.has(url) || swCached.has(url) || isAudioSaved(url);
 
     if (isSaved) {
       chip.classList.add('is-saved');
+      chip.classList.remove('is-caching');
       if (dlBtn) {
         dlBtn.classList.add('is-saved');
         dlBtn.setAttribute('title', 'محفوظ للاستماع دون اتصال ✓');
@@ -5640,7 +5773,7 @@ async function refreshSavedAudioBadges() {
       chip.classList.remove('is-saved');
       if (dlBtn) {
         dlBtn.classList.remove('is-saved');
-        dlBtn.setAttribute('title', 'تحميل الريكورد للجهاز');
+        dlBtn.setAttribute('title', 'حفظ للاستماع دون اتصال');
         if (dlUse) dlUse.setAttribute('href', '#i-download');
       }
     }
@@ -6553,6 +6686,11 @@ const AudioPlayer = {
     }
 
     this.updateChips();
+
+    // Auto-trigger Telegram-style background precache if online and not yet saved
+    if (navigator.onLine && track && track.url && typeof swPrecacheAudio === 'function') {
+      swPrecacheAudio(track.url);
+    }
     const existingBm = this.getBookmark(track);
     if (existingBm && typeof existingBm.time === 'number' && existingBm.time > 0) {
       toast(`تشغيل: ${track.title} • علامة محفوظة عند ${existingBm.formatted} 🔖`);
@@ -7233,7 +7371,7 @@ window.addEventListener('offline', () => {
 // Register Service Worker with Stale-While-Revalidate (Problem 1)
 if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js?v=2').catch(err => {
+    navigator.serviceWorker.register('./sw.js?v=3').catch(err => {
       console.warn('Service worker registration notice:', err);
     });
   });

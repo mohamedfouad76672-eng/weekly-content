@@ -1605,6 +1605,33 @@ button.chip.off:hover {
 .toast-action-btn:hover {
   opacity: 0.9;
 }
+@media (max-width: 600px) {
+  #bulkLinkAudioBtn span {
+    display: none;
+  }
+  #bulkLinkAudioBtn {
+    padding-inline: 10px;
+  }
+}
+.chip-split.is-saved {
+  border-color: var(--brand) !important;
+}
+.chip-split.is-saved .chip-split-dl {
+  background: var(--soft) !important;
+  color: var(--brand) !important;
+}
+.chip-split.is-saved .chip-split-dl .i {
+  color: var(--brand) !important;
+  stroke: var(--brand) !important;
+}
+.chip-split.is-saved .chip-split-dl:hover {
+  background: var(--brand) !important;
+  color: var(--on-brand) !important;
+}
+.chip-split.is-saved .chip-split-dl:hover .i {
+  color: var(--on-brand) !important;
+  stroke: var(--on-brand) !important;
+}
 
 /* ==========================================================================
    Subject Accordion View (Redesigned with Grid & Clean Aesthetic)
@@ -3099,6 +3126,8 @@ body.has-audio-player.audio-minimized .back-to-top {
   <symbol id="i-alert" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></symbol>
   <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
   <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></symbol>
+  <symbol id="i-link" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
   <symbol id="i-download" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></symbol>
   <symbol id="i-notes" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></symbol>
 
@@ -3157,6 +3186,10 @@ body.has-audio-player.audio-minimized .back-to-top {
       <button id="todayBtn" class="btn" aria-label="عرض جدول اليوم">
         محاضرات اليوم
         <span id="todayBadge" class="btn-badge muted" title="عدد محاضرات اليوم">-</span>
+      </button>
+      <button id="bulkLinkAudioBtn" class="btn ghost" title="ربط تسجيلات المحاضرات المحملة لتشغيلها دون إنترنت" aria-label="ربط الريكوردات المحملة">
+        <svg class="i"><use href="#i-link"/></svg>
+        <span>ربط الريكوردات</span>
       </button>
       <div class="refresh-wrap" id="refreshWrap" title="تحديث الجدول وعرض وقت آخر مزامنة">
         <button id="refreshBtn" class="icon-btn" aria-label="تحديث البيانات من المصدر" title="تحديث الجدول">
@@ -3369,6 +3402,10 @@ body.has-audio-player.audio-minimized .back-to-top {
         <a class="ap-tool-btn" id="apDlLink" href="#" target="_blank" rel="noopener noreferrer" download title="تنزيل الملف للجهاز" aria-label="تنزيل الريكورد">
           <svg class="i"><use href="#i-download"/></svg>
         </a>
+        <!-- 2.5 Link Audio File -->
+        <button type="button" class="ap-tool-btn" id="apLinkBtn" title="ربط ملف الريكورد المحمل من جهازك" aria-label="ربط الريكورد المحمل">
+          <svg class="i"><use href="#i-link"/></svg>
+        </button>
         <!-- 3. Share -->
         <button type="button" class="ap-tool-btn" id="apShareBtn" title="مشاركة رابط المحاضرة" aria-label="مشاركة المحاضرة">
           <svg class="i"><use href="#i-share"/></svg>
@@ -5352,33 +5389,56 @@ async function downloadAndSaveAudio(url, meta = {}, isBackground = false) {
   return p;
 }
 
-async function cacheAudioUrlInBackground(url) {
-  if (!url || typeof url !== 'string') return;
-  try {
-    localStorage.setItem('pt_audio_saved_' + url, '1');
-    refreshSavedAudioBadges();
-    if ('caches' in window) {
-      const cache = await caches.open('pt-recordings-v1');
-      const match = await cache.match(url, { ignoreSearch: true });
-      if (!match) {
-        const cleanReq = new Request(url, { method: 'GET', mode: 'no-cors' });
-        const res = await fetch(cleanReq);
-        if (res) {
-          await cache.put(url, res);
-        }
-      }
+/**
+ * Matches a chosen local audio file to the corresponding lecture item
+ * by comparing filenames and subject titles.
+ */
+function findMatchingLectureForFile(fileName, audioItems) {
+  if (!fileName || !audioItems || !audioItems.length) return null;
+  const cleanName = fileName.toLowerCase().replace(/\.(mp3|m4a|aac|ogg|wav)$/i, '').replace(/[_s.\-–—]+/g, ' ').trim();
+
+  // 1. Direct match with URL filename
+  for (const item of audioItems) {
+    if (!item.url) continue;
+    const urlParts = item.url.split('/');
+    const rawUrlName = urlParts[urlParts.length - 1];
+    const cleanUrlName = rawUrlName.toLowerCase().replace(/\.(mp3|m4a|aac|ogg|wav)$/i, '').replace(/[_s.\-–—]+/g, ' ').trim();
+    if (cleanUrlName && (cleanName.includes(cleanUrlName) || cleanUrlName.includes(cleanName))) {
+      return item;
     }
-  } catch (err) {
-    console.warn('Background cache error:', err);
   }
+
+  // 2. Direct match with subject title
+  for (const item of audioItems) {
+    if (!item.subject) continue;
+    const cleanSubj = item.subject.toLowerCase().replace(/[_s.\-–—]+/g, ' ').trim();
+    if (cleanSubj && (cleanName.includes(cleanSubj) || cleanSubj.includes(cleanName))) {
+      return item;
+    }
+  }
+
+  // 3. Keyword / partial token match
+  const words = cleanName.split(' ').filter(w => w.length > 2);
+  for (const item of audioItems) {
+    for (const w of words) {
+      if (item.url && item.url.toLowerCase().includes(w)) return item;
+      if (item.subject && item.subject.toLowerCase().includes(w)) return item;
+    }
+  }
+
+  return null;
 }
 
-function promptLocalAudioFile(url, title, type, ctx, dl, id) {
-  let fileInput = $('offlineAudioPicker');
+/**
+ * Prompts user to pick a downloaded audio file from their device,
+ * permanently binds it to the lecture in IndexedDB, and optionally plays it.
+ */
+function promptLinkLocalAudio(url, title, type, ctx, dl, id, autoPlayAfterLink = false) {
+  let fileInput = $('singleAudioPicker');
   if (!fileInput) {
     fileInput = document.createElement('input');
     fileInput.type = 'file';
-    fileInput.id = 'offlineAudioPicker';
+    fileInput.id = 'singleAudioPicker';
     fileInput.accept = 'audio/*, .mp3, .m4a, .aac, .ogg, .wav';
     fileInput.style.display = 'none';
     document.body.appendChild(fileInput);
@@ -5387,31 +5447,38 @@ function promptLocalAudioFile(url, title, type, ctx, dl, id) {
   fileInput.onchange = async () => {
     const file = fileInput.files && fileInput.files[0];
     if (!file) return;
-    toast('جارٍ تشغيل الريكورد من جهازك…');
+    toast('جارٍ ربط الملف بالموقع…');
     try {
-      // 1. حفظ في IndexedDB ليصبح متاحاً دائماً بلمسة واحدة دون اتصال
+      // حفظ في IndexedDB ليصبح متاحاً فوراً بلمسة واحدة دون اتصال للأبد
       await audioDB.save(url, file, { title, type, id });
       localStorage.setItem('pt_audio_saved_' + url, '1');
-      refreshSavedAudioBadges();
+      await refreshSavedAudioBadges();
+      toast('تم ربط الريكورد بنجاح ✓ — يعمل الآن دون إنترنت في أي وقت');
 
-      // 2. تشغيل فوري في المشغل عبر Blob URL
-      const blobUrl = URL.createObjectURL(file);
-      AudioPlayer.play({ url, title, type, ctx, dl, id, streamUrl: blobUrl, isOfflineBlob: true });
-      toast('تم تشغيل وحفظ الريكورد في الموقع بنجاح ✓');
+      if (autoPlayAfterLink) {
+        const blobUrl = URL.createObjectURL(file);
+        AudioPlayer.play({ url, title, type, ctx, dl, id, streamUrl: blobUrl, isOfflineBlob: true });
+      }
     } catch (err) {
-      console.warn('Local audio save error:', err);
-      const blobUrl = URL.createObjectURL(file);
-      AudioPlayer.play({ url, title, type, ctx, dl, id, streamUrl: blobUrl, isOfflineBlob: true });
+      console.warn('Audio link error:', err);
+      toast('تعذّر حفظ الريكورد، يرجى المحاولة مجدداً');
     }
   };
 
-  toast(
-    'الريكورد مش مخزن في المتصفح. لو حملته على جهازك يمكنك تشغيله الآن:',
-    '📂 تشغيل من الجهاز',
-    () => fileInput.click()
-  );
+  const actionText = autoPlayAfterLink ? '📂 اختيار الملف والتشغيل' : '🔗 ربط الملف المحمل';
+  const msg = autoPlayAfterLink
+    ? `الريكورد محمل على جهازك؟ اضغط لتحديده والتشغيل فوراً:`
+    : `لربط ريكورد "${title || 'المحاضرة'}" ليعمل دون نت للأبد:`;
+
+  toast(msg, actionText, () => fileInput.click());
 }
 
+/**
+ * Handles Listen click:
+ * 1. If saved in IndexedDB -> instant play offline
+ * 2. If online -> instant streaming
+ * 3. If offline and unlinked -> opens file picker to link and play
+ */
 async function handleAudioListen(playBtn) {
   const url = playBtn.dataset.url;
   const title = playBtn.dataset.title;
@@ -5422,7 +5489,7 @@ async function handleAudioListen(playBtn) {
 
   if (!url || typeof AudioPlayer === 'undefined') return;
 
-  // 1. فحص هل هو محفوظ في IndexedDB كـ Blob
+  // 1. لو محفوظ في IndexedDB -> تشغيل فوري بدون أي نت
   const savedBlob = await audioDB.get(url);
   if (savedBlob) {
     const blobUrl = URL.createObjectURL(savedBlob);
@@ -5430,76 +5497,149 @@ async function handleAudioListen(playBtn) {
     return;
   }
 
-  // 2. إذا كنا أونلاين: نبدأ الكاش في الخلفية تلقائياً + تشغيل فوري Progressive Streaming
+  // 2. إذا كنا متصلين بالإنترنت -> تشغيل فوري Progressive Streaming
   if (navigator.onLine) {
-    cacheAudioUrlInBackground(url);
     AudioPlayer.play({ url, title, type, ctx, dl, id });
     return;
   }
 
-  // 3. إذا كنا أوفلاين:
-  // نفحص هل الريكورد مخزن في كاش الـ Service Worker
-  let isCached = false;
-  if ('caches' in window) {
-    try {
-      const cache = await caches.open('pt-recordings-v1');
-      const match = await cache.match(url, { ignoreSearch: true });
-      if (match) isCached = true;
-    } catch (_) {}
-  }
-
-  const isSavedFlag = localStorage.getItem('pt_audio_saved_' + url) === '1';
-
-  if (isCached || isSavedFlag) {
-    // تشغيل من كاش الـ Service Worker
-    AudioPlayer.play({ url, title, type, ctx, dl, id });
-  } else {
-    // الملف غير مخزن في المتصفح والنت مفصول -> إتاحة تشغيله مباشرة من مجلد التنزيلات بالجهاز
-    promptLocalAudioFile(url, title, type, ctx, dl, id);
-  }
+  // 3. إذا كنا دون اتصال والريكورد مش مربوط -> طلب اختيار الملف للربط والتشغيل الفوري
+  promptLinkLocalAudio(url, title, type, ctx, dl, id, true);
 }
 
+/**
+ * Handles Download click:
+ * 1. If already in IndexedDB -> save copy to Downloads
+ * 2. If not -> browser downloads via <a> and prompts user to link file
+ */
 async function handleAudioDownload(e, dlBtn) {
   const url = dlBtn.dataset.url;
   const title = dlBtn.dataset.title || 'تسجيل_المحاضرة';
+  const type = dlBtn.dataset.type;
+  const ctx = dlBtn.dataset.ctx;
+  const dl = dlBtn.dataset.dl;
+  const id = dlBtn.dataset.id;
 
   if (!url) return;
 
-  // 1. لو محفوظ في IndexedDB -> تنزيل فوري من الـ Blob المحفوظ
+  // 1. لو مربوط بالفعل في IndexedDB -> تنزيل فوري للجهاز
   const savedBlob = await audioDB.get(url);
   if (savedBlob) {
     e.preventDefault();
     saveBlobToDevice(savedBlob, title);
-    toast('محفوظ بالفعل ✓ — تم حفظ نسخة في مجلد التنزيلات');
+    toast('الريكورد مربوط بالفعل ومحفوظ أوفلاين ✓ — تم حفظ نسخة في مجلد التنزيلات');
     return;
   }
 
-  // 2. حفظ في الكاش ليعمل أوفلاين في الموقع + بدء التنزيل للموبايل
-  cacheAudioUrlInBackground(url);
-  toast('جارٍ تنزيل الريكورد لجهازك وحفظه للاستماع أوفلاين ✓');
+  // 2. يبدأ التنزيل الطبيعي للجهاز عبر الرابط <a>
+  toast('جارٍ تنزيل الريكورد لجهازك…');
+  setTimeout(() => {
+    promptLinkLocalAudio(url, title, type, ctx, dl, id, false);
+  }, 1200);
 }
 
+/**
+ * Updates UI badges for all audio chips according to IndexedDB saved keys
+ */
 async function refreshSavedAudioBadges() {
   try {
     const savedKeys = await audioDB.getAllKeys();
     document.querySelectorAll('.chip-split[data-audio-url]').forEach(chip => {
       const url = chip.getAttribute('data-audio-url');
       const dlBtn = chip.querySelector('.chip-split-dl');
-      const isSavedInStorage = localStorage.getItem('pt_audio_saved_' + url) === '1';
-      const isSavedInDB = savedKeys.has(url);
+      const dlUse = dlBtn?.querySelector('use');
+      const isSaved = savedKeys.has(url);
 
-      if (isSavedInStorage || isSavedInDB) {
+      if (isSaved) {
         chip.classList.add('is-saved');
         if (dlBtn) {
           dlBtn.classList.add('is-saved');
-          dlBtn.setAttribute('title', 'محفوظ للاستماع دون اتصال ✓ (انقر للتنزيل مجدداً)');
+          dlBtn.setAttribute('title', 'مربوط ومحفوظ للاستماع دون اتصال ✓ (انقر للتنزيل أو إعادة الربط)');
+          if (dlUse) dlUse.setAttribute('href', '#i-check');
         }
       } else {
         chip.classList.remove('is-saved');
-        if (dlBtn) dlBtn.classList.remove('is-saved');
+        if (dlBtn) {
+          dlBtn.classList.remove('is-saved');
+          dlBtn.setAttribute('title', 'تحميل الريكورد للجهاز');
+          if (dlUse) dlUse.setAttribute('href', '#i-download');
+        }
       }
     });
   } catch (_) {}
+}
+
+/**
+ * Initializes the Bulk Linker button in the top navigation bar.
+ * Allows students to select multiple downloaded MP3 files at once.
+ */
+function initBulkLinker() {
+  const btn = $('bulkLinkAudioBtn');
+  if (!btn) return;
+
+  let bulkInput = $('bulkAudioPicker');
+  if (!bulkInput) {
+    bulkInput = document.createElement('input');
+    bulkInput.type = 'file';
+    bulkInput.id = 'bulkAudioPicker';
+    bulkInput.multiple = true;
+    bulkInput.accept = 'audio/*, .mp3, .m4a, .aac, .ogg, .wav';
+    bulkInput.style.display = 'none';
+    document.body.appendChild(bulkInput);
+  }
+
+  btn.onclick = () => {
+    bulkInput.value = '';
+    bulkInput.click();
+  };
+
+  bulkInput.onchange = async () => {
+    const files = Array.from(bulkInput.files || []);
+    if (!files.length) return;
+
+    toast(`جارٍ فحص وربط ${files.length} ملف…`);
+    let linkedCount = 0;
+
+    // Gather all audio items from ALL
+    const audioItems = [];
+    if (typeof ALL !== 'undefined' && Array.isArray(ALL)) {
+      ALL.forEach(item => {
+        if (item.audio) {
+          audioItems.push({
+            url: item.audio,
+            subject: item.subject || '',
+            type: item.type || '',
+            id: item.id || ''
+          });
+        }
+      });
+    }
+
+    for (const file of files) {
+      const match = findMatchingLectureForFile(file.name, audioItems);
+      if (match) {
+        try {
+          await audioDB.save(match.url, file, {
+            title: match.subject,
+            type: match.type,
+            id: match.id
+          });
+          localStorage.setItem('pt_audio_saved_' + match.url, '1');
+          linkedCount++;
+        } catch (e) {
+          console.warn('Bulk link save error:', e);
+        }
+      }
+    }
+
+    await refreshSavedAudioBadges();
+
+    if (linkedCount > 0) {
+      toast(`تم ربط ${linkedCount} ريكورد بنجاح ✓ — تعمل الآن دون اتصال بالإنترنت!`);
+    } else {
+      toast('تم اختيار الملفات. يمكنك ربط كل ريكورد مباشرة بالضغط عليه');
+    }
+  };
 }
 
 function renderCore(scrollToTop = false) {
@@ -6238,6 +6378,19 @@ const AudioPlayer = {
       }
     });
     $('apCloseBtn')?.addEventListener('click', () => this.close());
+    $('apLinkBtn')?.addEventListener('click', () => {
+      if (this.currentTrack) {
+        promptLinkLocalAudio(
+          this.currentTrack.url,
+          this.currentTrack.title,
+          this.currentTrack.type,
+          this.currentTrack.ctx,
+          this.currentTrack.dl,
+          this.currentTrack.id,
+          true
+        );
+      }
+    });
     $('apMiniCloseBtn')?.addEventListener('click', () => this.close());
 
     // Volume & Mute Controls
@@ -7033,6 +7186,7 @@ updateLastSyncDisplay();
 
 render(false);
 AudioPlayer.init();
+initBulkLinker();
 loadAll();
 startNextClassTimer();
 renderAdhkar();

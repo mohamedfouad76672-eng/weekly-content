@@ -563,6 +563,16 @@ h1 {
   color: var(--brand);
 }
 
+/* Refresh Button Spinning Animation during live sync */
+#refreshBtn.is-refreshing .i,
+.refresh-wrap.is-refreshing #refreshBtn .i {
+  animation: refresh-spin 0.85s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+@keyframes refresh-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
 /* Interactive Stats Row (Clickable Filter Shortcuts with Hover Scale) */
 .stats {
   display: flex;
@@ -1573,50 +1583,44 @@ button.chip.off:hover {
 .chip-split-dl:hover .dl-progress {
   color: var(--on-brand);
 }
-/* Telegram-style Circular Download Indicator around the button */
-.chip-split.is-caching .chip-split-dl {
+/* Telegram-style Circular Download Progress Ring */
+.chip-split-dl {
   position: relative;
-  pointer-events: none;
 }
-.chip-split.is-caching .chip-split-dl::before {
-  content: '';
+.chip-split-dl .dl-ring {
   position: absolute;
-  width: 22px;
-  height: 22px;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  border: 2px solid color-mix(in srgb, var(--brand) 22%, transparent);
-  box-sizing: border-box;
+  transform: translate(-50%, -50%) rotate(-90deg);
+  width: 23px;
+  height: 23px;
+  pointer-events: none;
+  display: none;
+}
+.chip-split.is-caching .chip-split-dl {
   pointer-events: none;
 }
-.chip-split.is-caching .chip-split-dl::after {
-  content: '';
-  position: absolute;
-  width: 22px;
-  height: 22px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  border: 2px solid transparent;
-  border-top-color: var(--brand);
-  border-right-color: var(--brand);
-  animation: tg-dl-spin 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-  box-sizing: border-box;
-  pointer-events: none;
+.chip-split.is-caching .chip-split-dl .dl-ring {
+  display: block;
 }
-@keyframes tg-dl-spin {
-  to { transform: translate(-50%, -50%) rotate(360deg); }
+.chip-split-dl .dl-ring-bg {
+  fill: none;
+  stroke: color-mix(in srgb, var(--brand) 22%, transparent);
+  stroke-width: 2;
+}
+.chip-split-dl .dl-ring-fill {
+  fill: none;
+  stroke: var(--brand);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 59.7;
+  stroke-dashoffset: 59.7;
+  transition: stroke-dashoffset 200ms ease-out;
 }
 .chip-split.is-caching .chip-split-dl .i {
   opacity: 0.5;
-  transform: scale(0.9);
-}
-.chip-split.is-caching .chip-split-dl:hover::after {
-  border-top-color: var(--on-brand);
-  border-right-color: var(--on-brand);
+  transform: scale(0.85);
+  transition: opacity 150ms ease, transform 150ms ease;
 }
 
 /* When audio is saved in IndexedDB / Cache: ⬇️ icon turns to --brand */
@@ -4415,12 +4419,16 @@ async function fetchWeek(n, signal, bypassCache = false) {
   if (signal && signal.aborted) return null;
 
   const sheetName = 'Week ' + String(n).padStart(2, '0');
-  const url = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?sheet=${encodeURIComponent(sheetName)}`;
+  const baseUrl = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/gviz/tq?sheet=${encodeURIComponent(sheetName)}`;
+  const fetchUrl = bypassCache ? `${baseUrl}&_t=${Date.now()}` : baseUrl;
 
   // 1. Try modern fetch (supports Service Worker & Cache Storage)
   if (navigator.onLine) {
     try {
-      const res = await fetch(url, { signal });
+      const res = await fetch(fetchUrl, {
+        signal,
+        cache: bypassCache ? 'reload' : 'default'
+      });
       if (res.ok) {
         const text = await res.text();
         const resp = parseGvizText(text);
@@ -4430,7 +4438,7 @@ async function fetchWeek(n, signal, bypassCache = false) {
           try {
             if ('caches' in window) {
               const sc = await caches.open('pt-sheets-v1');
-              await sc.put(new Request(url), new Response(text, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } }));
+              await sc.put(new Request(baseUrl), new Response(text, { headers: { 'Content-Type': 'text/plain; charset=utf-8' } }));
             }
           } catch (_) {}
           return rows;
@@ -4445,7 +4453,7 @@ async function fetchWeek(n, signal, bypassCache = false) {
   try {
     if ('caches' in window) {
       const sc = await caches.open('pt-sheets-v1');
-      const cachedRes = await sc.match(url);
+      const cachedRes = await sc.match(baseUrl);
       if (cachedRes) {
         const text = await cachedRes.text();
         const resp = parseGvizText(text);
@@ -4470,8 +4478,9 @@ async function fetchWeek(n, signal, bypassCache = false) {
 
 /**
  * Background worker to fetch remaining weeks with concurrency limit (2-3).
+ * @param {boolean} [forceBypass=false]
  */
-function processBackgroundQueue() {
+function processBackgroundQueue(forceBypass = false) {
   if (isBackgroundQueueRunning || !backgroundFetchQueue.length) return;
   isBackgroundQueueRunning = true;
 
@@ -4482,7 +4491,7 @@ function processBackgroundQueue() {
     }
 
     const batch = backgroundFetchQueue.splice(0, CONFIG.CONCURRENT_FETCHES);
-    const promises = batch.map(w => fetchWeek(w));
+    const promises = batch.map(w => fetchWeek(w, null, forceBypass));
 
     Promise.all(promises).then(results => {
       let hasNew = false;
@@ -4520,17 +4529,47 @@ function processBackgroundQueue() {
 let isOfflineMode = false;
 
 /**
+ * Toggles the spinning animation on the refresh icon and updates sync status label.
+ * @param {boolean} active
+ */
+function setRefreshIndicator(active) {
+  const btn = $('refreshBtn');
+  const wrap = $('refreshWrap');
+  if (btn) {
+    btn.classList.toggle('is-refreshing', active);
+    btn.setAttribute('aria-busy', String(active));
+  }
+  if (wrap) {
+    wrap.classList.toggle('is-refreshing', active);
+  }
+  const lastSyncValue = $('lastSyncValue');
+  if (active) {
+    if (lastSyncValue) lastSyncValue.textContent = 'جارٍ التحديث…';
+  } else {
+    updateLastSyncDisplay();
+  }
+}
+
+/**
  * Loads the current week first, then queues remaining weeks progressively.
  * Preserves cached data on failure and displays offline notice.
  * @param {boolean} [force=false]
+ * @param {Object} [options={}]
+ * @param {boolean} [options.silent=false]
  */
-async function loadAll(force = false) {
+async function loadAll(force = false, options = {}) {
+  const silent = Boolean(options.silent);
+
   if (force) {
     backgroundFetchQueue = [];
     isBackgroundQueueRunning = false;
   }
 
-  $('loading').hidden = false;
+  setRefreshIndicator(true);
+
+  if (ALL.length === 0) {
+    $('loading').hidden = false;
+  }
 
   // Cancel any pending fetch for active week
   if (pendingControllers.has(st.week)) {
@@ -4582,24 +4621,30 @@ async function loadAll(force = false) {
       const timeEl = $('offlineTimeText');
       if (timeEl) timeEl.textContent = timeFormatted;
       offlineNotice.hidden = false;
-      if (force) toast('تعذّر الاتصال بالإنترنت - يتم عرض البيانات المحفوظة');
+      if (force && !silent) toast('تعذّر الاتصال بالإنترنت - يتم عرض البيانات المحفوظة');
     } else {
       offlineNotice.hidden = true;
     }
   }
 
   $('loading').hidden = true;
+  setRefreshIndicator(false);
+
   renderStats();
   updateTodayBadge();
   updateNextClassCard();
   updateLastSyncDisplay();
   render(false);
 
+  if (force && !silent && !fetchFailed) {
+    toast('تم تحديث البيانات بنجاح ✓');
+  }
+
   // Queue remaining weeks to be loaded in background only if online
   if (navigator.onLine && !isOfflineMode) {
     backgroundFetchQueue = Array.from({ length: CONFIG.WEEKS }, (_, i) => i + 1)
-      .filter(n => n !== st.week && !ALL.some(x => x.wk === n));
-    processBackgroundQueue();
+      .filter(n => n !== st.week && (force || !ALL.some(x => x.wk === n)));
+    processBackgroundQueue(force);
   }
 }
 
@@ -5043,7 +5088,8 @@ function resChipHTML(it, r, ctx = '') {
         <span>${r.l}</span>
       </button>
       <span class="chip-split-divider" aria-hidden="true"></span>
-      <a class="chip-split-dl downloadAudioBtn" href="${esc(dlUrl)}" download="${esc(it.subject || 'تسجيل')}.mp3" data-url="${esc(url)}" data-title="${esc(it.subject)}" data-type="${esc(it.type || '')}" data-ctx="${esc(contextLabel)}" data-dl="${esc(dlUrl)}" data-id="${esc(it.id || '')}" title="تحميل الريكورد للجهاز" aria-label="تحميل الريكورد للجهاز">
+      <a class="chip-split-dl downloadAudioBtn" href="${esc(dlUrl)}" download="${esc(it.subject || 'تسجيل')}.mp3" data-url="${esc(url)}" data-title="${esc(it.subject)}" data-type="${esc(it.type || '')}" data-ctx="${esc(contextLabel)}" data-dl="${esc(dlUrl)}" data-id="${esc(it.id || '')}" title="حفظ الريكورد للاستماع دون اتصال" aria-label="حفظ الريكورد للاستماع دون اتصال">
+        <svg class="dl-ring" viewBox="0 0 24 24" aria-hidden="true"><circle class="dl-ring-bg" cx="12" cy="12" r="9.5"/><circle class="dl-ring-fill" cx="12" cy="12" r="9.5"/></svg>
         <span class="dl-progress" style="display:none;"></span>
         <svg class="i" aria-hidden="true"><use href="#i-download"/></svg>
       </a>
@@ -5574,14 +5620,42 @@ function markAudioSaved(url) {
   refreshSavedAudioBadges();
 }
 
+/**
+ * Updates the circular progress ring (0% to 100%) live on matching download buttons.
+ * Circumference of r=9.5 is 59.7px.
+ */
+function updateChipProgress(url, pct) {
+  pct = Math.max(0, Math.min(100, Math.round(pct)));
+  document.querySelectorAll('.chip-split[data-audio-url]').forEach(chip => {
+    if (chip.getAttribute('data-audio-url') === url) {
+      if (!chip.classList.contains('is-caching')) {
+        chip.classList.add('is-caching');
+      }
+      const ringFill = chip.querySelector('.dl-ring-fill');
+      if (ringFill) {
+        const offset = 59.7 * (1 - pct / 100);
+        ringFill.style.strokeDashoffset = offset + 'px';
+      }
+      const dlBtn = chip.querySelector('.chip-split-dl');
+      if (dlBtn) {
+        dlBtn.setAttribute('title', `جارٍ التحميل في الخلفية (${pct}%)…`);
+      }
+    }
+  });
+}
+
 /** Set or clear the Telegram circular caching indicator state on all chips matching this URL */
 function setChipCaching(url, caching) {
   document.querySelectorAll('.chip-split[data-audio-url]').forEach(chip => {
     if (chip.getAttribute('data-audio-url') === url) {
       if (caching) {
         chip.classList.add('is-caching');
+        const ringFill = chip.querySelector('.dl-ring-fill');
+        if (ringFill) {
+          ringFill.style.strokeDashoffset = '59.7px';
+        }
         const dlBtn = chip.querySelector('.chip-split-dl');
-        if (dlBtn) dlBtn.setAttribute('title', 'جارٍ الحفظ في الخلفية للاستماع دون اتصال…');
+        if (dlBtn) dlBtn.setAttribute('title', 'جارٍ التحميل في الخلفية للاستماع دون اتصال…');
         clearTimeout(chip._cachingTimer);
         chip._cachingTimer = setTimeout(() => {
           chip.classList.remove('is-caching');
@@ -5589,17 +5663,42 @@ function setChipCaching(url, caching) {
       } else {
         clearTimeout(chip._cachingTimer);
         chip.classList.remove('is-caching');
+        const ringFill = chip.querySelector('.dl-ring-fill');
+        if (ringFill) ringFill.style.strokeDashoffset = '59.7px';
       }
     }
   });
 }
 
+/** Track live download progress from currently playing audio in AudioPlayer */
+function trackActiveAudioProgress() {
+  if (typeof AudioPlayer === 'undefined' || !AudioPlayer.audio || !AudioPlayer.currentTrack) return;
+  const trackUrl = AudioPlayer.currentTrack.url;
+  if (!trackUrl || isAudioSaved(trackUrl)) return;
+
+  const audio = AudioPlayer.audio;
+  if (audio.duration && !isNaN(audio.duration) && audio.duration > 0) {
+    const b = audio.buffered;
+    if (b && b.length > 0) {
+      let maxEnd = 0;
+      for (let i = 0; i < b.length; i++) {
+        if (b.end(i) > maxEnd) maxEnd = b.end(i);
+      }
+      const pct = Math.min(100, Math.round((maxEnd / audio.duration) * 100));
+      updateChipProgress(trackUrl, pct);
+      if (pct >= 99) {
+        markAudioSaved(trackUrl);
+      }
+    }
+  }
+}
+
 const activeBgCaches = new Set();
 
 /**
- * Telegram-style background precache:
+ * Telegram-style live background precache:
  * Downloads the full audio file in background and stores in offline Cache Storage.
- * Shows circular indicator around download button during caching.
+ * Shows circular progress ring filling up clockwise live (0-100%) according to network speed.
  */
 function swPrecacheAudio(url) {
   if (!url) return;
@@ -5607,8 +5706,9 @@ function swPrecacheAudio(url) {
   if (activeBgCaches.has(url)) return;
   activeBgCaches.add(url);
 
-  // Show Telegram circular indicator
+  // Initialize circular ring at 3% so user sees download started
   setChipCaching(url, true);
+  updateChipProgress(url, 3);
 
   // 1. Notify Service Worker to fetch and cache in background
   if ('serviceWorker' in navigator) {
@@ -5621,14 +5721,65 @@ function swPrecacheAudio(url) {
     }
   }
 
-  // 2. Also cache directly via Cache Storage in page for immediate reliability
+  // 2. Track download progress via live background audio stream if not currently active
+  let bgAudio = null;
+  const isCurrentlyPlayingThis = typeof AudioPlayer !== 'undefined' && AudioPlayer.currentTrack && AudioPlayer.currentTrack.url === url;
+  if (!isCurrentlyPlayingThis) {
+    try {
+      bgAudio = new Audio();
+      bgAudio.preload = 'auto';
+      bgAudio.muted = true;
+      bgAudio.src = url;
+
+      const onProgress = () => {
+        if (bgAudio && bgAudio.duration && !isNaN(bgAudio.duration) && bgAudio.duration > 0) {
+          const b = bgAudio.buffered;
+          if (b && b.length > 0) {
+            let maxEnd = 0;
+            for (let i = 0; i < b.length; i++) {
+              if (b.end(i) > maxEnd) maxEnd = b.end(i);
+            }
+            const pct = Math.min(100, Math.round((maxEnd / bgAudio.duration) * 100));
+            updateChipProgress(url, pct);
+            if (pct >= 99) {
+              cleanupBg();
+              markAudioSaved(url);
+            }
+          }
+        }
+      };
+
+      const cleanupBg = () => {
+        if (!bgAudio) return;
+        bgAudio.removeEventListener('progress', onProgress);
+        bgAudio.removeAttribute('src');
+        bgAudio.load();
+        bgAudio = null;
+      };
+
+      bgAudio.addEventListener('progress', onProgress);
+      bgAudio.addEventListener('canplaythrough', () => {
+        updateChipProgress(url, 100);
+        setTimeout(() => {
+          cleanupBg();
+          markAudioSaved(url);
+        }, 250);
+      });
+      bgAudio.load();
+    } catch (_) {}
+  }
+
+  // 3. Cache directly via Cache Storage in page for robust offline persistence
   if ('caches' in window) {
     caches.open('pt-audio-v1').then(async cache => {
       const key = audioKey(url);
       const existing = await cache.match(key, { ignoreSearch: true }) || await cache.match(url, { ignoreSearch: true });
       if (existing) {
-        markAudioSaved(url);
-        activeBgCaches.delete(url);
+        updateChipProgress(url, 100);
+        setTimeout(() => {
+          markAudioSaved(url);
+          activeBgCaches.delete(url);
+        }, 250);
         return;
       }
       try {
@@ -5638,12 +5789,15 @@ function swPrecacheAudio(url) {
             cache.put(key, res.clone()).catch(() => {}),
             cache.put(url, res).catch(() => {})
           ]);
-          markAudioSaved(url);
+          updateChipProgress(url, 100);
+          setTimeout(() => {
+            markAudioSaved(url);
+            activeBgCaches.delete(url);
+          }, 300);
         }
       } catch (err) {
         console.warn('Background caching notice:', err);
       } finally {
-        setChipCaching(url, false);
         activeBgCaches.delete(url);
       }
     }).catch(() => {
@@ -6165,7 +6319,7 @@ $('todayBtn').onclick = () => {
 // Manual Refresh Button
 $('refreshBtn').onclick = () => {
   toast('جارٍ تحديث البيانات من المصدر…');
-  loadAll(true);
+  loadAll(true, { silent: false });
 };
 
 // ==========================================================================
@@ -7331,10 +7485,34 @@ updateLastSyncDisplay();
 render(false);
 AudioPlayer.init();
 requestIdleCallback(() => refreshSavedAudioBadges(), { timeout: 2000 });
-loadAll();
+
+// 1. Immediately refresh fresh data from source on page load in the background (silent)
+loadAll(true, { silent: true });
+
 startNextClassTimer();
 renderAdhkar();
 initLiveCounter();
+
+// 2. Periodic Auto-Refresh: Automatically refresh live data every 5 minutes (300,000 ms)
+const AUTO_REFRESH_INTERVAL = 5 * 60 * 1000;
+let autoRefreshTimer = setInterval(() => {
+  if (navigator.onLine && document.visibilityState === 'visible') {
+    loadAll(true, { silent: true });
+  }
+}, AUTO_REFRESH_INTERVAL);
+
+// 3. Tab Visibility Handler: When returning to this tab after backgrounding, refresh if >= 5 mins elapsed
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && navigator.onLine) {
+    const lastSync = parseInt(store.get('pt_last_sync_time', '0'), 10);
+    const elapsed = Date.now() - lastSync;
+    if (!lastSync || elapsed >= AUTO_REFRESH_INTERVAL) {
+      loadAll(true, { silent: true });
+    } else {
+      updateLastSyncDisplay();
+    }
+  }
+});
 
 // Periodic timer to refresh relative time labels (every 30 seconds)
 setInterval(() => {
@@ -7354,7 +7532,7 @@ window.addEventListener('online', () => {
   const offlineNotice = $('offlineNotice');
   if (offlineNotice) offlineNotice.hidden = true;
   toast('تمت استعادة الاتصال بالإنترنت ✓ — جارٍ التحديث في الخلفية');
-  loadAll(true);
+  loadAll(true, { silent: true });
 });
 window.addEventListener('offline', () => {
   isOfflineMode = true;
@@ -7371,7 +7549,7 @@ window.addEventListener('offline', () => {
 // Register Service Worker with Stale-While-Revalidate (Problem 1)
 if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js?v=3').catch(err => {
+    navigator.serviceWorker.register('./sw.js?v=4').catch(err => {
       console.warn('Service worker registration notice:', err);
     });
   });
@@ -7380,7 +7558,7 @@ if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || wi
 // Offline Banner Retry Button click
 $('offlineRetryBtn')?.addEventListener('click', () => {
   toast('جارٍ محاولة الاتصال بالإنترنت…');
-  loadAll(true);
+  loadAll(true, { silent: false });
 });
 
 // Refresh Label Clickable Shortcut

@@ -1469,6 +1469,28 @@ button.chip.off:hover {
   transform: translateY(-1px);
 }
 
+/* Telegram & Audio Direct Link Chip */
+.chip.chip-telegram {
+  background: rgba(36, 161, 222, 0.12);
+  color: #1783b5;
+  border: 1px solid rgba(36, 161, 222, 0.25);
+}
+.chip.chip-telegram:hover {
+  border-color: #24a1de;
+  background: rgba(36, 161, 222, 0.18);
+  color: #0c6994;
+}
+[data-theme="dark"] .chip.chip-telegram {
+  background: rgba(36, 161, 222, 0.18);
+  color: #5bc0eb;
+  border-color: rgba(36, 161, 222, 0.35);
+}
+[data-theme="dark"] .chip.chip-telegram:hover {
+  background: rgba(36, 161, 222, 0.28);
+  color: #82d0f5;
+  border-color: #24a1de;
+}
+
 /* Split Segmented Chip for Audio (Listen + Direct Download) */
 .chip-split {
   display: inline-flex;
@@ -3228,6 +3250,7 @@ body.has-audio-player.audio-minimized .back-to-top {
 
 <!-- Inline SVG Icons Sprite -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-telegram" viewBox="0 0 24 24" fill="currentColor"><path d="m20.665 3.717-17.73 6.837c-1.21.486-1.203 1.161-.222 1.462l4.552 1.42 10.532-6.645c.498-.303.953-.14.579.192l-8.533 7.701h-.002l-.313 4.693c.46 0 .663-.211.921-.46l2.211-2.15 4.599 3.397c.848.467 1.457.227 1.668-.785l3.019-14.228c.309-1.239-.473-1.8-1.282-1.434z"/></symbol>
   <symbol id="i-headphones" viewBox="0 0 24 24"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"/></symbol>
   <symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4M16 13H8M16 17H8M10 9H8"/></symbol>
   <symbol id="i-list" viewBox="0 0 24 24"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></symbol>
@@ -3308,18 +3331,6 @@ body.has-audio-player.audio-minimized .back-to-top {
         محاضرات اليوم
         <span id="todayBadge" class="btn-badge muted" title="عدد محاضرات اليوم">-</span>
       </button>
-      <button id="bulkLinkAudioBtn" class="btn ghost" title="ربط تسجيلات المحاضرات المحملة لتشغيلها دون إنترنت" aria-label="ربط الريكوردات المحملة">
-        <svg class="i"><use href="#i-link"/></svg>
-        <span>ربط الريكوردات</span>
-      </button>
-      <div class="refresh-wrap" id="refreshWrap" title="تحديث الجدول وعرض وقت آخر مزامنة">
-        <button id="refreshBtn" class="icon-btn" aria-label="تحديث البيانات من المصدر" title="تحديث الجدول">
-          <svg class="i"><use href="#i-refresh"/></svg>
-        </button>
-        <span id="lastSyncLabel" class="last-sync-label">
-          <span class="last-sync-prefix">آخر تحديث: </span><span id="lastSyncValue">جاري التحميل…</span>
-        </span>
-      </div>
       <button id="themeBtn" class="icon-btn" aria-label="التبديل إلى الوضع الداكن">
         <svg class="i"><use id="themeUse" href="#i-moon"/></svg>
       </button>
@@ -3705,7 +3716,7 @@ const CONFIG = {
   ],
 
   RES: [
-    { k: 'audio', l: 'استماع للريكورد', i: 'headphones', pill: 'متاح ريكورد' },
+    { k: 'audio', l: 'الريكورد', i: 'headphones', pill: 'متاح ريكورد' },
     { k: 'pdf', l: 'عرض الداتا', i: 'file', pill: 'متاحة داتا' },
     { k: 'summary', l: 'الملخص', i: 'list', pill: null },
     { k: 'transcript', l: 'التفريغ', i: 'text', pill: 'متاح تفريغ' },
@@ -4140,7 +4151,24 @@ const st = {
 // 4. HELPER UTILITIES
 // ==========================================================================
 const $ = id => document.getElementById(id);
-const isUrl = u => /^https?:\/\//i.test((u || '').trim());
+const isUrl = u => {
+  if (!u || typeof u !== 'string') return false;
+  const s = u.trim();
+  return /^(https?:\/\/|tg:\/\/)/i.test(s) || /^(t\.me|telegram\.me|telegram\.dog)\//i.test(s);
+};
+const isTelegramUrl = u => {
+  if (!u || typeof u !== 'string') return false;
+  const s = u.trim();
+  return /^(https?:\/\/)?(t\.me|telegram\.me|telegram\.dog)\//i.test(s) || /^tg:\/\//i.test(s);
+};
+const normalizeUrl = u => {
+  if (!u || typeof u !== 'string') return '';
+  let s = u.trim();
+  if (/^(t\.me|telegram\.me|telegram\.dog)\//i.test(s)) {
+    s = 'https://' + s;
+  }
+  return s;
+};
 const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 const ic = n => `<svg class="i" aria-hidden="true"><use href="#i-${n}"/></svg>`;
 
@@ -5072,29 +5100,21 @@ function renderFavs() {
  * @param {string} [ctx='']
  */
 function resChipHTML(it, r, ctx = '') {
-  const url = it[r.k];
-  if (!isUrl(url)) {
+  const rawUrl = it[r.k];
+  if (!isUrl(rawUrl)) {
     return `<button type="button" class="chip off" data-unavail="${r.l}" title="${r.l} لم يتم رفعه بعد — انقر للمزيد" aria-label="${r.l} (غير متاح بعد)">${ic(r.i)}${r.l}</button>`;
   }
 
-  // Segmented Chip for Audio: Listen in Floating Player + Offline Download & IndexedDB
+  const url = normalizeUrl(rawUrl);
+
+  // Audio / Record chip: Direct link to Telegram / recording (opens directly without Media Player)
   if (r.k === 'audio') {
-    const dlUrl = getDirectDownloadUrl(url);
-    const contextLabel = ctx || (it.day ? `${it.day} • الأسبوع ${it.wk}` : '');
-    const isPlayingThis = typeof AudioPlayer !== 'undefined' && AudioPlayer.currentTrack && AudioPlayer.currentTrack.url === url && !AudioPlayer.isPaused();
-    return `<div class="chip-split${isPlayingThis ? ' is-playing' : ''}" role="group" aria-label="خيارات الريكورد" data-audio-url="${esc(url)}">
-      <button type="button" class="chip-split-main playAudioBtn" data-url="${esc(url)}" data-title="${esc(it.subject)}" data-type="${esc(it.type || '')}" data-ctx="${esc(contextLabel)}" data-dl="${esc(dlUrl)}" data-id="${esc(it.id || '')}" title="تشغيل الريكورد في المشغل المدمج" aria-label="تشغيل ريكورد ${esc(it.subject)}">
-        <span class="chip-audio-icon">${ic('headphones')}</span>
-        <span>${r.l}</span>
-      </button>
-      <span class="chip-split-divider" aria-hidden="true"></span>
-      <a class="chip-split-dl downloadAudioBtn" href="${esc(dlUrl)}" download="${esc(it.subject || 'تسجيل')}.mp3" data-url="${esc(url)}" data-title="${esc(it.subject)}" data-type="${esc(it.type || '')}" data-ctx="${esc(contextLabel)}" data-dl="${esc(dlUrl)}" data-id="${esc(it.id || '')}" title="حفظ الريكورد للاستماع دون اتصال" aria-label="حفظ الريكورد للاستماع دون اتصال">
-        <svg class="dl-ring" viewBox="0 0 24 24" aria-hidden="true"><circle class="dl-ring-bg" cx="12" cy="12" r="9.5"/><circle class="dl-ring-fill" cx="12" cy="12" r="9.5"/></svg>
-        <span class="dl-progress" style="display:none;"></span>
-        <svg class="i" aria-hidden="true"><use href="#i-download"/></svg>
-      </a>
-      <div class="chip-split-progress-bar" style="width:0%;"></div>
-    </div>`;
+    const isTg = isTelegramUrl(url);
+    const chipIcon = isTg ? 'telegram' : (r.i || 'headphones');
+    const chipLabel = isTg ? 'الريكورد (تليجرام)' : (r.l || 'الريكورد');
+    const titleText = isTg ? 'فتح الريكورد في تليجرام' : 'فتح الريكورد';
+    const ariaText = isTg ? `فتح ريكورد ${esc(it.subject)} في تليجرام` : `فتح ريكورد ${esc(it.subject)}`;
+    return `<a class="chip chip-audio${isTg ? ' chip-telegram' : ''}" href="${esc(url)}" target="_blank" rel="noopener noreferrer" title="${titleText}" aria-label="${ariaText}">${ic(chipIcon)}${chipLabel}</a>`;
   }
 
   return `<a class="chip" href="${esc(url)}" target="_blank" rel="noopener noreferrer">${ic(r.i)}${r.l}</a>`;
@@ -5819,51 +5839,14 @@ if ('serviceWorker' in navigator) {
 }
 
 /**
- * handleAudioListen — Telegram-style:
- * Plays immediately. Starts background download if online.
- * When offline, serves from cache without requiring network or saving to device disk.
+ * handleAudioListen:
+ * Directly opens Telegram/audio link in a new tab without using Media Player.
  */
 async function handleAudioListen(playBtn) {
-  const url   = playBtn.dataset.url;
-  const title = playBtn.dataset.title;
-  const type  = playBtn.dataset.type;
-  const ctx   = playBtn.dataset.ctx;
-  const dl    = playBtn.dataset.dl || url;
-  const id    = playBtn.dataset.id;
-
-  if (!url || typeof AudioPlayer === 'undefined') return;
-
-  // If offline: check if saved/cached
-  if (!navigator.onLine) {
-    const savedBlob = await audioDB.get(url);
-    if (savedBlob) {
-      const blobUrl = URL.createObjectURL(savedBlob);
-      AudioPlayer.play({ url, title, type, ctx, dl, id, streamUrl: blobUrl, isOfflineBlob: true });
-      return;
-    }
-
-    let isAvailable = isAudioSaved(url);
-    if (!isAvailable && 'caches' in window) {
-      try {
-        const cache = await caches.open('pt-audio-v1');
-        const k = audioKey(url);
-        isAvailable = !!(await cache.match(k, { ignoreSearch: true }) || await cache.match(url, { ignoreSearch: true }));
-      } catch (_) {}
-    }
-
-    if (!isAvailable) {
-      toast('الريكورد غير متاح دون اتصال — يرجى تشغيله أثناء الاتصال بالإنترنت لحفظه تلقائياً');
-      return;
-    }
-
-    // SW serves from cache instantly
-    AudioPlayer.play({ url, title, type, ctx, dl, id });
-    return;
-  }
-
-  // Online: play immediately + start Telegram-style background download
-  AudioPlayer.play({ url, title, type, ctx, dl, id });
-  swPrecacheAudio(url);
+  const rawUrl = playBtn?.dataset?.url;
+  if (!rawUrl) return;
+  const url = normalizeUrl(rawUrl);
+  window.open(url, '_blank', 'noopener,noreferrer');
 }
 
 /**
@@ -6316,11 +6299,13 @@ $('todayBtn').onclick = () => {
   toast(`محاضرات اليوم (${CONFIG.DAYS.find(d => d.k === TODAY_KEY)?.n || ''})`);
 };
 
-// Manual Refresh Button
-$('refreshBtn').onclick = () => {
-  toast('جارٍ تحديث البيانات من المصدر…');
-  loadAll(true, { silent: false });
-};
+// Manual Refresh Button (if present)
+if ($('refreshBtn')) {
+  $('refreshBtn').onclick = () => {
+    toast('جارٍ تحديث البيانات من المصدر…');
+    loadAll(true, { silent: false });
+  };
+}
 
 // ==========================================================================
 // IndexedDB Engine for Offline Audio Recordings (Problem 2)
@@ -7559,11 +7544,6 @@ if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || wi
 $('offlineRetryBtn')?.addEventListener('click', () => {
   toast('جارٍ محاولة الاتصال بالإنترنت…');
   loadAll(true, { silent: false });
-});
-
-// Refresh Label Clickable Shortcut
-$('lastSyncLabel')?.addEventListener('click', () => {
-  $('refreshBtn')?.click();
 });
 
 // Restore previous session feedback

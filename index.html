@@ -3717,7 +3717,8 @@ const CONFIG = {
 
   RES: [
     { k: 'audio', l: 'الريكورد', i: 'headphones', pill: 'متاح ريكورد' },
-    { k: 'pdf', l: 'عرض الداتا', i: 'file', pill: 'متاحة داتا' },
+    { k: 'bookBreakdown', l: 'تقسيمة الكتاب', i: 'book', pill: 'متاحة تقسيمة الكتاب' },
+    { k: 'slides', l: 'السلايدات', i: 'file', pill: 'متاحة سلايدات' },
     { k: 'summary', l: 'الملخص', i: 'list', pill: null },
     { k: 'transcript', l: 'التفريغ', i: 'text', pill: 'متاح تفريغ' },
     { k: 'quiz', l: 'بنك الأسئلة', i: 'quiz', pill: 'متاح بنك أسئلة' }
@@ -4421,11 +4422,12 @@ function processGvizData(resp, n) {
       place: v(3),
       time: v(4),
       audio: v(5),
-      pdf: v(6),
-      summary: v(7),
-      transcript: v(8),
-      quiz: v(9),
-      dayKey: validateDayKey(rawKey),
+      bookBreakdown: v(6), // العمود G: تقسيمة الكتاب
+      slides: v(7),        // العمود H: السلايدات الجديد
+      summary: v(8),       // العمود I: الملخص (كان 7)
+      transcript: v(9),    // العمود J: التفريغ (كان 8)
+      quiz: v(10),         // العمود K: بنك الأسئلة (كان 9)
+      dayKey: validateDayKey(v(11) || rawDay), // العمود L (كان 10)
       notes: cleanNotes
     };
   }).filter(x => {

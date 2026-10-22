@@ -188,16 +188,25 @@
                 });
         });
 
-        function renderCard() {
+                function renderCard() {
             isFlipped = false;
             flashcardEl.classList.remove('is-flipped');
             gradingControls.classList.remove('show');
 
             const card = cardsData[currentIndex];
             
+            // 👇 تنظيف النجوم (Markdown) وتحويلها لخط عريض 👇
+            const formatText = (text) => {
+                if (!text) return '';
+                // استبدال النص اللي بين ** ** بوسم <strong> عشان يبان عريض
+                let formatted = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                // تحويل سطور جديدة لـ <br>
+                return formatted.replace(/\n/g, '<br>');
+            };
+
             setTimeout(() => {
-                questionEl.textContent = card.q;
-                answerEl.textContent = card.a;
+                questionEl.innerHTML = formatText(card.q);
+                answerEl.innerHTML = formatText(card.a);
             }, 150);
 
             updateUI();

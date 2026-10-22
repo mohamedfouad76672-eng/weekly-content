@@ -4394,15 +4394,20 @@ function parseGvizText(text) {
 
 function processGvizData(resp, n) {
   const rawRows = (resp && resp.table && resp.table.rows) || [];
+  
+  // القيم الافتراضية للأعمدة
   let notesColIdx = 11;
+  let flashcardColIdx = 12; 
+  let dayKeyColIdx = 10;
+
+  // 1. البحث الذكي عن أسماء الأعمدة
   if (rawRows.length > 0) {
     const headerCells = rawRows[0].c || [];
     for (let i = 0; i < headerCells.length; i++) {
       const hText = (headerCells[i] && headerCells[i].v) ? String(headerCells[i].v).trim().toLowerCase() : '';
-      if (hText.includes('ملاحظ') || hText.includes('note')) {
-        notesColIdx = i;
-        break;
-      }
+      if (hText.includes('ملاحظ') || hText.includes('note')) notesColIdx = i;
+      if (hText.includes('flash') || hText.includes('كارد')) flashcardColIdx = i;
+      if (hText.includes('daykey') || hText.includes('اليوم')) dayKeyColIdx = i;
     }
   }
 
@@ -4410,9 +4415,10 @@ function processGvizData(resp, n) {
     const c = row.c || [];
     const v = i => (c[i] && c[i].v != null) ? String(c[i].v).trim() : '';
     const rawDay = v(0);
-    const rawKey = v(10) || rawDay;
+    
     const rawNotes = v(notesColIdx);
     const cleanNotes = (rawNotes && rawNotes !== 'undefined' && rawNotes !== '-' && !rawNotes.includes('ملاحظ') && !rawNotes.includes('note')) ? rawNotes : '';
+    
     return {
       id: `lec-${n}-${rowIdx}`,
       wk: n,
@@ -4422,14 +4428,14 @@ function processGvizData(resp, n) {
       place: v(3),
       time: v(4),
       audio: v(5),
-      bookBreakdown: v(6), // العمود G: تقسيمة الكتاب
-      slides: v(7),        // العمود H: السلايدات الجديد
-      summary: v(8),       // العمود I: الملخص (كان 7)
-      transcript: v(9),    // العمود J: التفريغ (كان 8)
-      quiz: v(10),         // العمود K: بنك الأسئلة
-      notes: v(12),        // 👈 العمود M: الملاحظات (كان 11)
-      flashcards: v(13),   // 👈 العمود N: الفلاش كاردز (الجديد)
-      dayKey: validateDayKey(v(11) || rawDay) // العمود L: dayKey (ثابت زي ما هو)
+      bookBreakdown: v(6),
+      slides: v(7),
+      summary: v(8),
+      transcript: v(9),
+      quiz: v(10),
+      notes: cleanNotes,
+      flashcards: v(flashcardColIdx), // 👈 قراءة الفلاش كاردز من العمود الصح
+      dayKey: validateDayKey(v(dayKeyColIdx) || rawDay)
     };
   }).filter(x => {
     const s = (x.subject || '').trim().toLowerCase();

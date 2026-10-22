@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المراجعة السريعة | Flashcards</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-main: #f4f6f5; --bg-card: #ffffff; --text-main: #0f1e1d; 
+            --text-muted: #4e605e; --accent: #0c5551; --accent-hover: #083e3b;
+            --border: #d8e2df; --shadow: 0 4px 14px rgba(12, 85, 81, 0.08);
+            --color-again: #ef4444; --color-hard: #f59e0b; --color-good: #10b981;
+        }
+        [data-theme="dark"] {
+            --bg-main: #0b1312; --bg-card: #121c1b; --text-main: #e7f1ee; 
+            --text-muted: #92a7a4; --accent: #5cbdb3; --accent-hover: #75cac1;
+            --border: #1c2b29; --shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'IBM Plex Sans Arabic', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background-color: var(--bg-main); color: var(--text-main); display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; transition: background-color 0.3s, color 0.3s; }
+        
+        .top-bar { width: 100%; max-width: 700px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .subject-title { font-size: 1.2rem; font-weight: 600; }
+        .icon-btn { background: none; border: none; color: var(--text-muted); cursor: pointer; padding: 8px; border-radius: 50%; transition: background 0.2s, color 0.2s; }
+        .icon-btn:hover { background-color: var(--bg-card); color: var(--accent); }
+        .back-btn { display: inline-flex; align-items: center; gap: 6px; color: var(--text-muted); text-decoration: none; font-size: 0.9rem; font-weight: 600; transition: color 0.2s; }
+        .back-btn:hover { color: var(--accent); }
+        
+        .progress-container { width: 100%; max-width: 700px; margin-bottom: 30px; }
+        .progress-info { display: flex; justify-content: space-between; font-size: 0.9rem; color: var(--text-muted); margin-bottom: 10px; font-weight: 500; }
+        .progress-bar-bg { width: 100%; height: 8px; background-color: var(--border); border-radius: 10px; overflow: hidden; }
+        .progress-bar-fill { height: 100%; width: 0%; background-color: var(--accent); border-radius: 10px; transition: width 0.4s ease; }
+        
+        .flashcard-container { width: 100%; max-width: 700px; height: 450px; perspective: 1500px; cursor: pointer; margin-bottom: 30px; }
+        .flashcard { width: 100%; height: 100%; position: relative; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; }
+        .flashcard.is-flipped { transform: rotateY(180deg); }
+        .card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; background-color: var(--bg-card); border: 1px solid var(--border); border-radius: 24px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; text-align: center; box-shadow: var(--shadow); transition: background-color 0.3s, border-color 0.3s; }
+        .card-back { transform: rotateY(180deg); }
+        .card-label { position: absolute; top: 24px; right: 24px; font-size: 0.85rem; color: var(--text-muted); letter-spacing: 1px; font-weight: 600; }
+        .card-text { font-size: 1.5rem; font-weight: 500; line-height: 1.6; white-space: pre-wrap; }
+        .card-back .card-text { color: var(--accent); }
+        
+        .controls-area { width: 100%; max-width: 700px; display: flex; flex-direction: column; gap: 15px; }
+        .grading-controls { display: none; gap: 10px; width: 100%; animation: fadeIn 0.3s ease; }
+        .grading-controls.show { display: flex; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .btn-grade { flex: 1; padding: 15px; border: none; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: transform 0.1s, opacity 0.2s; display: flex; flex-direction: column; align-items: center; gap: 5px; color: white; }
+        .btn-grade:active { transform: scale(0.97); }
+        .btn-again { background-color: var(--color-again); }
+        .btn-hard { background-color: var(--color-hard); }
+        .btn-good { background-color: var(--color-good); }
+        .btn-grade:hover { opacity: 0.9; }
+        
+        .nav-controls { display: flex; justify-content: space-between; align-items: center; gap: 15px; }
+        .btn-nav { background-color: var(--bg-card); color: var(--text-main); border: 1px solid var(--border); padding: 12px 24px; border-radius: 12px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 10px; }
+        .btn-nav:hover { border-color: var(--accent); color: var(--accent); }
+        .btn-flip { background-color: var(--accent); color: var(--on-brand); border: none; flex: 1; justify-content: center; padding: 15px; font-size: 1.1rem; }
+        .btn-flip:hover { background-color: var(--accent-hover); }
+        
+        .loading-spinner { text-align: center; font-size: 1.2rem; color: var(--text-muted); margin-top: 50px; }
+        
+        @media (max-width: 600px) {
+            .flashcard-container { height: 380px; }
+            .card-text { font-size: 1.2rem; }
+            .nav-controls { flex-wrap: wrap; }
+            .btn-nav { padding: 10px 15px; font-size: 0.9rem; }
+            .btn-flip { flex: 1 1 100%; order: -1; }
+            .grading-controls { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar">
+        <a href="index.html" class="back-btn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+            العودة للموقع
+        </a>
+        <span class="subject-title" id="subjectTitle">المراجعة السريعة</span>
+        <button class="icon-btn" onclick="toggleTheme()" title="تغيير المظهر">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+    </div>
+
+    <div id="loading" class="loading-spinner">جارٍ تحميل البطاقات...</div>
+
+    <div id="app" style="display:none; width:100%; display:flex; flex-direction:column; align-items:center;">
+        <div class="progress-container">
+            <div class="progress-info">
+                <span id="progressText">1 من 1</span>
+                <span id="scoreText">تم إتقان: 0</span>
+            </div>
+            <div class="progress-bar-bg">
+                <div class="progress-bar-fill" id="progressFill"></div>
+            </div>
+        </div>
+
+        <div class="flashcard-container" onclick="flipCard()">
+            <div class="flashcard" id="flashcard">
+                <div class="card-face card-front">
+                    <span class="card-label">سؤال</span>
+                    <h2 class="card-text" id="questionText"></h2>
+                </div>
+                <div class="card-face card-back">
+                    <span class="card-label">إجابة</span>
+                    <h2 class="card-text" id="answerText"></h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="controls-area">
+            <div class="grading-controls" id="gradingControls">
+                <button class="btn-grade btn-again" onclick="gradeCard('again')">مش عارف</button>
+                <button class="btn-grade btn-hard" onclick="gradeCard('hard')">صعب</button>
+                <button class="btn-grade btn-good" onclick="gradeCard('good')">عرفت</button>
+            </div>
+
+            <div class="nav-controls">
+                <button class="btn-nav" onclick="prevCard()">
+                    السابق
+                    <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5l7 7-7 7"/></svg>
+                </button>
+                <button class="btn-nav btn-flip" onclick="flipCard()">
+                    اقلب البطاقة
+                </button>
+                <button class="btn-nav" onclick="nextCard()">
+                    <svg class="icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 19l-7-7 7-7"/></svg>
+                    التالي
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let cardsData = [];
+        let currentIndex = 0;
+        let isFlipped = false;
+        let progressData = {}; 
+        let storageKey = '';
+
+        const flashcardEl = document.getElementById('flashcard');
+        const questionEl = document.getElementById('questionText');
+        const answerEl = document.getElementById('answerText');
+        const gradingControls = document.getElementById('gradingControls');
+        const progressText = document.getElementById('progressText');
+        const scoreText = document.getElementById('scoreText');
+        const progressFill = document.getElementById('progressFill');
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const jsonUrl = urlParams.get('file');
+
+            if (!jsonUrl) {
+                document.getElementById('loading').textContent = 'خطأ: لم يتم العثور على رابط البطاقات.';
+                return;
+            }
+
+            fetch(decodeURIComponent(jsonUrl))
+                .then(res => {
+                    if (!res.ok) throw new Error('Network response was not ok');
+                    return res.json();
+                })
+                .then(data => {
+                    if(!data.cards || data.cards.length === 0) {
+                        document.getElementById('loading').textContent = 'لا توجد بطاقات في هذا الملف.';
+                        return;
+                    }
+                    cardsData = data.cards;
+                    document.getElementById('subjectTitle').textContent = data.meta.title || 'المراجعة السريعة';
+                    
+                    storageKey = 'fc_progress_' + (data.meta.title || 'default').replace(/\s+/g, '_');
+                    progressData = JSON.parse(localStorage.getItem(storageKey)) || {};
+
+                    document.getElementById('loading').style.display = 'none';
+                    document.getElementById('app').style.display = 'flex';
+                    
+                    if(localStorage.getItem('pt_theme') === 'dark') {
+                        document.documentElement.setAttribute('data-theme', 'dark');
+                    }
+
+                    renderCard();
+                })
+                .catch(err => {
+                    console.error(err);
+                    document.getElementById('loading').textContent = 'تعذر تحميل البطاقات. تأكد من اللينك.';
+                });
+        });
+
+        function renderCard() {
+            isFlipped = false;
+            flashcardEl.classList.remove('is-flipped');
+            gradingControls.classList.remove('show');
+
+            const card = cardsData[currentIndex];
+            
+            setTimeout(() => {
+                questionEl.textContent = card.q;
+                answerEl.textContent = card.a;
+            }, 150);
+
+            updateUI();
+        }
+
+        function updateUI() {
+            progressText.textContent = `${currentIndex + 1} من ${cardsData.length}`;
+            let masteredCount = Object.values(progressData).filter(status => status === 'good').length;
+            scoreText.textContent = `تم إتقان: ${masteredCount}`;
+            let percent = ((currentIndex + 1) / cardsData.length) * 100;
+            progressFill.style.width = `${percent}%`;
+        }
+
+        function flipCard() {
+            isFlipped = !isFlipped;
+            flashcardEl.classList.toggle('is-flipped');
+            if (isFlipped) { gradingControls.classList.add('show'); } else { gradingControls.classList.remove('show'); }
+        }
+
+        function nextCard() {
+            if (currentIndex < cardsData.length - 1) {
+                currentIndex++;
+                renderCard();
+            } else {
+                alert("لقد أتممت مراجعة كل البطاقات في هذه المحاضرة!");
+            }
+        }
+
+        function prevCard() {
+            if (currentIndex > 0) {
+                currentIndex--;
+                renderCard();
+            }
+        }
+
+        function gradeCard(status) {
+            const cardId = cardsData[currentIndex].id;
+            progressData[cardId] = status;
+            localStorage.setItem(storageKey, JSON.stringify(progressData));
+            
+            if (currentIndex < cardsData.length - 1) {
+                currentIndex++;
+                renderCard();
+            } else {
+                updateUI();
+                alert("أنهيت المراجعة! ممتاز.");
+            }
+        }
+
+        function toggleTheme() {
+            const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+            if (isDark) {
+                document.documentElement.removeAttribute('data-theme');
+                localStorage.setItem('pt_theme', 'light');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('pt_theme', 'dark');
+            }
+        }
+    </script>
+</body>
+</html>

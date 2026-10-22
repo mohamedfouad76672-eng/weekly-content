@@ -4426,9 +4426,10 @@ function processGvizData(resp, n) {
       slides: v(7),        // العمود H: السلايدات الجديد
       summary: v(8),       // العمود I: الملخص (كان 7)
       transcript: v(9),    // العمود J: التفريغ (كان 8)
-      quiz: v(10),         // العمود K: بنك الأسئلة (كان 9)
-      dayKey: validateDayKey(v(11) || rawDay), // العمود L (كان 10)
-      notes: cleanNotes
+      quiz: v(10),         // العمود K: بنك الأسئلة
+      notes: v(12),        // 👈 العمود M: الملاحظات (كان 11)
+      flashcards: v(13),   // 👈 العمود N: الفلاش كاردز (الجديد)
+      dayKey: validateDayKey(v(11) || rawDay) // العمود L: dayKey (ثابت زي ما هو)
     };
   }).filter(x => {
     const s = (x.subject || '').trim().toLowerCase();
@@ -5159,6 +5160,15 @@ function cardHTML(it, ctx = '', showBook = true) {
     </div>
     <div class="res">
       ${CONFIG.RES.map(r => resChipHTML(it, r, ctx)).join('')}
+      
+      <!-- 👇 زرار الفلاش كاردز الجديد 👇 -->
+      ${it.flashcards ? `
+        <a class="chip" href="flashcards.html?file=${encodeURIComponent(it.flashcards)}" style="background: var(--brand); color: var(--on-brand); border-color: var(--brand); font-weight: 700;">
+          <svg class="i"><use href="#i-quiz"/></svg>
+          مراجعة سريعة (Flashcards)
+        </a>
+      ` : ''}
+
       ${(showBook && bookUrl) ? `<a class="chip book" href="${esc(bookUrl)}" target="_blank" rel="noopener noreferrer">${ic('book')}كتاب المادة</a>` : ''}
     </div>
     ${it.notes ? `

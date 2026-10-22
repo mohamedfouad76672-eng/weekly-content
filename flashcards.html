@@ -13,6 +13,16 @@
             --border: #d8e2df; --shadow: 0 4px 14px rgba(12, 85, 81, 0.08);
             --color-again: #ef4444; --color-hard: #f59e0b; --color-good: #10b981;
         }
+                /* لون الكلمات المفتاحية بين ** ** */
+        .highlight-key {
+            color: #10b981; /* لون أخضر مريح للعين */
+            font-weight: 600;
+        }
+        
+        /* عشان لو الموقع في الوضع الفاتح، نخلي الأخضر أغمق شوية */
+        :root:not([data-theme="dark"]) .highlight-key {
+            color: #047857; 
+        }
         [data-theme="dark"] {
             --bg-main: #0b1312; --bg-card: #121c1b; --text-main: #e7f1ee; 
             --text-muted: #92a7a4; --accent: #5cbdb3; --accent-hover: #75cac1;
@@ -188,19 +198,18 @@
                 });
         });
 
-                function renderCard() {
+                        function renderCard() {
             isFlipped = false;
             flashcardEl.classList.remove('is-flipped');
             gradingControls.classList.remove('show');
 
             const card = cardsData[currentIndex];
             
-            // 👇 تنظيف النجوم (Markdown) وتحويلها لخط عريض 👇
+            // 👇 دالة تلوين الكلام اللي بين ** ** 👇
             const formatText = (text) => {
                 if (!text) return '';
-                // استبدال النص اللي بين ** ** بوسم <strong> عشان يبان عريض
-                let formatted = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-                // تحويل سطور جديدة لـ <br>
+                // استبدال النص اللي بين ** ** بوسم span بلون أخضر
+                let formatted = text.replace(/\*\*(.*?)\*\*/g, '<span class="highlight-key">$1</span>');
                 return formatted.replace(/\n/g, '<br>');
             };
 

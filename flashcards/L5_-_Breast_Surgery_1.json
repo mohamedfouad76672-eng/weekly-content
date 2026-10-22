@@ -1,0 +1,194 @@
+{
+  "meta": {
+    "title": "L5 - Breast Surgery 1",
+    "subject": "General Surgery",
+    "category": "theory"
+  },
+  "cards": [
+    {
+      "id": 1,
+      "q": "What is the embryological origin and classification of the mammary gland?",
+      "a": "It is a modified sweat gland derived from specialized ectoderm, functioning physiologically as an exocrine gland with an arborizing ductal drainage system."
+    },
+    {
+      "id": 2,
+      "q": "At what gestational age do primitive mammary tissues and milk lines first develop?",
+      "a": "Primitive mammary tissue is detectable by the 6th gestational week as bilateral ectodermal thickenings (milk lines) extending from the axillae to the groins."
+    },
+    {
+      "id": 3,
+      "q": "Which anatomical portion of the embryonic milk line normally persists in humans?",
+      "a": "Only the middle part of the upper 1/3 of each mammary ridge persists, while cranial and caudal remnants undergo physiological apoptosis and regress."
+    },
+    {
+      "id": 4,
+      "q": "What congenital anomalies arise from the failure of embryonic milk line regression?",
+      "a": "Supernumerary nipples (polythelia) or accessory mammary tissue/breasts (polymazia) along the anatomical milk line."
+    },
+    {
+      "id": 5,
+      "q": "What is polythelia and what common dermatologic entity can it mimic?",
+      "a": "The presence of accessory (supernumerary) nipples along the milk line; it is frequently mistaken clinically for melanocytic nevi (moles)."
+    },
+    {
+      "id": 6,
+      "q": "What are the clinical differences and significance between congenital and acquired nipple inversion?",
+      "a": "• Congenital: Typically bilateral, present since childhood, caused by mesenchymal proliferation failure or short lactiferous ducts.\n• Acquired: Recent or unilateral retraction in an adult, which is a major red flag for invasive carcinoma (due to desmoplastic cicatricial traction)."
+    },
+    {
+      "id": 7,
+      "q": "What is Poland syndrome and which specific muscle head is congenitally absent?",
+      "a": "Congenital unilateral absence of breast tissue (amazia) associated with absence of the sternocostal head of the pectoralis major (the clavicular head is spared and latissimus dorsi is intact)."
+    },
+    {
+      "id": 8,
+      "q": "What associated defects occur in Poland syndrome besides pectoral muscle and breast absence?",
+      "a": "Ipsilateral chest wall hypoplasia, absence of ribs 2–4, and upper extremity syndactyly or brachydactyly."
+    },
+    {
+      "id": 9,
+      "q": "Why does polymazia (supernumerary breast) undergo enlargement during pregnancy and lactation?",
+      "a": "Because it contains true hormone-sensitive glandular epithelium that responds to pregnancy hormones and puerperal lactational signals."
+    },
+    {
+      "id": 10,
+      "q": "In which anatomical fascial plane does the breast lie, and what is the sole exception?",
+      "a": "It lies entirely within the superficial fascia of the anterior chest wall, except for the axillary tail of Spence, which pierces the deep axillary fascia."
+    },
+    {
+      "id": 11,
+      "q": "Through which anatomical opening does the axillary tail of Spence pierce the deep fascia?",
+      "a": "The foramen of Langer, placing it into direct contact with axillary neurovascular structures and lymph nodes."
+    },
+    {
+      "id": 12,
+      "q": "What is the surgical significance of the retromammary space?",
+      "a": "It is a loose areolar cleft separating the deep surface of the breast from the deep pectoral fascia, allowing free mobility of the gland over the underlying chest wall."
+    },
+    {
+      "id": 13,
+      "q": "What are the true horizontal and vertical anatomical boundaries of the female breast?",
+      "a": "• Vertical: 2nd rib down to the 6th rib.\n• Horizontal: Lateral sternal border medially to the midaxillary line laterally (does not reach the posterior axillary line)."
+    },
+    {
+      "id": 14,
+      "q": "What are the microscopic glandular extension limits of the breast that dictate wide flaps during mastectomy?",
+      "a": "• Superiorly: Clavicle\n• Inferiorly: Rectus sheath\n• Medially: Sternal midline\n• Laterally: Anterior border of latissimus dorsi"
+    },
+    {
+      "id": 15,
+      "q": "What constitutes the functional and histopathological unit of the breast?",
+      "a": "The Terminal Ductal Lobular Unit (TDLU), which is the target of ovarian hormones and the site of origin for >90% of breast diseases (fibroadenomas, cysts, ductal/lobular carcinomas)."
+    },
+    {
+      "id": 16,
+      "q": "What are the suspensory ligaments of Cooper and what causes senescent breast ptosis?",
+      "a": "Fibrous fascial bands running from the deep pectoral fascia to the dermis; loss of collagen/elastin within these ligaments alongside glandular atrophy leads to breast ptosis (corrected via mastopexy)."
+    },
+    {
+      "id": 17,
+      "q": "What is the primary arterial blood supply to the breast and how much volume does it provide?",
+      "a": "The Internal Mammary Artery (Internal Thoracic Artery), supplying 50%–60% of total mammary blood flow via anterior perforating branches through the 2nd, 3rd, and 4th intercostal spaces."
+    },
+    {
+      "id": 18,
+      "q": "Which artery supplies the lateral quadrants of the breast and lateral thoracic wall?",
+      "a": "The Lateral Thoracic Artery, which originates from the second part of the axillary artery."
+    },
+    {
+      "id": 19,
+      "q": "What vascular anatomical mechanism explains early vertebral and pelvic metastases from breast cancer without pulmonary involvement?",
+      "a": "Direct, valveless communications between the posterior intercostal veins and the internal vertebral venous plexus of Batson."
+    },
+    {
+      "id": 20,
+      "q": "What percentage of mammary lymphatic drainage flows to the axillary lymph nodes versus the internal mammary nodes?",
+      "a": "• Axillary nodes: ~75% (primary route of cancer dissemination)\n• Internal mammary nodes: ~20% (drains primarily the medial quadrants)"
+    },
+    {
+      "id": 21,
+      "q": "What anatomical muscle defines the three Berg surgical levels of axillary lymph nodes?",
+      "a": "The Pectoralis Minor muscle (never the pectoralis major)."
+    },
+    {
+      "id": 22,
+      "q": "What are the anatomical definitions of Berg axillary node Levels I, II, and III?",
+      "a": "• Level I: Lateral to the lateral border of pectoralis minor (pectoral, subscapular, and axillary vein groups).\n• Level II: Behind/deep to pectoralis minor (central group and Rotter's interpectoral nodes).\n• Level III: Medial to the medial border of pectoralis minor (apical/subclavicular nodes)."
+    },
+    {
+      "id": 23,
+      "q": "What is the single most common and urgent presenting symptom of breast pathology?",
+      "a": "A palpable breast mass (demands immediate workup to definitively exclude malignancy)."
+    },
+    {
+      "id": 24,
+      "q": "Why is an isolated nipple discharge without a lump statistically reassuring?",
+      "a": "Isolated discharge is overwhelmingly due to benign causes (intraductal papilloma, duct ectasia, inflammation); primary invasive carcinoma rarely presents with isolated discharge without a palpable mass."
+    },
+    {
+      "id": 25,
+      "q": "What is the initial radiological investigation of choice for a breast mass in a woman < 35 years versus ≥ 35–40 years?",
+      "a": "• < 35 years: Breast Ultrasound (sonomammography), due to dense radiopaque glandular parenchyma.\n• ≥ 35–40 years: Mammography, due to progressive replacement of radiodense glandular tissue with radiolucent fat."
+    },
+    {
+      "id": 26,
+      "q": "What clinical features characterize a classic hard fibroadenoma?",
+      "a": "Occurs in women aged 16–25 years, rubbery firm, small (< 5 cm), smooth, and highly encapsulated/hypermobile ('breast mouse')."
+    },
+    {
+      "id": 27,
+      "q": "How does a soft fibroadenoma differ from a hard fibroadenoma regarding age, size, and consistency?",
+      "a": "Presents in premenopausal women aged 30–40 years, is soft, larger (> 5 cm), lobulated, and less mobile due to increased cellularity/myxoid stroma."
+    },
+    {
+      "id": 28,
+      "q": "What are the distinguishing clinical and metastatic features of Cystosarcoma Phyllodes?",
+      "a": "Occurs in women > 40 years, mixed fibroepithelial tumor characterized by rapid growth, massive size, stretched skin, and prominent superficial veins; malignant variants metastasize hematogenously rather than via lymphatics."
+    },
+    {
+      "id": 29,
+      "q": "What is the most common causative organism and route of infection in acute lactational mastitis?",
+      "a": "Staphylococcus aureus; it enters via infant nasopharynx transmission through cracked or fissured nipples into stagnant pools of milk."
+    },
+    {
+      "id": 30,
+      "q": "What are the 3 sequential stages of acute puerperal breast infection and their management?",
+      "a": "1. Milk Engorgement: Sectoral fullness/stasis → regular breast evacuation, pumping, warm compresses.\n2. Acute Mastitis: Cellulitis (calor, rubor, dolor) → antistaphylococcal antibiotics (e.g., flucloxacillin) and continued feeding/pumping.\n3. Acute Abscess: Suppuration/fluctuance/throbbing pain → surgical drainage (I&D or US-guided aspiration) plus antibiotics."
+    },
+    {
+      "id": 31,
+      "q": "What is an antibioma and why is it clinically significant?",
+      "a": "A sterile, thick-walled chronic pyogenic mass forming when an acute breast abscess is treated with antibiotics without adequate surgical drainage; it forms a hard lump that clinically mimics breast carcinoma."
+    },
+    {
+      "id": 32,
+      "q": "What is the pathophysiology and classic nipple sign of mammary duct ectasia?",
+      "a": "Dilation of major subareolar lactiferous ducts with debris; periductal chemical irritation and plasma cell infiltration cause chronic scarring and a characteristic slit-like (transverse) nipple retraction."
+    },
+    {
+      "id": 33,
+      "q": "What histological features characterize chronic tuberculous mastitis?",
+      "a": "Caseating or non-caseating granulomas with epithelioid histiocytes and Langhans giant cells, presenting as cold breast masses or chronically discharging sinus tracts."
+    },
+    {
+      "id": 34,
+      "q": "What does ANDI stand for and what is its primary hormonal etiology?",
+      "a": "Aberrations of Normal Development and Involution (fibrocystic disease); caused by relative estrogen hyperstimulation unopposed by adequate progesterone."
+    },
+    {
+      "id": 35,
+      "q": "What are the 4 main histopathological components of ANDI (fibrocystic change)?",
+      "a": "1. Adenosis (acinar glandular proliferation)\n2. Epitheliosis (ductal epithelial hyperplasia)\n3. Fibrosis (interlobular stromal hyalinization)\n4. Cyst Formation (distended terminal ductules forming 'blue-domed cysts of Bloodgood')"
+    },
+    {
+      "id": 36,
+      "q": "What is the classic clinical triad and cyclical pattern of fibrocystic disease (ANDI)?",
+      "a": "• Triad: Mastalgia, Nipple Discharge (often green/yellow, non-bloody), and Nodularity (bilateral 'lumpy/cobblestone' texture).\n• Pattern: Symptoms worsen premenstrually and regress following menses."
+    },
+    {
+      "id": 37,
+      "q": "What are the 3 components of the standard Triple Assessment Protocol for evaluating breast lesions?",
+      "a": "1. Clinical Examination (bilateral breasts, axillae, supraclavicular fossae)\n2. Radiological Imaging (Ultrasound if < 35 yrs; Mammography if ≥ 35–40 yrs)\n3. Pathological Biopsy (Core needle biopsy [CNB] or fine-needle aspiration cytology [FNAC])"
+    }
+  ]
+}

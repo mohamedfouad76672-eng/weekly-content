@@ -1,0 +1,304 @@
+{
+  "meta": {
+    "title": "L5 - Breast Surgery 1",
+    "subject": "General Surgery",
+    "category": "theory"
+  },
+  "cards": [
+    {
+      "id": 1,
+      "q": "What is the embryological derivation and physiological classification of the breast?",
+      "a": "The breast is an **ectodermal derivative** functioning as a specialized **modified sweat gland** (exocrine gland) with an arborizing ductal drainage system."
+    },
+    {
+      "id": 2,
+      "q": "When does mammary gland development begin, and what primitive structures form it?",
+      "a": "Development begins by the **6th gestational week** as bilateral **milk lines (mammary ridges)** extending from the **axillae to the groins**."
+    },
+    {
+      "id": 3,
+      "q": "Which portion of the embryonic milk line persists in normal human development?",
+      "a": "Only the **middle part of the upper one-third (1/3)** persists to form the breast, while cranial and caudal remnants undergo **physiological apoptosis**."
+    },
+    {
+      "id": 4,
+      "q": "What is the clinical definition of athelia, and what anomaly commonly accompanies it?",
+      "a": "Athelia is the **complete absence of a nipple**; it is rarely isolated and typically coexists with parenchymal absence (**amazia** or **amastia**)."
+    },
+    {
+      "id": 5,
+      "q": "What is polythelia, where does it occur, and what is its classic clinical pitfall?",
+      "a": "Polythelia is the presence of **supernumerary nipples** occurring strictly along the **embryonic milk lines**; they are frequently misdiagnosed as **melanocytic nevi (moles)**."
+    },
+    {
+      "id": 6,
+      "q": "How is congenital inverted nipple distinguished from acquired nipple inversion clinically?",
+      "a": "Congenital inversion is typically **bilateral and longstanding since childhood**; acquired inversion in an adult female is **recent or unilateral** and serves as a major red flag for **invasive breast carcinoma**."
+    },
+    {
+      "id": 7,
+      "q": "What is the pathophysiological cause of acquired nipple retraction in breast cancer?",
+      "a": "Direct neoplastic infiltration of lactiferous ducts leading to **desmoplastic cicatricial traction** pulling the nipple inward."
+    },
+    {
+      "id": 8,
+      "q": "What is amazia, and what classic syndrome must be evaluated when it presents?",
+      "a": "Amazia is the **complete absence of breast parenchyma** with preservation of the nipple-areolar complex; it is classically associated with **Poland syndrome**."
+    },
+    {
+      "id": 9,
+      "q": "Which specific muscle defect defines Poland syndrome?",
+      "a": "Congenital absence strictly of the **sternocostal head of the pectoralis major muscle** (the **clavicular head is spared** and the **latissimus dorsi is intact**)."
+    },
+    {
+      "id": 10,
+      "q": "What clinical features and associated musculoskeletal defects characterize Poland syndrome?",
+      "a": "Presents with **unilateral amazia**, **ipsilateral chest wall hypoplasia**, absence of **ribs 2 to 4**, and ipsilateral upper extremity **syndactyly or brachydactyly**."
+    },
+    {
+      "id": 11,
+      "q": "What is polymazia, and how does its glandular tissue behave during pregnancy and puerperium?",
+      "a": "Polymazia is the presence of **supernumerary (accessory) breasts** along the milk line containing true glandular tissue that **enlarges during pregnancy** and **lactates during the puerperium**."
+    },
+    {
+      "id": 12,
+      "q": "In which fascial plane does the female breast reside, and what is the sole anatomical exception?",
+      "a": "The breast lies entirely within the **superficial fascia** of the anterior thoracic wall, **except for the axillary tail of Spence**."
+    },
+    {
+      "id": 13,
+      "q": "What aperture does the axillary tail of Spence pierce to enter the true axilla?",
+      "a": "It pierces the deep axillary fascia through the **foramen of Langer**, placing it in direct anatomical contact with axillary lymph nodes."
+    },
+    {
+      "id": 14,
+      "q": "What is the retromammary space, and what is its physiological significance?",
+      "a": "A loose areolar cleft separating the deep surface of the breast from the **pectoral fascia**, allowing **free physiological mobility** of the breast over the chest wall."
+    },
+    {
+      "id": 15,
+      "q": "What are the anatomical vertical and horizontal boundaries of the adult female breast?",
+      "a": "Vertically from the **2nd rib to the 6th rib**; horizontally from the **lateral border of the sternum** to the **midaxillary line** (it does **not** reach the posterior axillary line)."
+    },
+    {
+      "id": 16,
+      "q": "What are the four true microscopic extensions of breast tissue relevant to oncological mastectomy?",
+      "a": "Extends superiorly to the **clavicle**, inferiorly to the **rectus sheath**, medially to the **midline**, and laterally to the **anterior border of the latissimus dorsi**."
+    },
+    {
+      "id": 17,
+      "q": "What constitutes the parenchyma of the breast, and what is its volume contribution?",
+      "a": "Constitutes **< 10% of breast volume**, arranged into **15 to 20 lobes**, with each lobe containing **20 to 40 terminal ductal lobular units (TDLUs)**."
+    },
+    {
+      "id": 18,
+      "q": "What is the Terminal Ductal Lobular Unit (TDLU), and why is it histopathologically critical?",
+      "a": "The **functional and histopathological unit** of the breast where lobules drain into terminal ductules; it is the **primary site of origin for > 90% of breast pathologies** (cysts, fibroadenomas, and carcinomas)."
+    },
+    {
+      "id": 19,
+      "q": "What structural role do Cooper's ligaments play, and what causes clinical breast ptosis?",
+      "a": "They are fibrous suspensory bands connecting the dermis to deep fascia; age-related **elastin and collagen degradation** within Cooper's ligaments causes **breast ptosis**, surgically repaired by **mastopexy**."
+    },
+    {
+      "id": 20,
+      "q": "What is the primary arterial supply to the breast, and what proportion of mammary blood flow does it provide?",
+      "a": "The **internal mammary (internal thoracic) artery**, providing **50% to 60%** of total blood supply via anterior perforating branches through the **2nd, 3rd, and 4th intercostal spaces**."
+    },
+    {
+      "id": 21,
+      "q": "Which artery supplies the lateral quadrants of the breast, and what is its parent vessel?",
+      "a": "The **lateral thoracic artery**, which originates from the **2nd part of the axillary artery**."
+    },
+    {
+      "id": 22,
+      "q": "By what mechanism does breast carcinoma spread early to the spine and skull without pulmonary metastases?",
+      "a": "Via posterior intercostal veins communicating directly with **Batson's vertebral venous plexus** through **valveless (avalvular) venous connections**."
+    },
+    {
+      "id": 23,
+      "q": "What percentage of breast lymphatic drainage is received by the axillary versus internal mammary lymph nodes?",
+      "a": "The **axillary lymph nodes receive ~75%**, whereas the **internal mammary lymph nodes receive ~20%** (principally draining medial quadrants)."
+    },
+    {
+      "id": 24,
+      "q": "What is the subareolar plexus of Sappey?",
+      "a": "A dense **confluent lymphatic meshwork** beneath the areola that collects lymph from the nipple, areola, and central breast parenchyma before centrifugal drainage."
+    },
+    {
+      "id": 25,
+      "q": "What anatomical muscle serves as the sole landmark for Berg's axillary lymph node levels?",
+      "a": "The **pectoralis minor muscle** (never the pectoralis major)."
+    },
+    {
+      "id": 26,
+      "q": "What are the anatomical boundaries and nodal groups of Berg's Level I axillary nodes?",
+      "a": "Located **lateral to the lateral border of pectoralis minor**; includes the **anterior (pectoral)**, **posterior (subscapular)**, and **lateral (axillary vein)** groups."
+    },
+    {
+      "id": 27,
+      "q": "What are the anatomical boundaries and nodal groups of Berg's Level II axillary nodes?",
+      "a": "Located **deep (posterior/behind) to the pectoralis minor**; includes the **central nodal group** and **Rotter's interpectoral nodes**."
+    },
+    {
+      "id": 28,
+      "q": "What are the anatomical boundaries and nodal groups of Berg's Level III axillary nodes?",
+      "a": "Located **medial to the medial border of pectoralis minor**; corresponds to the **apical (subclavicular) nodal group** situated directly inferior to the clavicle."
+    },
+    {
+      "id": 29,
+      "q": "What long-term complication can follow axillary lymph node dissection (ALND), and what precautions are mandated?",
+      "a": "**Secondary arm lymphedema**; mandates lifelong **avoidance of venipunctures, IV lines, and blood pressure cuffs** on that ipsilateral limb."
+    },
+    {
+      "id": 30,
+      "q": "What is the single most prevalent and urgent clinical presenting symptom of breast disease?",
+      "a": "A **palpable breast mass**, which mandates immediate comprehensive evaluation to rule out malignancy."
+    },
+    {
+      "id": 31,
+      "q": "What is the statistical likelihood and clinical relevance of isolated nipple discharge?",
+      "a": "Isolated nipple discharge is statistically **far more likely to be benign** (e.g., duct ectasia, intraductal papilloma); primary carcinoma rarely presents with isolated discharge without a palpable lump."
+    },
+    {
+      "id": 32,
+      "q": "What are the initial imaging modalities of choice for a breast mass based on patient age?",
+      "a": "**Ultrasound (sonomammography)** is first-line in women **< 35 years** (dense glandular tissue); **mammography** is first-line in women **≥ 35 to 40 years** (fatty replacement)."
+    },
+    {
+      "id": 33,
+      "q": "What are the key clinical features and buzzword for a hard fibroadenoma?",
+      "a": "Presents in young women aged **16 to 25 years** as a **rubbery firm, smooth, painless mass < 5 cm** termed the **'breast mouse'** due to extreme hypermobility."
+    },
+    {
+      "id": 34,
+      "q": "How does a soft fibroadenoma present clinically compared to a hard fibroadenoma?",
+      "a": "Occurs in women aged **30 to 40 years**, presents with a **soft, lobulated consistency**, is **larger (> 5 cm)**, and is less mobile due to higher stromal cellularity."
+    },
+    {
+      "id": 35,
+      "q": "What are the classic hallmarks and metastatic behavior of Cystosarcoma Phyllodes (Phyllodes tumor)?",
+      "a": "Occurs in women **> 40 years** presenting as a **very large/massive bosselated mass** stretching overlying skin with dilated veins; malignant variants metastasize **hematogenously** (not via lymphatics)."
+    },
+    {
+      "id": 36,
+      "q": "What is the most common pathogen causing acute lactational mastitis and breast abscess?",
+      "a": "**Staphylococcus aureus**, which enters through **nipple fissures or abrasions** and produces **coagulase and hyaluronidase**."
+    },
+    {
+      "id": 37,
+      "q": "What are the three sequential stages of acute lactational breast infection?",
+      "a": "1) **Milk engorgement** (ductal stasis); 2) **Acute mastitis** (parenchymal cellulitis); and 3) **Acute abscess** (liquefactive necrosis and suppuration)."
+    },
+    {
+      "id": 38,
+      "q": "What is the first-line management for the milk engorgement stage of lactational breast disease?",
+      "a": "**Continued breast evacuation** (frequent nursing or pumping), **warm compresses**, and **oral analgesia**."
+    },
+    {
+      "id": 39,
+      "q": "What are the clinical hallmarks and primary management of an acute breast abscess?",
+      "a": "Hallmarks include **throbbing pain**, **swinging hectic fever with rigors**, **fluctuance**, and **pitting edema over redness**; managed with **surgical incision & drainage (or US-guided aspiration)** plus **systemic antibiotics**."
+    },
+    {
+      "id": 40,
+      "q": "What is an antibioma of the breast, and why is it clinically dangerous?",
+      "a": "A **chronic pyogenic abscess** treated with **systemic antibiotics without surgical drainage**, forming an encysted sterile fibrotic mass that **clinically mimics breast carcinoma**."
+    },
+    {
+      "id": 41,
+      "q": "What is duct ectasia (periductal/plasma cell mastitis), and what classic nipple sign does it produce?",
+      "a": "Dilatation of subareolar lactiferous ducts filled with pultaceous debris; duct rupture incites chemical inflammation with a dense **plasma cell infiltrate**, resulting in **slit-like nipple retraction**."
+    },
+    {
+      "id": 42,
+      "q": "What histopathological features confirm tuberculous mastitis?",
+      "a": "Demonstration of **caseating (or non-caseating) granulomas**, **epithelioid histiocytes**, and multinucleated **Langhans giant cells**."
+    },
+    {
+      "id": 43,
+      "q": "What does the acronym ANDI stand for, and what is its underlying hormonal pathophysiology?",
+      "a": "**Aberrations of Normal Development and Involution**; driven by **relative hyperestrogenism** (cyclical ovarian estrogen unopposed by adequate progesterone)."
+    },
+    {
+      "id": 44,
+      "q": "What are the four core histopathological components of fibrocystic disease (ANDI)?",
+      "a": "1) **Adenosis** (lobular acinar hyperplasia); 2) **Epitheliosis** (ductal hyperplasia); 3) **Fibrosis** (stromal hyalinization); and 4) **Cyst formation** (**'blue-domed cysts of Bloodgood'**)."
+    },
+    {
+      "id": 45,
+      "q": "What is the classic clinical triad and pain pattern of fibrocystic disease?",
+      "a": "Triad of **mastalgia**, **nodularity ('cobblestone' texture)**, and **nipple discharge**; symptoms characteristically **peak premenstrually** and remit after menses."
+    },
+    {
+      "id": 46,
+      "q": "What are the three components of the Triple Assessment Protocol in breast disease?",
+      "a": "1) **Clinical examination** (breast and regional nodal stations); 2) **Radiological imaging** (US and/or mammography); and 3) **Pathological biopsy** (**Core Needle Biopsy** or FNAC)."
+    },
+    {
+      "id": 47,
+      "q": "What is the cardinal oncological rule governing the Triple Assessment Protocol?",
+      "a": "If **any single component** of the three is suspicious or suggestive of malignancy, full histological exclusion is mandatory—the assessment must be **100% concordantly benign** to rule out cancer."
+    },
+    {
+      "id": 48,
+      "q": "What is the physiological ratio of Type I to Type III collagen in normal adult skin?",
+      "a": "Normal intact adult skin maintains a strict **Type I to Type III collagen ratio of 4:1**."
+    },
+    {
+      "id": 49,
+      "q": "What is the defining anatomical difference in margin extension between a hypertrophic scar and a keloid?",
+      "a": "A hypertrophic scar **remains strictly confined within the original wound margins**, whereas a keloid **extends and invades beyond the original margins** into normal tissue ('crab's claw')."
+    },
+    {
+      "id": 50,
+      "q": "How do collagen fiber types and spatial orientations differ between hypertrophic scars and keloids?",
+      "a": "Hypertrophic scars contain primarily **Type III collagen oriented parallel** to the skin surface; keloids contain **disorganized, thick hypocellular bundles of both Type I and Type III collagen**."
+    },
+    {
+      "id": 51,
+      "q": "Why do hypertrophic scars cause severe joint contractures, and what is the primary non-operative management?",
+      "a": "Due to abundant **contractile myofibroblasts**; managed aggressively with **custom physical splinting** and **intense specialized physical therapy**."
+    },
+    {
+      "id": 52,
+      "q": "What physiological states exacerbate the formation and progression of keloids?",
+      "a": "Keloids are markedly exacerbated by endocrine surges during **puberty** and **pregnancy**."
+    },
+    {
+      "id": 53,
+      "q": "Why is surgical excision alone strictly contraindicated as monotherapy for keloids?",
+      "a": "Excision creates a larger zone of tissue trauma in a genetically predisposed individual, resulting in an unacceptably high **recurrence rate of 50% to 100%**."
+    },
+    {
+      "id": 54,
+      "q": "By what mechanism does adjuvant radiation therapy prevent keloid recurrence after excision?",
+      "a": "Ionizing radiation suppresses fibroblasts and induces **endarteritis obliterans** of dermal micro-arterioles, lowering recurrence to **2% to 30%**."
+    },
+    {
+      "id": 55,
+      "q": "What is the optimal timing and duration for prophylactic silicone gel/sheeting in scar prevention?",
+      "a": "Initiated as soon as **re-epithelialization is complete (~3 weeks post-injury)** and maintained continuously for a **minimum duration of 1 month**."
+    },
+    {
+      "id": 56,
+      "q": "What is the pathomechanics of a widened facial scar, and how does Botulinum Toxin (Botox) treat it?",
+      "a": "Caused by perpendicular distraction forces from mimetic muscles; Botox **temporarily paralyzes adjacent mimetic muscles**, eliminating mechanical tension vectors during collagen remodeling."
+    },
+    {
+      "id": 57,
+      "q": "What features explain scarless wound healing in mammalian embryos?",
+      "a": "Restricted to the **first two trimesters**, characterized by a predominance of **Type III collagen**, extremely high **hyaluronic acid**, **absence of acute inflammation**, and physiological **relative hypoxia**."
+    },
+    {
+      "id": 58,
+      "q": "What is the maximum tensile strength wounded skin can regain, and when does it peak?",
+      "a": "Wounded skin never regains 100% strength; it peaks between **40 and 60 days (40 days to 2 months)**, plateauing at a **maximum ceiling of 80%** of original baseline tensile strength."
+    },
+    {
+      "id": 59,
+      "q": "Which vitamin directly counteracts the wound healing impairment caused by systemic corticosteroids?",
+      "a": "**Vitamin A** directly reverses corticosteroid-induced suppression of inflammation, epithelialization, and fibroplasia."
+    }
+  ]
+}

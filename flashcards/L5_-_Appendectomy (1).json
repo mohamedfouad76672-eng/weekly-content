@@ -1,0 +1,154 @@
+{
+  "meta": {
+    "title": "L5 - Appendectomy",
+    "subject": "Physical Therapy / Wound Care",
+    "category": "theory"
+  },
+  "cards": [
+    {
+      "id": 1,
+      "q": "What is the operational definition of Hyperbaric Oxygen Therapy (HBOT)?",
+      "a": "The intermittent inhalation of **100% oxygen** at pressures greater than **1 atmosphere absolute (ATA)** within a **sealed chamber**."
+    },
+    {
+      "id": 2,
+      "q": "Which physical gas law explains the mechanism of dissolved oxygen elevation in HBOT, and by what factor does it increase at therapeutic pressures?",
+      "a": "Governed by **Henry's Law**, breathing 100% oxygen at **2.0–3.0 ATA** increases dissolved plasma oxygen by approximately **10–15 fold**, delivering supraphysiological oxygen independent of **hemoglobin concentration**."
+    },
+    {
+      "id": 3,
+      "q": "How does HBOT reduce post-traumatic tissue edema without inducing tissue hypoxia?",
+      "a": "Hyperoxia induces **vasoconstriction**, which decreases tissue edema in crush injuries, burns, and compartment syndromes, while the marked increase in **dissolved plasma oxygen** prevents tissue hypoxia."
+    },
+    {
+      "id": 4,
+      "q": "What essential cellular repair processes are stimulated by elevated arterial and tissue PO2 during HBOT?",
+      "a": "Restores aerobic metabolism and accelerates oxygen-dependent processes including **phagocytosis**, **collagen synthesis**, and **angiogenesis**."
+    },
+    {
+      "id": 5,
+      "q": "How does HBOT stimulate angiogenesis across the wound bed?",
+      "a": "It increases the **oxygen gradient** between the **ischemic center** and the **well-perfused periphery** of the wound."
+    },
+    {
+      "id": 6,
+      "q": "What immunomodulatory and antimicrobial effects does HBOT exert on healing tissues?",
+      "a": "Shifts macrophages toward **pro-repair phenotypes**, enhances **neutrophil oxidative burst**, suppresses **anaerobic bacterial growth and toxin production**, and potentiates **aminoglycosides and fluoroquinolones**."
+    },
+    {
+      "id": 7,
+      "q": "What are standard clinical dosage parameters for HBOT in wound-healing protocols?",
+      "a": "Pressures of **2.0–2.5 ATA** (up to 3.0 ATA) applied for **60–90 minutes per session**, administered **once or twice daily**."
+    },
+    {
+      "id": 8,
+      "q": "What is the single absolute contraindication to Hyperbaric Oxygen Therapy (HBOT) and why?",
+      "a": "**Untreated pneumothorax**, because pressure changes during compression and decompression can precipitate a **fatal tension pneumothorax** and **gas embolism**."
+    },
+    {
+      "id": 9,
+      "q": "What are the common relative contraindications to HBOT?",
+      "a": "Includes **claustrophobia**, **asthma**, **COPD**, **pregnancy**, **congenital spherocytosis**, **upper respiratory tract infection**, **fever**, **pacemakers**, and **seizure disorders/epilepsy**."
+    },
+    {
+      "id": 10,
+      "q": "What are the physical characteristics and wavelength spectrum of Polarized Light Therapy (PLT)?",
+      "a": "It is **polarized**, **polychromatic**, **non-coherent**, and **low-energy** light spanning a spectrum of **480–3400 nm**."
+    },
+    {
+      "id": 11,
+      "q": "What biological effects does Polarized Light Therapy exert during the inflammatory phase of wound healing?",
+      "a": "Promotes **lymphocyte and monocyte proliferation**, enhances **macrophage and neutrophil counts**, increases **phagocytosis**, downregulates **pro-inflammatory cytokines**, and releases **pro-proliferative growth factors**."
+    },
+    {
+      "id": 12,
+      "q": "How does Polarized Light Therapy influence the proliferative and remodeling phases of wound healing?",
+      "a": "Stimulates **endothelial growth factors (neovascularization)**, promotes **keratinocyte/fibroblast proliferation**, balances **collagen synthesis with collagenase lysis**, and increases **wound tensile strength**."
+    },
+    {
+      "id": 13,
+      "q": "What are the application distance and angle recommendations for Polarized Light Therapy?",
+      "a": "The device must be held at a **right angle (perpendicular)** to the wound surface at a fixed distance of **10 cm** after cleansing with saline and betadine."
+    },
+    {
+      "id": 14,
+      "q": "What tissue depths are targeted by specific wavelengths in Polarized Light Therapy?",
+      "a": "**Red light (630–660 nm)** targets **superficial tissue layers**, whereas **near-infrared light (810–850 nm)** penetrates into **deeper tissues**."
+    },
+    {
+      "id": 15,
+      "q": "What are the recommended dosimetry parameters (energy density and duration) for Polarized Light Therapy?",
+      "a": "Energy density of **2–10 J/cm²** (typically **2.4 J/cm²** per session) for **5–20 minutes** per wound area."
+    },
+    {
+      "id": 16,
+      "q": "What is the recommended treatment frequency and course duration for Polarized Light Therapy?",
+      "a": "**3 times per week** for chronic wounds (daily for the first **7–10 days** in acute wounds) until wound closure, extending **2–4 weeks post-closure** for scar remodeling."
+    },
+    {
+      "id": 17,
+      "q": "What are the key contraindications and precautions for Polarized Light Therapy?",
+      "a": "Direct irradiation over **known malignancies**, **active hemorrhage**, the **thyroid gland**, and the **eyes** (protective eyewear required); caution in **pregnancy** and **photosensitivity**."
+    },
+    {
+      "id": 18,
+      "q": "What is High Voltage Pulsed Current (HVPC) and what is its primary biological mechanism in tissue repair?",
+      "a": "A **monophasic, twin-peak pulsed direct current** modality that accelerates repair via **galvanotaxis (electrotaxis)** by directing charged cellular migration."
+    },
+    {
+      "id": 19,
+      "q": "What waveform properties allow HVPC to penetrate deep tissues without activating nociceptors?",
+      "a": "A combination of **high peak voltage (150–500 V)** and an **ultra-short pulse duration (50–100 µs)** that remains below the **chronaxie of pain-mediating A-delta and C fibers**."
+    },
+    {
+      "id": 20,
+      "q": "What are the standard waveform characteristics (phase configuration, frequency, and duty cycle) of HVPC?",
+      "a": "**Twin-spike monophasic** pulsed DC, frequency of **1–120 pulses per second (PPS)**, and a **duty cycle <1%**, preventing significant thermal tissue injury."
+    },
+    {
+      "id": 21,
+      "q": "What endogenous electrical phenomenon does HVPC mimic in injured skin?",
+      "a": "Replicates the **transepithelial potential (TEP)** and injury-induced **lateral electric fields of 100–200 mV/mm**, guiding bioelectric cellular healing."
+    },
+    {
+      "id": 22,
+      "q": "When is anodal (+) stimulation indicated over a wound in HVPC, and which cells are recruited?",
+      "a": "Indicated during the **inflammatory phase**; attracts negatively charged **macrophages (−)** and **neutrophils (−)** to promote **phagocytosis and autolysis**."
+    },
+    {
+      "id": 23,
+      "q": "When is cathodal (−) stimulation indicated over a wound in HVPC, and which cells are recruited?",
+      "a": "Indicated during the **proliferative and remodeling phases**; attracts positively charged **fibroblasts (+)**, **keratinocytes (+)**, and **epidermal cells (+)** to promote **collagen synthesis and epithelialization**."
+    },
+    {
+      "id": 24,
+      "q": "How should electrodes be sized and configured during HVPC application?",
+      "a": "The active electrode matches **wound dimensions** (soaked in antiseptic and placed over saline-soaked gauze), while the dispersive electrode is placed **10–20 cm proximal** and sized **2–4× larger** to reduce current density."
+    },
+    {
+      "id": 25,
+      "q": "What are the standard clinical treatment settings (voltage, frequency, time) for HVPC wound healing?",
+      "a": "Voltage adjusted between **150–350 V**, frequency at **50–100 PPS**, and a duration of **30–60 minutes per session**."
+    },
+    {
+      "id": 26,
+      "q": "What are the four absolute contraindications to the use of HVPC?",
+      "a": "**Osteomyelitis** (risk of disseminating infection), **active malignancy** (risk of galvanotactic metastasis), **electronic implants (pacemakers/ICDs/pumps)**, and application over the **pregnant uterus/pelvis/lumbar spine**."
+    },
+    {
+      "id": 27,
+      "q": "Why is the anterior cervical region contraindicated for HVPC electrode placement?",
+      "a": "Stimulation of the **carotid sinus** can precipitate profound **bradycardia**, **hypotension**, and **syncope**."
+    },
+    {
+      "id": 28,
+      "q": "What anatomical regions represent relative contraindications or precautions for HVPC?",
+      "a": "The **thoracic region** (arrhythmia risk crossing the heart), **cranial region** (cerebral perfusion/ICP shifts), areas of **active hemorrhage**, and areas with **deep vein thrombosis or thrombophlebitis**."
+    },
+    {
+      "id": 29,
+      "q": "What adverse effects can occur from improper application of HVPC?",
+      "a": "**Skin irritation or chemical burns** (excessive current density or poor contact), **muscle twitching/spasms** (motor nerve activation), and **increased pain**."
+    }
+  ]
+}

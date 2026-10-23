@@ -1,0 +1,189 @@
+{
+  "meta": {
+    "title": "L5 - Appendectomy",
+    "subject": "Physical Therapy in General Surgery",
+    "category": "theory"
+  },
+  "cards": [
+    {
+      "id": 1,
+      "q": "What is the anatomical origin and normal dimensions of the vermiform appendix?",
+      "a": "It is a blind-ended tubular structure arising from the **posteromedial wall of the cecum**, measuring **6–10 cm in length** and **0.5–0.8 cm in diameter**."
+    },
+    {
+      "id": 2,
+      "q": "What are the physiological functions of the vermiform appendix?",
+      "a": "It provides **mucosal immunity and gut microbiota homeostasis** via lymphoid tissue, secretes mucus from **goblet cells** for luminal lubrication, and supports propulsive activity through its **muscularis layer**."
+    },
+    {
+      "id": 3,
+      "q": "What are the four main surgical indications for an appendectomy?",
+      "a": "1. **Acute appendicitis** (most common emergency)\n2. **Recurrent appendicitis**\n3. **Selected appendiceal neoplasms** (carcinoid/neuroendocrine tumors ≤2 cm at the tip)\n4. **Complicated appendicitis** (perforation, abscess, or mass)"
+    },
+    {
+      "id": 4,
+      "q": "How is an appendiceal mass or abscess managed initially, and when is surgery performed?",
+      "a": "Managed initially with **non-operative treatment (antibiotics ± image-guided percutaneous drainage)**, followed by an **interval appendectomy** in selected cases."
+    },
+    {
+      "id": 5,
+      "q": "What clinical scenarios warrant avoiding laparoscopy or converting laparoscopic appendectomy to an open procedure?",
+      "a": "Conversion or avoidance occurs in cases of **severe peritonitis**, **dense adhesions**, or **hemodynamic instability**."
+    },
+    {
+      "id": 6,
+      "q": "What is the initiating pathophysiology and sequence of events in acute appendicitis?",
+      "a": "**Luminal obstruction** (by fecalith, lymphoid hyperplasia, foreign body, or tumor) leads to **increased intraluminal pressure**, **venous congestion**, **ischemia**, **bacterial overgrowth**, and ultimately **perforation or abscess formation**."
+    },
+    {
+      "id": 7,
+      "q": "What is the classic pain migration pattern and accompanying symptoms of acute appendicitis?",
+      "a": "Pain migrates from the **periumbilical region to the right lower quadrant (RLQ)**, accompanied by **anorexia, nausea, vomiting, constipation/diarrhea**, and **low-grade fever**."
+    },
+    {
+      "id": 8,
+      "q": "Where is McBurney's point located anatomically?",
+      "a": "Located **two-thirds of the distance** along a line drawn from the **umbilicus to the right anterior superior iliac spine (ASIS)**."
+    },
+    {
+      "id": 9,
+      "q": "How is Rovsing's sign elicited and what does it indicate?",
+      "a": "Palpation of the **left lower quadrant (LLQ)** elicits pain in the **right lower quadrant (RLQ)**, indicating peritoneal irritation from acute appendicitis."
+    },
+    {
+      "id": 10,
+      "q": "How are the Psoas sign and Obturator sign performed, and what appendix position do they typically suggest?",
+      "a": "• **Psoas sign**: Pain on **passive right hip extension**; suggests **retrocecal appendicitis**.\n• **Obturator sign**: Pain on **flexion and internal rotation of the right hip**; suggests **pelvic or retrocecal appendicitis**."
+    },
+    {
+      "id": 11,
+      "q": "What laboratory findings are characteristic of acute appendicitis?",
+      "a": "Leukocytosis with WBC count elevated to **9,000–11,000 cells/mm³** (normal ~4,000) and **elevated C-reactive protein (CRP)**; urine analysis may show **pus cells**."
+    },
+    {
+      "id": 12,
+      "q": "What are the anatomical landmarks and muscles split/cut during a Grid-iron (McBurney's) incision?",
+      "a": "An **oblique incision (~5 cm)** directed inward and downward perpendicular to McBurney's point. It splits/cuts the **external oblique, internal oblique, and transversus abdominis** (splitting down toward quadratus lumborum)."
+    },
+    {
+      "id": 13,
+      "q": "What are the advantages and disadvantages of a Grid-iron incision?",
+      "a": "• Advantages: **Rapid healing** and **direct exposure** of the appendix.\n• Disadvantages: Risk of **incisional hernia**, cannot be extended for **exploratory laparotomy**, and extension causes **muscle damage**."
+    },
+    {
+      "id": 14,
+      "q": "What are the characteristics, advantages, and disadvantages of a Lanz incision?",
+      "a": "A **transverse skin crease incision** ~2 cm below the umbilicus between both ASIS. It cuts the **rectus abdominis** and splits the **transversus abdominis**. It provides **superior cosmetic outcomes**, but offers **indirect exposure** and **slower healing**."
+    },
+    {
+      "id": 15,
+      "q": "When is a right lower paramedian incision indicated, and what muscle does it cut?",
+      "a": "Indicated for **exploratory laparotomy or complicated cases**; it is a vertical cut **1.5–2.5 cm lateral to the midline** that traverses the **rectus abdominis**."
+    },
+    {
+      "id": 16,
+      "q": "What are the major advantages and disadvantages of laparoscopic appendectomy over open techniques?",
+      "a": "• Advantages: **Smaller incisions, shorter hospital stay, faster healing**, and **definitive diagnostic visualization**.\n• Disadvantages: **Higher financial cost** and requires **specialized surgical training**."
+    },
+    {
+      "id": 17,
+      "q": "What assessments are included in the preoperative respiratory evaluation for appendectomy?",
+      "a": "Assessment of **chest symmetry, respiratory rate, depth, chest expansion**, and the use of **accessory muscles of respiration**."
+    },
+    {
+      "id": 18,
+      "q": "Which tests are used during preoperative evaluation to check for circulatory problems?",
+      "a": "Assessment for **peripheral edema** and **Homan's test (sign)** to screen for deep vein thrombosis."
+    },
+    {
+      "id": 19,
+      "q": "What are the key components of the preoperative physical therapy rehabilitation program?",
+      "a": "1. **Breathing exercises** (diaphragmatic and local expansion)\n2. **Airway clearance** (teaching real cough)\n3. **Arm exercises** (short and long lever)\n4. **Leg exercises** (ankle/toe pumps, static quadriceps/gluteal sets)\n5. **Postural correction advice**"
+    },
+    {
+      "id": 20,
+      "q": "How is postoperative wound bed tissue categorized during objective assessment?",
+      "a": "Identified as either **healthy granulation tissue** (pink/red, moist) or non-viable tissue such as **slough** (yellow, white, or grey stringy matter) or **eschar** (black or brown necrotic crust)."
+    },
+    {
+      "id": 21,
+      "q": "What are the four classifications of surgical wound drainage/exudate type?",
+      "a": "1. **Serous**: clear/straw-colored\n2. **Serosanguineous**: pink/blood-tinged\n3. **Sanguineous**: frankly bloody\n4. **Purulent**: thick yellow/green pus"
+    },
+    {
+      "id": 22,
+      "q": "What biochemical mediators stimulate chemosensitive pain receptors following surgical incision?",
+      "a": "Tissue disruption causes release of **histamine, bradykinin, and prostaglandins**."
+    },
+    {
+      "id": 23,
+      "q": "What objective biomarker can be measured to assess postoperative pain severity?",
+      "a": "**Serum cortisol level**."
+    },
+    {
+      "id": 24,
+      "q": "What are the specific parameters for conventional TENS applied for postoperative incisional pain?",
+      "a": "• Placement: **Para-incisional**\n• Frequency: **80–120 Hz**\n• Pulse rate: **40 Hz**\n• Amplitude: **Sub-motor (tingling sensation)**\n• Duration: **20–60 minutes every 4 hours**"
+    },
+    {
+      "id": 25,
+      "q": "By what neurophysiological mechanisms does TENS relieve incisional pain?",
+      "a": "• Spinal level: **Gate control theory** (presynaptic inhibition of nociceptive input)\n• Supraspinal level: **Activation of endogenous opiate system** (endorphin/enkephalin release)"
+    },
+    {
+      "id": 26,
+      "q": "What are the application parameters for low-level laser therapy (LLLT) in incisional pain?",
+      "a": "Probe held **perpendicularly 2–3 mm above the incision**, power at **1 mW (pulsed mode)**, for a duration of **90 seconds per watt**."
+    },
+    {
+      "id": 27,
+      "q": "Why do patients develop respiratory complications following general anesthesia and appendectomy?",
+      "a": "Due to **depression of ciliary action**, **relaxation of respiratory muscles**, **splinting from incisional pain**, **abdominal distension**, and development of a **restrictive lung pattern**."
+    },
+    {
+      "id": 28,
+      "q": "What physical therapy interventions are utilized to prevent and treat postoperative respiratory complications?",
+      "a": "• **Breath control exercises with arm movements**\n• **Resisted diaphragmatic breathing** (manual, mechanical, positional)\n• **Chest mobility exercises and postural drainage**\n• **Cough support, chest percussion, and vibrations**\n• **Early mobilization**"
+    },
+    {
+      "id": 29,
+      "q": "What physical therapy modalities promote surgical wound healing post-appendectomy?",
+      "a": "1. **Low-level laser (continuous mode: He-Ne, GaAs semiconductor)**\n2. **Pulsed ultrasound (3 MHz)**\n3. **Negative pressure wound therapy**\n4. **Polarized light therapy**"
+    },
+    {
+      "id": 30,
+      "q": "How should abdominal muscle exercises progress postoperatively following appendectomy?",
+      "a": "Begin with **static and isometric contractions on Day 1**, gradually progressing to **isotonic contractions (concentric and eccentric)** according to suture integrity and pain tolerance."
+    },
+    {
+      "id": 31,
+      "q": "What is an antalgic gait versus a shuffling gait seen in post-appendectomy patients?",
+      "a": "• **Antalgic gait**: A limp where the **stance phase is shortened** on the operated side to minimize weight-bearing and pain.\n• **Shuffling gait**: **Dragging the feet without lifting**, with short steps and slow gait velocity."
+    },
+    {
+      "id": 32,
+      "q": "What is the recommended incentive spirometry protocol on Postoperative Day 1?",
+      "a": "**Inspiratory only**, performed for **10 consecutive breaths every hour** (instruct patient to exhale normally, seal lips on mouthpiece, and take a slow, deep breath)."
+    },
+    {
+      "id": 33,
+      "q": "What mobility and exercise milestones should be reached on Postoperative Day 1?",
+      "a": "• **Ankle-toe pumps**: 10 repetitions per hour\n• **Positioning**: Supported long sitting in bed\n• **Mobility**: Active/assisted bed mobility\n• **Airway**: Splinting incision with huffing/coughing"
+    },
+    {
+      "id": 34,
+      "q": "What are the mobility milestones for Postoperative Day 2 versus Day 3?",
+      "a": "• **Day 2**: Sitting on the edge of the bed and **supported ambulation for 20 meters**.\n• **Day 3**: Ankle pumps reduced to 10 reps twice daily and **ambulation up to 30 meters 3–4 times daily**."
+    },
+    {
+      "id": 35,
+      "q": "What is the timeline for incentive spirometry phases during post-appendectomy rehab?",
+      "a": "Use **inspiratory-only spirometry** from **Day 1 through the early postoperative weeks**, and incorporate combined **inspiratory + expiratory spirometry beyond 4 weeks**."
+    },
+    {
+      "id": 36,
+      "q": "What four strict postoperative precautions ('DON'Ts') must patients follow post-appendectomy?",
+      "a": "1. **No forward trunk bending**\n2. **No lifting heavy weights**\n3. **No vigorous coughing without splinting**\n4. **No side-lying on the operated side**"
+    }
+  ]
+}

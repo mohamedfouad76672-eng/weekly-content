@@ -1,0 +1,224 @@
+{
+  "meta": {
+    "title": "Hypertrophic Scar (HTS) — Comprehensive Clinical Guide",
+    "subject": "Physical Therapy & Endocrine Surgery",
+    "category": "theory"
+  },
+  "cards": [
+    {
+      "id": 1,
+      "q": "What is the core clinical mandate of physical therapy following thyroidectomy?",
+      "a": "Physical therapy bridges surgical recovery and metabolic health by balancing **acute cervical protection**, **scar pliability**, and musculoskeletal alignment while counteracting rapid **bone mineral density (BMD) loss** via **Wolff's law** and maintaining endocrine vigilance."
+    },
+    {
+      "id": 2,
+      "q": "What is the surgical definition and common clinical indications for a thyroidectomy?",
+      "a": "It is the **surgical excision of part or all of the thyroid gland**, indicated for **thyroid carcinoma**, **severe/toxic hyperthyroidism**, or large **obstructive goiters**."
+    },
+    {
+      "id": 3,
+      "q": "What are the anatomical location and classic dimensions of each thyroid lateral lobe?",
+      "a": "Positioned in the **anterior visceral compartment of the neck** below the larynx; each lateral lobe measures approximately **4 cm in length** and **1–2 cm in width**, joined by a central **isthmus**."
+    },
+    {
+      "id": 4,
+      "q": "Which vital structure is innervated by the recurrent laryngeal nerve (RLN), and what is its clinical role?",
+      "a": "The RLN innervates the **intrinsic laryngeal musculature**, which is crucial for **vocal cord mobility** and **airway protection**."
+    },
+    {
+      "id": 5,
+      "q": "What muscle is supplied by the external branch of the superior laryngeal nerve (EBSLN), and what function does it serve?",
+      "a": "It supplies the **cricothyroid muscle**, regulating **vocal cord tension** and **pitch modulation**."
+    },
+    {
+      "id": 6,
+      "q": "What acute metabolic consequence occurs if the parathyroid glands are devascularized or inadvertently resected during thyroidectomy?",
+      "a": "Loss of **parathyroid hormone (PTH)** stops osteoclastic bone resorption, precipitating **acute hypocalcemia**."
+    },
+    {
+      "id": 7,
+      "q": "What are the distinct physiological roles and cellular origins of follicular cells versus parafollicular C-cells in the thyroid gland?",
+      "a": "**Follicular cells** synthesize **T3 and T4** to accelerate basal metabolic rate, whereas **parafollicular C-cells** secrete **calcitonin** to downregulate osteoclasts and inhibit bone resorption."
+    },
+    {
+      "id": 8,
+      "q": "Why does a total thyroidectomy cause a dual endocrine deficit affecting bone metabolism?",
+      "a": "Total thyroidectomy causes both absolute thyroxine deficiency and complete loss of **bone-conserving calcitonin**, removing normal physiological inhibition over **osteoclastic bone resorption**."
+    },
+    {
+      "id": 9,
+      "q": "How do thyroxine (T4) and triiodothyronine (T3) differ structurally and in metabolic potency?",
+      "a": "**T4 contains 4 iodine atoms** and is predominantly converted in peripheral tissues to **T3 (3 iodine atoms)**, which exhibits markedly **greater hormonal and metabolic activity**."
+    },
+    {
+      "id": 10,
+      "q": "What are the key systemic physiological actions driven by thyroid hormones?",
+      "a": "They elevate **basal metabolic rate (BMR)**, stimulate **calorigenesis**, increase **heart rate and cardiac contractility**, and promote **skeletal and neural maturation**."
+    },
+    {
+      "id": 11,
+      "q": "How does the hypothalamic-pituitary-thyroid (HPT) axis regulate circulating thyroid hormone levels?",
+      "a": "The **hypothalamus secretes TRH**, stimulating the **anterior pituitary to release TSH**, which triggers thyroid **T3/T4 release**; elevated T3/T4 exert **negative feedback inhibition** on TRH and TSH."
+    },
+    {
+      "id": 12,
+      "q": "What serological pattern differentiates primary hyperthyroidism from secondary (central) hyperthyroidism?",
+      "a": "Primary hyperthyroidism presents with **elevated free T3/T4 with suppressed TSH (< 0.01)**, whereas secondary hyperthyroidism presents with **elevated TSH and elevated free T3/T4** shifting concordantly."
+    },
+    {
+      "id": 13,
+      "q": "What serological pattern differentiates primary hypothyroidism from secondary hypothyroidism?",
+      "a": "Primary hypothyroidism exhibits **low free T3/T4 with elevated TSH**, while secondary hypothyroidism presents with **low free T3/T4 with deficient or inappropriately normal TSH**."
+    },
+    {
+      "id": 14,
+      "q": "What are the primary autoimmune etiologies of hyperthyroidism versus hypothyroidism?",
+      "a": "Hyperthyroidism is predominantly caused by **Graves' disease (TSI antibodies)**, while hypothyroidism is caused by **Hashimoto's thyroiditis (anti-TPO antibodies)**."
+    },
+    {
+      "id": 15,
+      "q": "How do cardiovascular and neuromuscular findings differ between hyperthyroid and hypothyroid states?",
+      "a": "Hyperthyroidism features **sinus tachycardia, palpitations, fine tremors, and hyperreflexia**, whereas hypothyroidism causes **sinus bradycardia, diminished cardiac output, and sluggish 'hung-up' deep tendon reflexes**."
+    },
+    {
+      "id": 16,
+      "q": "How do body weight and gastrointestinal motility differ between hyperthyroidism and hypothyroidism?",
+      "a": "Hyperthyroidism manifests with **weight loss despite hyperphagia** and **hyperdefecation/diarrhea**, whereas hypothyroidism causes **weight gain despite anorexia** and **intractable constipation**."
+    },
+    {
+      "id": 17,
+      "q": "What ophthalmic signs are classically distinctive for Graves' hyperthyroidism compared to hypothyroidism?",
+      "a": "Graves' exhibits true **exophthalmos/proptosis, lid lag, and upper eyelid retraction**, whereas hypothyroidism displays **non-exophthalmic periorbital puffiness and facial myxedema**."
+    },
+    {
+      "id": 18,
+      "q": "What is a goiter and in which functional states can it occur?",
+      "a": "A goiter is a descriptive term for **macroscopic thyroid enlargement**; it can occur in **hyperthyroid, hypothyroid, or euthyroid** states due to iodine deficiency, inflammation, or pregnancy/puberty."
+    },
+    {
+      "id": 19,
+      "q": "What is the gold standard diagnostic modality to differentiate benign thyroid nodules from malignant neoplasms?",
+      "a": "**Fine-Needle Aspiration Biopsy (FNAB)** for definitive cytopathological analysis."
+    },
+    {
+      "id": 20,
+      "q": "What is the clinical role of thyroid hormone suppressive therapy in post-thyroidectomy oncology patients?",
+      "a": "Supraphysiological **levothyroxine** is administered to intentionally **suppress pituitary TSH**, depriving residual tumor cells of TSH-mediated **mitogenic proliferative stimulus**."
+    },
+    {
+      "id": 21,
+      "q": "What anatomical structures are excised in a total thyroidectomy versus a subtotal thyroidectomy?",
+      "a": "Total thyroidectomy entails **complete bilateral removal of both lobes, isthmus, and pyramidal lobe**, whereas subtotal thyroidectomy **leaves a small remnant of functional thyroid tissue** bilaterally."
+    },
+    {
+      "id": 22,
+      "q": "What is conventional open thyroidectomy and what incision is classically utilized?",
+      "a": "Open surgical excision performed via an anterior transverse cervical collar incision termed the **Kocher incision**, placed along a **natural neck skin crease**."
+    },
+    {
+      "id": 23,
+      "q": "What is Transoral Endoscopic Thyroidectomy Vestibular Approach (TOETVA)?",
+      "a": "A scarless surgical approach performed through **3 endoscopic ports in the lower lip vestibule** (one midline and two lateral trocars), eliminating visible cervical scarring."
+    },
+    {
+      "id": 24,
+      "q": "Why is an expanding postoperative neck hematoma considered a surgical emergency?",
+      "a": "Disrupted vasculature bleeds into the rigid deep cervical fascia, forming an unyielding mass that compresses the trachea and precipitates **fatal airway compromise**."
+    },
+    {
+      "id": 25,
+      "q": "How long are closed-suction surgical drains (e.g., Jackson-Pratt) typically maintained post-thyroidectomy?",
+      "a": "They are maintained for approximately **48 hours** to evacuate exudative fluid from the operative dead space."
+    },
+    {
+      "id": 26,
+      "q": "What are the cardinal neuromuscular signs of acute post-thyroidectomy hypocalcemia?",
+      "a": "**Perioral and digital paresthesia**, positive **Chvostek's sign (facial twitching)**, positive **Trousseau's sign**, carpopedal spasms, and severe **tetany**."
+    },
+    {
+      "id": 27,
+      "q": "What is the immediate action required if a patient shows signs of an expanding neck hematoma during physical therapy?",
+      "a": "**Immediately stop physical therapy**, never leave the patient unattended, and call an **emergency surgical code** for emergent bedside **wound reopening and tracheal decompression**."
+    },
+    {
+      "id": 28,
+      "q": "What musculoskeletal deformities commonly arise secondary to postoperative kinesiophobia?",
+      "a": "Protective neck splinting leads to **forward head posture**, **rounded shoulders**, exaggerated **thoracic kyphosis**, and adaptive shortening of the **SCM and scalenes**."
+    },
+    {
+      "id": 29,
+      "q": "How does sustained postoperative scapular depression and downward rotation affect the glenohumeral joint?",
+      "a": "It alters scapulothoracic kinematics, directly precipitating secondary **subacromial shoulder impingement**."
+    },
+    {
+      "id": 30,
+      "q": "What two endocrine mechanisms accelerate bone mineral density (BMD) loss following thyroidectomy?",
+      "a": "**Supraphysiological levothyroxine** that directly stimulates osteoclasts, combined with **calcitonin deficiency** from C-cell removal leading to **unopposed osteoclastic bone resorption**."
+    },
+    {
+      "id": 31,
+      "q": "Which patient population faces the greatest clinical risk for post-thyroidectomy osteoporosis?",
+      "a": "**Elderly postmenopausal females**, due to compounding of age-related bone mineral loss with postoperative osteoclastic bone resorption."
+    },
+    {
+      "id": 32,
+      "q": "What seated positioning modification unloads the cervical spine and trapezius musculature during early recovery?",
+      "a": "Placing **supportive pillows under the upper extremities** while seated in an armchair to eliminate downward gravitational traction on the neck."
+    },
+    {
+      "id": 33,
+      "q": "What is the primary kinematic corrective exercise for forward head posture following neck surgery?",
+      "a": "Active **chin tucks (cervical axial retraction)** held for **5 seconds** without forceful backward thrust or cervical hyperextension."
+    },
+    {
+      "id": 34,
+      "q": "When can active cervical and shoulder range of motion exercises be safely initiated?",
+      "a": "Only after **surgical drains are removed** and **primary wound stability** is confirmed by surgical clearance."
+    },
+    {
+      "id": 35,
+      "q": "What is the recommended dosage principle for early postoperative cervical range of motion?",
+      "a": "Short, frequent bouts of **5–10 minutes per session**, repeated **2–3 times daily** within strict pain-free limits to prevent suture strain."
+    },
+    {
+      "id": 36,
+      "q": "What are the mandatory clinical prerequisites before initiating scar mobilization after thyroidectomy?",
+      "a": "**Complete wound closure** with **zero scabs**, no open areas, no drainage, and completion of any adjuvant **neck radiation therapy**."
+    },
+    {
+      "id": 37,
+      "q": "At what postoperative timeframe does manual scar mobilization typically begin?",
+      "a": "Typically at **2–3 weeks post-surgery**, strictly contingent upon explicit surgical clearance."
+    },
+    {
+      "id": 38,
+      "q": "What specific manual scar mobilization technique prevents tethering between the cutaneous incision and underlying deep cervical fascia?",
+      "a": "**Two-finger scar lifting**, where the scar tissue is gently pinched and lifted in **superior, inferior, and lateral vectors** for **1–2 minutes** to restore laryngeal gliding during deglutition."
+    },
+    {
+      "id": 39,
+      "q": "Which thermal modality is strictly contraindicated during the early postoperative scar management phase?",
+      "a": "Early postoperative **hot immersion baths** are strictly forbidden."
+    },
+    {
+      "id": 40,
+      "q": "How does Wolff's law explain the requirement for progressive resistance training after thyroidectomy?",
+      "a": "Bone tissue remodels along lines of applied **mechanical stress and strain**; strain generates **piezo-electric signals** that stimulate **osteoblastic bone deposition** to halt demineralization."
+    },
+    {
+      "id": 41,
+      "q": "Why is walking alone insufficient as an osteogenic exercise post-thyroidectomy?",
+      "a": "Walking lacks multi-directional high-strain loading and must be paired with **progressive resistance training (PRT)** and **balance training** to stimulate the femoral neck and spine."
+    },
+    {
+      "id": 42,
+      "q": "Which progressive resistance training (PRT) exercise specifically builds femoral neck BMD and quadriceps strength post-thyroidectomy?",
+      "a": "**Sit-to-stand transitions** from a stable chair, supplemented by supported mini-squats."
+    },
+    {
+      "id": 43,
+      "q": "Which high-impact and trunk exercises are strictly prohibited in osteopenic post-thyroidectomy patients?",
+      "a": "**Ballistic drills (jumping, running, jogging)**, **forward spinal flexion (sit-ups)**, and **loaded spinal rotation/twisting** due to risk of **vertebral wedge compression fractures**."
+    }
+  ]
+}

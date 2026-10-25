@@ -1,0 +1,259 @@
+{
+  "meta": {
+    "title": "New Document",
+    "subject": "Obstetrics & Physical Therapy",
+    "category": "theory"
+  },
+  "cards": [
+    {
+      "id": 1,
+      "q": "What is the clinical definition of normal labour (eutocia)?",
+      "a": "Spontaneous expulsion of a **viable, mature singleton fetus** presenting by the **vertex** through the maternal birth canal within **24 hours**, without maternal or fetal trauma, and without surgical intervention beyond an **indicated episiotomy**."
+    },
+    {
+      "id": 2,
+      "q": "What gestational age ranges define abortion, preterm labour, full-term delivery, and post-term gestation?",
+      "a": "• Non-viable / Abortion: Termination prior to **28 weeks**.\n• Premature (Preterm): Expulsion between **28 and 36 weeks** (or <37 completed weeks).\n• Full-Term / Mature: Delivery between **37 and 42 weeks** (canonically **38–40 weeks**).\n• Post-mature (Post-term): Gestation exceeding **40 to 42 weeks**."
+    },
+    {
+      "id": 3,
+      "q": "What percentage of normal physiological deliveries present in cephalic vertex presentation, and what are the main malpresentations?",
+      "a": "• Vertex presentation: **~95%**\n• Breech presentation: **~4%**\n• Transverse lie (shoulder) presentation\n• Cord presentation/prolapse: **~0.5%** (causes acute fetal asphyxia requiring immediate delivery)."
+    },
+    {
+      "id": 4,
+      "q": "What criteria exclude an otherwise uncomplicated delivery from being classified as eutocia regarding assistance and passage?",
+      "a": "Exclusions include delivery via **Cesarean section**, extrauterine implantations, or requiring instrumental assistance like **obstetric forceps** or **Ventouse vacuum extractor**."
+    },
+    {
+      "id": 5,
+      "q": "What are the common risks and standard management associated with post-mature labour?",
+      "a": "Risks include **placental senescence** and **oligohydramnios**; management requires **active induction of labour** via **exogenous oxytocin infusions** (or Cesarean delivery if induction fails)."
+    },
+    {
+      "id": 6,
+      "q": "What defines prolonged labour temporally, and what are its four primary etiologies?",
+      "a": "Defined as active labour cumulative duration **exceeding 24 hours**.\n• Etiologies: **Uterine inertia**, **occipitoposterior position**, **rigid perineum (elderly primigravida)**, and **full bladder and rectum**."
+    },
+    {
+      "id": 7,
+      "q": "What are the optimal and malpositioned cephalic occiput positions and their incidence?",
+      "a": "• Optimal: **Occiput Anterior (OA)** accounting for **80%** (**60% LOA**, **20% ROA**).\n• Malposition: **Occiput Posterior (OP)** accounting for **~20%** (**15% ROP**, **5% LOP**), which causes severe maternal low back pain and protracted descent."
+    },
+    {
+      "id": 8,
+      "q": "Why does a distended bladder or rectum impede labour progress, and how is it managed?",
+      "a": "They cause spatial encroachment on the mid-pelvic cavity, exerting **mechanical resistance** to fetal descent. Relieved by **evacuation via enema** and **voiding every 2 hours**."
+    },
+    {
+      "id": 9,
+      "q": "What defines precipitate labour, and what maternal and neonatal risks does it carry?",
+      "a": "Labour terminating in **less than 3 hours** due to hyperactive contractions against low resistance.\n• Maternal risks: **extensive perineal lacerations** and **uterine inversion**.\n• Neonatal risks: **intracranial hemorrhage**, **rapid hypoxia**, and **unattended birth trauma**."
+    },
+    {
+      "id": 10,
+      "q": "What is 'the show' and what causes its appearance at the onset of labour?",
+      "a": "Discharge of the **cervical mucous plug tinged with blood**, caused by **effacement of the lower uterine segment** separating the fetal membranes from decidua and tearing **miniature cervical capillaries**."
+    },
+    {
+      "id": 11,
+      "q": "How do true labour pains differ from false labour pains (Braxton Hicks) regarding cervical changes, palpation, and sedation response?",
+      "a": "• True pains: **progressive cervical effacement & dilatation**, uterus becomes **board-like hard**, and **not relieved by sedation**.\n• False pains: **no cervical dilatation**, uterus remains **relatively soft**, and **promptly relieved by sedation or rest**."
+    },
+    {
+      "id": 12,
+      "q": "How do true labour pains differ from false labour pains regarding pain radiation and enema response?",
+      "a": "• True pains: Radiate from lower abdomen to **lumbosacral region and thighs**, and are **enhanced by enema**.\n• False pains: Confined to **lower abdomen/groin (non-radiating)**, and **relieved/unaffected by enema**."
+    },
+    {
+      "id": 13,
+      "q": "What are the primary physiological functions of liquor amnii?",
+      "a": "Provides **free fetal movement** (prevents amniotic adhesions), acts as a **hydraulic shock absorber**, maintains **thermal regulation**, functions as an **excretory/metabolic reservoir**, and acts as an intrapartum **cervical wedge (forewaters)** for internal os dilatation."
+    },
+    {
+      "id": 14,
+      "q": "What is the biomechanical difference between skeletal muscle relaxation and uterine retraction?",
+      "a": "Instead of returning to original resting length, myometrial fibers maintain a **semi-relaxation / half-relaxation state**, fixating at a **shorter, thicker baseline** after each contraction cycle."
+    },
+    {
+      "id": 15,
+      "q": "What are the four clinical values of uterine retraction?",
+      "a": "1. Assists in **dilatation of the cervix**.\n2. Assists in **expulsion of the fetus**.\n3. Assists in **separation of the placenta**.\n4. Controls **postpartum bleeding** (acting as living ligatures around intramural blood vessels)."
+    },
+    {
+      "id": 16,
+      "q": "What constitute the auxiliary forces of labour, and in which stage are they primarily utilized?",
+      "a": "Voluntary and involuntary contractions of **maternal abdominal wall muscles and diaphragm** ('bearing-down efforts'), generated primarily during the **second stage of labour**."
+    },
+    {
+      "id": 17,
+      "q": "What are the defined boundaries and normal durations of the first stage of labour?",
+      "a": "Spans from **true labour onset** until **full cervical dilatation (10 cm / 5 fingers)**.\n• Duration: **8 to 12 hours** in primigravidae; **6 to 8 hours** in multiparae."
+    },
+    {
+      "id": 18,
+      "q": "What are the boundaries and standard duration of the second stage of labour?",
+      "a": "Spans from **complete cervical dilatation (10 cm)** to **complete expulsion of the fetus**, lasting from **a few minutes up to 2 hours**."
+    },
+    {
+      "id": 19,
+      "q": "What are the boundaries, duration, and mechanism of the third stage of labour?",
+      "a": "Spans from fetal delivery to **complete expulsion of placenta and membranes**, typically lasting **15 to 30 minutes**, mediated by **myometrial retraction shearing the placental site**."
+    },
+    {
+      "id": 20,
+      "q": "What is the fourth stage of labour, and what is the primary clinical priority during this time?",
+      "a": "The **first 24 hours postpartum**, dedicated to preventing and monitoring for **primary postpartum hemorrhage (uterine atony)** and **ascending infection / puerperal fever**."
+    },
+    {
+      "id": 21,
+      "q": "What are the sequential cardinal movements of the fetal head during normal labour?",
+      "a": "1. **Engagement**\n2. **Descent**\n3. **Flexion**\n4. **Internal Rotation**\n5. **Extension**\n6. **Restitution & External Rotation**"
+    },
+    {
+      "id": 22,
+      "q": "What fetal head diameter enters the pelvic inlet during engagement, and what diameter presents upon flexion?",
+      "a": "• Engagement: **Biparietal diameter (9.5 cm)**.\n• Flexion: Replaces larger diameters with the **suboccipitobregmatic diameter (9.5 cm)**."
+    },
+    {
+      "id": 23,
+      "q": "What anatomical structure mediates internal rotation of the fetal head, and what is its path?",
+      "a": "The gutter-like slope of the **levator ani (pelvic floor)** directs the occiput anteromedially from an **oblique diameter** into the **anteroposterior diameter** of the pelvic outlet."
+    },
+    {
+      "id": 24,
+      "q": "Why is maternal bearing down strictly contraindicated during the first stage of labour?",
+      "a": "Bearing down against an incompletely dilated cervix causes **maternal exhaustion**, **cervical edema**, and **cervical tissue tears**."
+    },
+    {
+      "id": 25,
+      "q": "Why is upright ambulation encouraged with intact membranes, but lateral recumbency mandated upon membrane rupture?",
+      "a": "• Ambulation uses gravity to promote descent.\n• Lateral recumbency post-ROM prevents **umbilical cord prolapse** and excessive loss of liquor amnii."
+    },
+    {
+      "id": 26,
+      "q": "What is the normal fetal heart rate (FHR) range, and what values indicate fetal distress?",
+      "a": "• Normal: **110–160 bpm**.\n• Distress: **<100 bpm** (bradycardia), **>160 bpm** (tachycardia), or persistent irregular rhythm."
+    },
+    {
+      "id": 27,
+      "q": "What breathing pattern should the mother adopt during bearing-down contractions versus at the moment of crowning?",
+      "a": "• Bearing down: **Costal breathing** to maintain intra-abdominal pressure.\n• At crowning: **Pant and stop pushing entirely** to allow slow delivery via passive uterine recoil and avoid perineal blowout."
+    },
+    {
+      "id": 28,
+      "q": "Why is gentle fundal massage indicated during the third stage of labour?",
+      "a": "Stimulates myometrial mechanoreceptors to produce **tonic contraction and rapid retraction**, constricting sheared spiral arterioles to prevent **primary postpartum hemorrhage**."
+    },
+    {
+      "id": 29,
+      "q": "What are the three main functional values of postpartum physical therapy exercises?",
+      "a": "1. **Prophylactic**: Prevents DVT, prolapse, incontinence, and diastasis recti.\n2. **Curative**: Resolves perineal edema, restores pelvic floor tone, and aids lochial drainage.\n3. **Lactational**: Boosts circulation, relieves posture strain, and promotes **prolactin/oxytocin release**."
+    },
+    {
+      "id": 30,
+      "q": "What are the absolute contraindications to initiating postpartum exercises?",
+      "a": "• **Postpartum haemorrhage**\n• **Nephritis**\n• **Puerperal fever**"
+    },
+    {
+      "id": 31,
+      "q": "What exercises are prescribed on the first postpartum day, and what is the benefit of prone lying?",
+      "a": "• Exercises: Deep breathing, circulatory ankle pumps, static abdominal exercises, and **prone relaxation on face**.\n• Prone lying creates **forward uterine displacement**, promoting **uterine involution** and **lochial drainage**."
+    },
+    {
+      "id": 32,
+      "q": "Which exercise is introduced on Day 2 postpartum to treat perineal edema, and what is its mechanism?",
+      "a": "**Pelvic floor exercises (Kegels)**; voluntary contractions produce a **mechanical pumping action** that accelerates venous and lymphatic drainage of interstitial fluid."
+    },
+    {
+      "id": 33,
+      "q": "What exercises are introduced on Days 3, 4, and 5 of the postpartum exercise protocol?",
+      "a": "• Day 3: **Pelvic rocking**.\n• Day 4: **Hip shrugging**, **pelvic rotation**, and **posture correction**.\n• Day 5: First step of **trunk flexion**."
+    },
+    {
+      "id": 34,
+      "q": "What is the exercise progression for Day 6, Day 7, and Day 8 onward postpartum?",
+      "a": "• Day 6: First step of **trunk rotation**.\n• Day 7: Progression of other trunk flexion and rotation steps.\n• Day 8: Increase repetitions **up to 20 times** daily through the end of the puerperium."
+    },
+    {
+      "id": 35,
+      "q": "What is an episiotomy, when is it performed, and under what anesthesia?",
+      "a": "A surgical incision into the perineum during the **second stage of labour as the fetal head crowns** (exterior distension **3–4 cm**), performed under **local infiltration anesthesia**."
+    },
+    {
+      "id": 36,
+      "q": "What anatomical structures are damaged in 1st-degree and 2nd-degree perineal tears?",
+      "a": "• 1st Degree: **Fourchette, perineal skin, and vaginal mucosa** (no muscle).\n• 2nd Degree: Perineal subcutaneous tissue and muscles (**superficial transverse perineal** and **bulbocavernosus**; spares deep transverse perineal)."
+    },
+    {
+      "id": 37,
+      "q": "What anatomical structures are damaged in 3rd-degree and 4th-degree perineal tears?",
+      "a": "• 3rd Degree: Disruption of the **anal sphincter complex (EAS ± IAS)**.\n• 4th Degree: Both external and internal anal sphincters plus the **anorectal epithelium (rectal mucosa)**, exposing the rectal lumen."
+    },
+    {
+      "id": 38,
+      "q": "What are the primary maternal and fetal indications for an episiotomy?",
+      "a": "• Maternal: **Elderly primipara (≥35 years)**, **rigid perineum**, **perineal scar**, **vulvar edema**, or **instrumental deliveries (forceps/Ventouse)**.\n• Fetal: **Fetal distress**, **malposition/malpresentation**, **fetal macrosomia (≥3.5–4.0 kg)**, and **prematurity**."
+    },
+    {
+      "id": 39,
+      "q": "What are the advantages and the primary disadvantage of a median (midline) episiotomy?",
+      "a": "• Advantages: **Easy to repair**, **rare dyspareunia**, **rare faulty healing**, **minimal blood loss**, and **less postoperative pain**.\n• Disadvantage: **High risk of extension through the anal sphincter and rectum**."
+    },
+    {
+      "id": 40,
+      "q": "What are the advantages and disadvantages of a mediolateral episiotomy?",
+      "a": "• Advantage: **Extension into the anal sphincter and rectum is rare**.\n• Disadvantages: **Technically difficult to repair**, **higher blood loss**, **more postoperative pain**, and **higher rates of faulty healing and dyspareunia**."
+    },
+    {
+      "id": 41,
+      "q": "What are the acute and chronic complications of an episiotomy?",
+      "a": "• Acute: **Pain**, **edema**, **hematoma**, **hemorrhage**, **infection**, and **sphincter tear extension**.\n• Chronic: **Persistent dyspareunia**, **pelvic floor dysfunction (incontinence/prolapse)**, and **rectovaginal or anovaginal fistulae**."
+    },
+    {
+      "id": 42,
+      "q": "What are the physical therapy parameters for cryotherapy and pulsed ultrasound in acute episiotomy pain?",
+      "a": "• Cryotherapy: **20 minutes**, up to **6 times/day (every 2 hours)**.\n• Pulsed Ultrasound: **3 MHz**, **0.5 W/cm²**, **1:1 pulsed ratio**, for **5 minutes/day** via an **indirect water/gel glove technique**."
+    },
+    {
+      "id": 43,
+      "q": "What are the physical therapy parameters for LLLT and TENS in acute episiotomy pain?",
+      "a": "• LLLT: Non-contact, **0.5–4 J/cm²**, **15 mW**, maximal pulsing frequency, **90 seconds per region**.\n• TENS: Conventional **high (100 Hz)** or low **(5 Hz)** for **30 minutes**, placed parallel/straddling the wound."
+    },
+    {
+      "id": 44,
+      "q": "What are the settings for Pulsed Electromagnetic Energy (PEMF) in acute vs chronic perineal tissue management?",
+      "a": "• Acute: Pulse width **40–65 µs**, frequency **10–220 pulses/s**, **20 minutes twice daily**.\n• Chronic: Administered to facilitate **organized fibrin realignment** and suppress hypertrophic cross-linked scar tissue."
+    },
+    {
+      "id": 45,
+      "q": "What are the specific laser parameters for wound healing vs scar remodeling in chronic perineal pain?",
+      "a": "• Wound Healing: Wavelength **600–750 nm**, frequency **<1000 Hz**, energy density **0.5–2 J/cm²**.\n• Scar Remodeling: Wavelength **750–900 nm**, frequency **>1000 Hz**, energy density **4–6 J/cm²**."
+    },
+    {
+      "id": 46,
+      "q": "How is continuous ultrasound utilized in the chronic stage of episiotomy healing?",
+      "a": "Administered in **continuous (thermal) mode** for **8 sessions** to enhance collagen viscoelasticity, realign irregular fibers, and restore tissue extensibility."
+    },
+    {
+      "id": 47,
+      "q": "How are TENS electrodes placed to relieve pain during the first stage of labour?",
+      "a": "• Upper pair: Paravertebral at **T10–L1** (targeting uterine sympathetic innervation).\n• Lower pair: Centered over **S2–S4** (targeting referred sacral back pain)."
+    },
+    {
+      "id": 48,
+      "q": "What are the specific TENS stimulation parameters used during the first stage of labour?",
+      "a": "• Frequency: **80–120 Hz**\n• Pulse Width: **150 µs**\n• Intensity: Adjusted to patient tolerance until **tingling/numbness** is felt, maintained across the **entire first stage**."
+    },
+    {
+      "id": 49,
+      "q": "How is back effleurage massage executed during the first stage of labour, and when is it most effective?",
+      "a": "Long, gliding flat-hand strokes moving from the **base of the spine up to the shoulders on inhalation**, then down the sides on exhalation; applied **between contractions** to promote relaxation and **endorphin release**."
+    },
+    {
+      "id": 50,
+      "q": "How is back kneading massage performed during the first stage of labour?",
+      "a": "Firm, slow, rhythmic finger-squeezing motions applied while sitting astride a chair or leaning forward, directed to the **lower back (between spine and iliac crest)**, upper back, and shoulders."
+    }
+  ]
+}

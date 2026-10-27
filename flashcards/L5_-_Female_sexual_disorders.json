@@ -1,0 +1,545 @@
+{
+  "meta": {
+    "title": "L5 - Female sexual disorders",
+    "subject": "Gynecology & Physical Therapy",
+    "category": "theory",
+    "mode": "comprehensive"
+  },
+  "cards": [
+    {
+      "id": 1,
+      "q": "What is the clinical definition of dyspareunia?",
+      "a": "Dyspareunia is defined as **recurrent or persistent pain during sexual intercourse** and is often one component of the **chronic pelvic pain complex**."
+    },
+    {
+      "id": 2,
+      "q": "What are the pathophysiological underpinnings of the chronic pelvic pain complex in dyspareunia?",
+      "a": "It arises from **gynecological, gastrointestinal, or neurological etiologies** inducing **chronic pelvic congestion**; mechanical penetration impinges upon engorged pelvic tissues and vessels, commonly co-occurring with **secondary dysmenorrhea**."
+    },
+    {
+      "id": 3,
+      "q": "How is dyspareunia classified according to anatomical depth or site of onset?",
+      "a": "It is classified into **superficial dyspareunia** and **deep dyspareunia**."
+    },
+    {
+      "id": 4,
+      "q": "What is the defining characteristic of superficial dyspareunia?",
+      "a": "Pain occurring with **initial penetration of the vaginal introitus**."
+    },
+    {
+      "id": 5,
+      "q": "What does superficial dyspareunia correspond to clinically?",
+      "a": "It corresponds directly to **introital or vulvar tissue pathology**."
+    },
+    {
+      "id": 6,
+      "q": "What is the defining characteristic of deep dyspareunia?",
+      "a": "Pain occurring with **deep vaginal penetration**."
+    },
+    {
+      "id": 7,
+      "q": "What does deep dyspareunia reflect pathophysiologically?",
+      "a": "It reflects **deep pelvic visceral or structural abnormalities** triggering pain as penile thrusting exerts mechanical force against **congested pelvic structures**."
+    },
+    {
+      "id": 8,
+      "q": "How is dyspareunia classified chronologically based on patient history?",
+      "a": "It is divided into **primary dyspareunia** and **secondary dyspareunia**."
+    },
+    {
+      "id": 9,
+      "q": "What is primary dyspareunia, and what is its classic clinical correlation?",
+      "a": "Intercourse has **always been painful**; classically identified in **newly married virgins** presenting with persistent coital pain since their first penetrative attempt."
+    },
+    {
+      "id": 10,
+      "q": "What is secondary dyspareunia, and when does it typically arise?",
+      "a": "Pain occurring after a **period of pain-free sexual intercourse**; acquired following **obstetrical trauma, pelvic surgery, chronic pelvic infection, or severe hormonal alterations**."
+    },
+    {
+      "id": 11,
+      "q": "How do congenital conditions cause superficial dyspareunia?",
+      "a": "Anomalies such as a **rigid hymen** or **vaginal stenosis** present as severe introital narrowing or an **unyielding hymenal ring** preventing initial penetration on the wedding night."
+    },
+    {
+      "id": 12,
+      "q": "What is the biomechanical reason episiotomy scars cause superficial dyspareunia?",
+      "a": "Fibrotic scar tissue lacks elasticity (**inelastic scars**); frictional forces during penile penetration generate severe **local tearing and burning pain** at the **posterior introitus**."
+    },
+    {
+      "id": 13,
+      "q": "What is the hormonal mechanism of atrophic vaginitis causing superficial dyspareunia in postmenopausal women?",
+      "a": "Profound depletion of **circulating estrogen** leads to **loss of vaginal epithelial rugae**, pronounced **thinning of the vaginal wall**, and severe **mucosal friability**."
+    },
+    {
+      "id": 14,
+      "q": "Why does prolonged lactation cause superficial dyspareunia?",
+      "a": "Elevated **prolactin levels** exert a suppressive **anti-estrogenic effect** on genital tissues, precipitating transient **atrophic vaginitis**."
+    },
+    {
+      "id": 15,
+      "q": "What microvascular changes occur during pelvic radiotherapy that cause radiation vaginitis?",
+      "a": "Ionizing radiation induces **obliterative endarteritis**, severe mucosal atrophy, **luminal stenosis**, and secondary radiation vaginitis."
+    },
+    {
+      "id": 16,
+      "q": "What two anatomical sources normally produce genital lubrication during sexual arousal?",
+      "a": "Superiorly by **cervical secretions** and inferiorly at the introitus by the **greater vestibular (Bartholin's) glands**."
+    },
+    {
+      "id": 17,
+      "q": "How do psychological factors lead to inadequate genital lubrication?",
+      "a": "Stress, severe life events, anxiety, and marital conflict inhibit autonomic **parasympathetic vasocongestive responses**, suppressing **Bartholin's and cervical glandular transudation**."
+    },
+    {
+      "id": 18,
+      "q": "Why does childbirth or pelvic surgery cause temporary lubrication failure?",
+      "a": "Direct mechanical or surgical trauma to the **birth canal, cervix, or Bartholin's glands** temporarily compromises secretory capacity until neural and microvascular recovery ensues."
+    },
+    {
+      "id": 19,
+      "q": "How does postmenopausal estrogen deficiency impact the Bartholin's glands?",
+      "a": "It downregulates mucosal receptors, causing **Bartholin's gland involution** and loss of transudative mucosal secretions."
+    },
+    {
+      "id": 20,
+      "q": "How can oral contraceptive pills (OCPs) contribute to superficial dyspareunia?",
+      "a": "Exogenous hormonal contraceptives disrupt endogenous endocrine balance, alter **vaginal epithelial maturation**, and induce **introital dryness**."
+    },
+    {
+      "id": 21,
+      "q": "How does prior sexual trauma lead to superficial dyspareunia?",
+      "a": "Past sexual assault or rape induces persistent **conditioned defensive guarding** and **local neurosensory hypersensitivity**, rendering introitus contact intolerable."
+    },
+    {
+      "id": 22,
+      "q": "How do vulvar infections cause superficial dyspareunia?",
+      "a": "Acute or chronic vulvovaginitis causes localized **erythema, inflammation**, and **hyperesthesia of the external vestibular epithelium**."
+    },
+    {
+      "id": 23,
+      "q": "Why does urethritis present with introital pain during intercourse?",
+      "a": "The external urethral orifice lies **immediately anterior to the vaginal introitus**; inflammatory pain radiates throughout the vulva upon mechanical contact."
+    },
+    {
+      "id": 24,
+      "q": "How does a retroverted retroflexed uterus (RVF) lead to deep dyspareunia?",
+      "a": "The uterine fundus tilts backward into the **cul-de-sac** near the sacrum and coccyx, causing **chronic pelvic vascular congestion** and placing the prolapsed **uterine body and ovaries directly in the path of deep thrusting**."
+    },
+    {
+      "id": 25,
+      "q": "What is the mechanism of deep dyspareunia in genital prolapse?",
+      "a": "Downward descent of pelvic viscera subjects the **cardinal and uterosacral ligaments** to chronic continuous traction, causing low back pain, **pelvic venous pooling**, and deep coital ache."
+    },
+    {
+      "id": 26,
+      "q": "How do urinary tract infections cause deep dyspareunia?",
+      "a": "Deep cranial bladder involvement (e.g., **cystitis or trigonitis**) causes referred hypogastric pain provoked by deep penile excursion against the **bladder base**."
+    },
+    {
+      "id": 27,
+      "q": "Why does severe constipation lead to deep dyspareunia?",
+      "a": "**Fecal impaction** fills the posterior pelvis, causing mechanical compression against the distended, inflamed **rectal vault** during deep penetration."
+    },
+    {
+      "id": 28,
+      "q": "How does acute or chronic pelvic inflammatory disease (PID) present in relation to sexual pain?",
+      "a": "Ascending microbial infection causes widespread **pelvic peritonitis, salpingitis, and parametritis**, which may present as **primary dyspareunia** in young females or virgins with poor hygiene."
+    },
+    {
+      "id": 29,
+      "q": "Which anatomical sites are most commonly involved in ectopic endometriosis?",
+      "a": "The **ovaries, uterosacral ligaments, pouch of Douglas, and pelvic peritoneum** (and occasionally remote structures like the diaphragm or iliopsoas)."
+    },
+    {
+      "id": 30,
+      "q": "What is the pathophysiological cause of severe pain and adhesions in endometriosis?",
+      "a": "Entrapped cyclic bleeding without an egress pathway triggers **localized prostaglandin release** and chemical inflammation, resulting in dense, painful **fibrotic adhesions**."
+    },
+    {
+      "id": 31,
+      "q": "Which surgical procedures predispose patients to deep dyspareunia secondary to adhesions?",
+      "a": "**Pelvic exploratory laparotomies, myomectomies, and Cesarean sections (C-sections)** violate tissue planes, leaving peritoneal adhesions."
+    },
+    {
+      "id": 32,
+      "q": "How do postoperative pelvic adhesions mechanically generate deep dyspareunia?",
+      "a": "**Fixed, non-distensible scar bands** tether normally mobile organs, provoking sharp or dragging pelvic pain during visceral displacement."
+    },
+    {
+      "id": 33,
+      "q": "How do pelvic neoplasms cause deep dyspareunia?",
+      "a": "Space-occupying benign or malignant tumors distort pelvic relations, **compress adjacent nerve plexuses**, and induce marked **pelvic vascular stasis**."
+    },
+    {
+      "id": 34,
+      "q": "What pain severity rating on the Visual Analog Scale (VAS) is typically associated with deep penetration in uterine fibroids?",
+      "a": "Deep aching pain rated **VAS 4 to 8 out of 10**."
+    },
+    {
+      "id": 35,
+      "q": "How can an intrauterine contraceptive device (IUD) produce deep dyspareunia?",
+      "a": "A **malpositioned or rigid IUD** irritates the **lower uterine segment or cervix** during deep contact, inducing deep coital pain and secondary protective spasm."
+    },
+    {
+      "id": 36,
+      "q": "What is the clinical definition of vaginismus?",
+      "a": "**Involuntary spasm of the perineal muscles** making vaginal penetration difficult, painful, or impossible, often associated with spasm of the **levator ani, hip adductors, and abdominal muscles**."
+    },
+    {
+      "id": 37,
+      "q": "Which deep pelvic floor stabilizers are recruited in persistent vaginismus?",
+      "a": "**Levator ani, obturator internus, piriformis, and iliopsoas**."
+    },
+    {
+      "id": 38,
+      "q": "Which accessory substitution muscles are recruited during reflex neuromuscular guarding in vaginismus?",
+      "a": "**Hip adductors, gluteal muscles, and rectus abdominis**."
+    },
+    {
+      "id": 39,
+      "q": "What is primary vaginismus?",
+      "a": "A condition where a female has **never been able to achieve vaginal penetration**, making penetration impossible from the first attempted coitus or medical exam."
+    },
+    {
+      "id": 40,
+      "q": "What is secondary vaginismus?",
+      "a": "Vaginismus that develops **after a period of successful, pain-free vaginal penetration**, triggered by physical trauma, infection, or profound relationship stressors."
+    },
+    {
+      "id": 41,
+      "q": "What are the four primary etiologic categories of vaginismus?",
+      "a": "1. **Dyspareunia**\n2. **Past sexual abuse**\n3. **Relationship problems**\n4. **Psychological factors**"
+    },
+    {
+      "id": 42,
+      "q": "What are the sequential steps in the 'Vicious Cycle of Sexual Pain'?",
+      "a": "1. **Dyspareunia** (Initial Physical Pain)\n2. **Fear of Pain with Intercourse** (Conditioned Dread)\n3. **Anxiety with or without Sex Response** (Sympathetic Guarding)\n4. **Vaginismus** (Severe Involuntary Perineal Spasm)"
+    },
+    {
+      "id": 43,
+      "q": "How does vaginismus perpetuate more intense coital pain in the vicious cycle?",
+      "a": "Involuntary muscular contraction exacerbates **mechanical friction and tissue trauma**, reinforcing anticipatory fear and reflex hypertonicity."
+    },
+    {
+      "id": 44,
+      "q": "What is the common therapeutic goal in managing dyspareunia and vaginismus?",
+      "a": "A **return to normal muscle tone and flexibility** of the spastic pelvic floor muscles."
+    },
+    {
+      "id": 45,
+      "q": "Describe the anatomical boundaries of the dynamic musculoskeletal 'core cylinder'.",
+      "a": "Superiorly: **Diaphragm**\nAnteriorly: **Abdominal muscles**\nPosteriorly: **Spinal and back muscles**\nBase: **Pelvic floor**"
+    },
+    {
+      "id": 46,
+      "q": "What is the 'Paradox of Hypertonicity' in pelvic floor dysfunction?",
+      "a": "Hypertonic, spastic pelvic muscles are **fundamentally weak muscles** due to **chronic ischemic fatigue** and lack of full physiological excursion; therapy must **prioritize relaxation before strengthening**."
+    },
+    {
+      "id": 47,
+      "q": "Why is forceps delivery an important risk factor to document in pelvic pain history?",
+      "a": "It dramatically increases the risk of **severe soft tissue avulsion, Bartholin's duct compromise, and rigid scar formation**."
+    },
+    {
+      "id": 48,
+      "q": "What elements must be inquired about in a detailed menstrual history for sexual pain disorders?",
+      "a": "Age of menarche, cycle length, regularity, **secondary dysmenorrhea**, menopausal status, lactation intervals, and **use of OCPs or IUDs**."
+    },
+    {
+      "id": 49,
+      "q": "Why must previous physical therapy attempts be reviewed during patient intake?",
+      "a": "To avoid replicating failed interventions, such as **premature aggressive probe insertion** into a highly spastic introitus."
+    },
+    {
+      "id": 50,
+      "q": "What does a 'burning' pain sensation typically indicate during pelvic pain assessment?",
+      "a": "**Neurological irritation, active infection, or mucosal inflammation**."
+    },
+    {
+      "id": 51,
+      "q": "What does an 'aching' (dull ache) pelvic pain signify?",
+      "a": "**Chronic musculoskeletal hypertonicity, spasm, and pelvic venous congestion**."
+    },
+    {
+      "id": 52,
+      "q": "How does the clinical distribution of pain differentiate introital lesions from endometriosis or chronic PID?",
+      "a": "**Highly localized pain** corresponds to superficial scars or introital inflammation, whereas **diffuse pelvic/abdominal pain** indicates deep widespread pathology like endometriosis or PID."
+    },
+    {
+      "id": 53,
+      "q": "How do provocative triggers clinically differentiate vulvodynia from vaginismus and dyspareunia?",
+      "a": "**Spontaneous pain** provoked by tight clothing or sitting indicates **vulvodynia**; **provoked pain** triggered specifically by coitus, tampon insertion, or speculum insertion defines **vaginismus and dyspareunia**."
+    },
+    {
+      "id": 54,
+      "q": "What clinical duration establishes chronic pelvic pain syndrome requiring complex desensitization?",
+      "a": "Symptoms persisting beyond **3 months**."
+    },
+    {
+      "id": 55,
+      "q": "Which functional associated activities should be evaluated as pain triggers in pelvic history taking?",
+      "a": "**Menses, exercise (hip abduction/squats), urination, defecation, and sleep disruption**."
+    },
+    {
+      "id": 56,
+      "q": "What are the three structural components of a pelvic floor physical examination?",
+      "a": "A. **Visual examination**\nB. **Internal examination**\nC. **EMG biofeedback**"
+    },
+    {
+      "id": 57,
+      "q": "What are the recommended environmental conditions for performing a pelvic floor exam?",
+      "a": "A **quiet, private, and unhurried atmosphere** after the patient empties her bladder and drapes her lower body."
+    },
+    {
+      "id": 58,
+      "q": "What is the American Physical Therapy Association (APTA) Section on Women's Health recommendation regarding internal pelvic examination?",
+      "a": "It is advised **only for females who can express clear understanding** of the nature of the examination and can provide **informed consent**."
+    },
+    {
+      "id": 59,
+      "q": "What clinical signs mandate immediate termination of an internal pelvic examination?",
+      "a": "**Severe muscle guarding, thigh adduction, rapid breathing shifts, vocalizations of distress, or withdrawal of consent**."
+    },
+    {
+      "id": 60,
+      "q": "What does lateral deviation of the perineum during visual inspection signify?",
+      "a": "Asymmetric muscular spasm toward a **hypertonic levator ani**."
+    },
+    {
+      "id": 61,
+      "q": "What does anterior-posterior retraction of the perineum indicate on visual inspection?",
+      "a": "Spasm of the **external anal sphincter**."
+    },
+    {
+      "id": 62,
+      "q": "What is the standardized clinical cue given to test voluntary pelvic floor contraction?",
+      "a": "'**As if you control bowel action, to the urethral orifice, draw your vagina inward and upward, hold for 5 seconds, and completely relax.**'"
+    },
+    {
+      "id": 63,
+      "q": "What is the expected physical finding during a normal pelvic floor contraction?",
+      "a": "The introitus **visibly narrows and retracts inward and cranially** without recruiting accessory muscles."
+    },
+    {
+      "id": 64,
+      "q": "What is the expected physiological response when the patient is asked to bear down, cough, or strain?",
+      "a": "**Gentle outward relaxation of the perineum** (urinary escape indicates stress incontinence; descent of walls indicates prolapse)."
+    },
+    {
+      "id": 65,
+      "q": "Describe the proper hand orientation and finger alignment during internal vaginal examination.",
+      "a": "Fingers are aligned **vertically**; the **right hand** examines the patient's right pelvic floor structures, and the **left hand** examines the left structures."
+    },
+    {
+      "id": 66,
+      "q": "How is a Grade 0 defined on the Modified Oxford Scale?",
+      "a": "**No contraction**: No palpable muscle activity or flicker detected digitally."
+    },
+    {
+      "id": 67,
+      "q": "How is a Grade 1 defined on the Modified Oxford Scale?",
+      "a": "**Flick contraction**: Barely perceptible, flickering contraction at isolated clock points (3, 6, 9, or 12 o'clock)."
+    },
+    {
+      "id": 68,
+      "q": "How is a Grade 2 defined on the Modified Oxford Scale?",
+      "a": "**Weak squeeze**: Weak squeeze felt digitally; contraction felt primarily on the **posterior half without lift**."
+    },
+    {
+      "id": 69,
+      "q": "How is a Grade 3 defined on the Modified Oxford Scale?",
+      "a": "**Fair squeeze with definite 'lift'**: Distinct muscle squeeze accompanied by **inward and upward lifting** of the examiner's finger."
+    },
+    {
+      "id": 70,
+      "q": "How is a Grade 4 defined on the Modified Oxford Scale?",
+      "a": "**Good squeeze with repeatable hold and lift**: Firm squeeze and cranial lift capable of sustaining against **moderate examiner resistance**."
+    },
+    {
+      "id": 71,
+      "q": "How is a Grade 5 defined on the Modified Oxford Scale?",
+      "a": "**Strong, solid squeeze with repeatable hold and lift**: Powerful, solid clamp pulling finger inward, comparable to **infant nipple latching**."
+    },
+    {
+      "id": 72,
+      "q": "How is pelvic floor muscle endurance scored in the physical exam?",
+      "a": "By counting the duration of a sustained maximal contraction in **seconds** (e.g., holding for 3 seconds gives an **endurance score of 3**; 5 seconds yields a **score of 5**)."
+    },
+    {
+      "id": 73,
+      "q": "What characterizes the 'quality of motion' in hypertonic pelvic floor dysfunction during internal exam?",
+      "a": "**Resting baseline tone remains high**, with virtually **no palpable difference** between the contraction phase and relaxation phase."
+    },
+    {
+      "id": 74,
+      "q": "When is EMG biofeedback indicated as an assessment tool instead of digital palpation?",
+      "a": "When **severe introital spasm, extreme pain, or patient refusal** prevents internal digital vaginal examination."
+    },
+    {
+      "id": 75,
+      "q": "Where are the surface electrodes placed for pelvic floor EMG assessment?",
+      "a": "Active electrodes on the **external anal sphincters**, and reference electrode on the **inner thigh muscle or gluteal muscle**."
+    },
+    {
+      "id": 76,
+      "q": "What is the anatomical rationale for using the external anal sphincter for surface EMG?",
+      "a": "It is the only **directly observable and accessible superficial perineal muscle**, as the bulbospongiosus and ischiocavernosus lie deep to skin and superficial perineal fascia."
+    },
+    {
+      "id": 77,
+      "q": "What are the primary therapeutic goals of physical therapy in sexual pain disorders?",
+      "a": "1. **Pain relief**\n2. **Normalize muscle tone**\n3. **Improve muscle relaxation**\n4. **Increase elasticity at vaginal opening and desensitize**\n5. **Decrease fear of penetration**"
+    },
+    {
+      "id": 78,
+      "q": "What is the structured, outside-to-inside hierarchical sequence of physical therapy protocols?",
+      "a": "1. **Indirect relaxation (diaphragmatic breathing)**\n2. **Pain relief thermal/acoustic modalities**\n3. **Superficial manual desensitization**\n4. **Trigger point release (extrapelvic before intrapelvic)**\n5. **Musculoskeletal flexibility/stretching**\n6. **Pelvic floor motor re-education/downtraining**\n7. **Active strengthening**"
+    },
+    {
+      "id": 79,
+      "q": "How is moist heat applied for pain relief, and what is its dosage?",
+      "a": "Moist hot packs placed over the **perineum, suprapubic region, or lower abdomen for 15 minutes** prior to stretching or desensitization."
+    },
+    {
+      "id": 80,
+      "q": "What are the biochemical and mechanical effects of therapeutic ultrasound on scar tissue?",
+      "a": "Causes **depolymerisation of mucopolysaccharides, mucoproteins, and glycoproteins**, and increases **extensibility of collagen bands**."
+    },
+    {
+      "id": 81,
+      "q": "By what neurophysiological mechanism does intravaginal TENS provide pain relief?",
+      "a": "Through the **gate control theory** of pain modulation."
+    },
+    {
+      "id": 82,
+      "q": "When should intravaginal electrical stimulation probes (TENS) be deferred?",
+      "a": "In patients with **severe hypertonicity** until initial desensitization and manual therapy are well established."
+    },
+    {
+      "id": 83,
+      "q": "What is the physiological biomechanic of the pelvic floor during deep diaphragmatic inhalation?",
+      "a": "Inhalation causes the **diaphragm to descend**, intra-abdominal pressure to rise, and the pelvic floor to **move downward into passive, indirect relaxation**."
+    },
+    {
+      "id": 84,
+      "q": "What functional posture optimizes diaphragmatic breathing exercises for pelvic floor biofeedback?",
+      "a": "Seated on a **stool or therapeutic ball** with **trunk tilted forward and thighs abducted**, ensuring firm perineal contact with the seat."
+    },
+    {
+      "id": 85,
+      "q": "How do deep breathing exercises interrupt the sexual pain cycle neurologically?",
+      "a": "They **stimulate parasympathetic activity**, interrupting the central autonomic anxiety loop that drives reflex perineal hypertonus."
+    },
+    {
+      "id": 86,
+      "q": "Describe the 1st manual desensitization technique.",
+      "a": "A sweeping motion in the vaginal opening by moving one finger in a **'U-shaped' manner** along the inferior hemi-circumference without entering the canal."
+    },
+    {
+      "id": 87,
+      "q": "Describe the clock positions and movement pattern of the 2nd desensitization technique.",
+      "a": "Finger placed at **3 -> 6 -> 9 -> 12 o'clock**, reversed **12 -> 9 -> 6 -> 3**, followed by semicircular sweeps between **3 and 9 o'clock**."
+    },
+    {
+      "id": 88,
+      "q": "Why is special emphasis placed on the 3 to 6 to 9 o'clock arc during desensitization massage?",
+      "a": "It lies directly adjacent to the **puborectalis muscle**, which harbors high mechanical sensitivity and bears peak coital friction."
+    },
+    {
+      "id": 89,
+      "q": "What is the initial sizing and progression rule for vaginal dilators in the 3rd desensitization technique?",
+      "a": "Begin with small-caliber dilators (**approximating little-finger diameter**) and advance gradually across sessions within patient pain tolerance."
+    },
+    {
+      "id": 90,
+      "q": "What is the recommended daily duration for desensitization techniques?",
+      "a": "**15 to 20 minutes daily**, which may extend up to **30 minutes** as a home exercise program."
+    },
+    {
+      "id": 91,
+      "q": "What are the therapeutic values of vaginal desensitization techniques?",
+      "a": "1. **Restore normal sensation and introital tolerance**\n2. **Increase tissue elasticity**\n3. **Decrease conditioned fear of penetration**"
+    },
+    {
+      "id": 92,
+      "q": "What is transvaginal Thiele's massage?",
+      "a": "A classic manual technique for relieving trigger points in the **levator ani**, emphasizing a **stripping motion from muscle origin to insertion** under tolerable pressure."
+    },
+    {
+      "id": 93,
+      "q": "What is the exact anatomical path traced during transvaginal Thiele's massage?",
+      "a": "The finger inserts up to three knuckles, sweeping from the origin at the **pubic symphysis** back to its insertion at the **coccyx**."
+    },
+    {
+      "id": 94,
+      "q": "Which muscle groups are primarily targeted by manual extrapelvic trigger point therapy?",
+      "a": "**Hip adductors and abdominal muscles** (extending to piriformis, iliopsoas, and gluteal muscles)."
+    },
+    {
+      "id": 95,
+      "q": "What is the expected timeframe for pain reduction during sustained ischemic compression of a trigger point?",
+      "a": "Pain decrease usually occurs within **15 to 20 seconds** of direct compression."
+    },
+    {
+      "id": 96,
+      "q": "What manual stretch follows trigger point compression, and what is its dosage?",
+      "a": "A firm stretch running a finger along the taut band for **1 to 2 inches**, repeated for **3 to 5 times**."
+    },
+    {
+      "id": 97,
+      "q": "What are the two primary target muscle groups for musculoskeletal flexibility training?",
+      "a": "**Pelvic floor muscles (PFM)** and **hip adductors**."
+    },
+    {
+      "id": 98,
+      "q": "How is pelvic floor muscle stretching executed via squatting, and what is the duration?",
+      "a": "Through a deep squatting position maintained for **1 minute**, which widens the ischial tuberosities and elongates the levator ani sling."
+    },
+    {
+      "id": 99,
+      "q": "How is pelvic mobility trained using a therapeutic exercise ball?",
+      "a": "The patient sits on the ball and slowly moves the pelvis **forward, backward, side to side, and in continuous circles**."
+    },
+    {
+      "id": 100,
+      "q": "Describe the patient positioning for the 'Frog Sitting' hip adductor stretch.",
+      "a": "Back supported against a wall, **soles of feet facing each other**, pressing knees gently downward toward the floor with **pillows under knees for support**."
+    },
+    {
+      "id": 101,
+      "q": "Describe the setup and primary muscles stretched in the 'Supine Wall Split Stretch'.",
+      "a": "Supine with legs elevated and abducted against a wall, utilizing gravity to stretch the **adductor longus, adductor brevis, and gracilis**."
+    },
+    {
+      "id": 102,
+      "q": "How is the contract/relax technique executed during pelvic floor graduations?",
+      "a": "**Repeated contraction and relaxation 3 times** to produce physiological muscle fatigue."
+    },
+    {
+      "id": 103,
+      "q": "What is 'downtraining', and why is it critical in vaginismus rehabilitation?",
+      "a": "Pairing diaphragmatic exhalations with deliberate release commands after fatigue to **drop hypertonic muscles below baseline resting tone into profound relaxation**; it is the **most critical motor control milestone**."
+    },
+    {
+      "id": 104,
+      "q": "When is active pelvic floor strengthening (e.g., Kegel exercises) permitted to begin?",
+      "a": "Only **after resting hypertonia has fully resolved** and **symmetrical downtraining has been mastered**."
+    },
+    {
+      "id": 105,
+      "q": "How do rhythmic contract-relax cycles contribute to pain relief biochemically?",
+      "a": "They act as a **mechanical intramuscular pump**, accelerating local circulation to **clear inflammatory metabolites and alleviate venous congestion**."
+    },
+    {
+      "id": 106,
+      "q": "How is EMG biofeedback utilized in the active treatment of pelvic floor disorders?",
+      "a": "Insertion of a **vaginal probe** provides real-time graphic visual targets during contract/relax, stair step, and downtraining protocols."
+    },
+    {
+      "id": 107,
+      "q": "How does EMG biofeedback prevent improper substitution patterns during motor re-education?",
+      "a": "It provides objective visual data verifying isolated pelvic floor activation while **suppressing unwanted substitution from the glutei, abdominals, and adductors**."
+    }
+  ]
+}

@@ -1,0 +1,220 @@
+{
+  "meta": {
+    "title": "Clinical - العلاج الطبيعي للاضطرابات الجلدية - PT - Integumentary Disorders",
+    "subject": "الطب السريري",
+    "category": "theory",
+    "mode": "comprehensive"
+  },
+  "cards": [
+    {
+      "id": 1,
+      "q": "What is the definition of an ulcer?",
+      "a": "A **break in the skin or mucous membrane** that fails to heal due to **poor circulation or pressure**."
+    },
+    {
+      "id": 2,
+      "q": "What are the common sites for pressure ulcers in a supine position?",
+      "a": "Sacrum, **heels**, occiput, **blades of scapulae**, and elbows."
+    },
+    {
+      "id": 3,
+      "q": "Name the common sites for pressure ulcers when in a side-lying position.",
+      "a": "Acromion, **greater trochanter**, femoral condyles, and **lateral malleolus**."
+    },
+    {
+      "id": 4,
+      "q": "What are the risk factors for pressure ulcer development?",
+      "a": "Immobility, **moisture**, friction & shear, **age**, and comorbidities like **D.M.**, **peripheral vascular disease**, and **hypotension**."
+    },
+    {
+      "id": 5,
+      "q": "Define Stage I pressure ulcer.",
+      "a": "Intact skin with **non-blanchable redness** of a localized area, usually over a bony prominence."
+    },
+    {
+      "id": 6,
+      "q": "Define Stage II pressure ulcer.",
+      "a": "Partial thickness loss of **dermis** presenting as a shallow open ulcer with a **red-pink wound bed**, without slough."
+    },
+    {
+      "id": 7,
+      "q": "Define Stage III pressure ulcer.",
+      "a": "Full thickness tissue loss where **subcutaneous fat** may be visible, but bone, tendon, or muscle are **not exposed**."
+    },
+    {
+      "id": 8,
+      "q": "Define Stage IV pressure ulcer.",
+      "a": "Full thickness tissue loss with **exposed bone, tendon, or muscle**; slough or eschar may be present."
+    },
+    {
+      "id": 9,
+      "q": "Define an Unstageable pressure ulcer.",
+      "a": "Full thickness tissue loss in which the base of the ulcer is covered by **slough (yellow, tan, gray, green, or brown) and/or eschar (tan, brown, or black)**."
+    },
+    {
+      "id": 10,
+      "q": "What are the causes of venous leg ulcers?",
+      "a": "Improper functioning of **venous valves** or **high venous blood pressure**."
+    },
+    {
+      "id": 11,
+      "q": "What is the primary cause of arterial (ischemic) ulcers?",
+      "a": "Poor **perfusion** to the lower extremities leading to **oxygen deprivation** and tissue death."
+    },
+    {
+      "id": 12,
+      "q": "What is the most common cause of neuropathic ulcers?",
+      "a": "Nerve damage, typically in people with **diabetes**, **peripheral neuropathy**, or **spinal cord injuries**."
+    },
+    {
+      "id": 13,
+      "q": "Which type of ulcer is the most common cause of lower extremity amputation in diabetic patients?",
+      "a": "**Diabetic ulcers**."
+    },
+    {
+      "id": 14,
+      "q": "List four characteristics of venous skin ulcers.",
+      "a": "Painless ulcers (above ankle), **pigmentation**, **eczema**, **ankle flare**, **varicose veins**, and **lipodermatosclerosis**."
+    },
+    {
+      "id": 15,
+      "q": "What is the 'clock face' orientation used for in wound assessment?",
+      "a": "Mapping the **anatomical location and dimensions** of an ulcer (e.g., describing tunneling or wound edges)."
+    },
+    {
+      "id": 16,
+      "q": "Differentiate between tunneling and undermining.",
+      "a": "**Tunneling** is a channel extending from the wound into surrounding tissue; **undermining** is a separation of tissue underneath the wound edge forming a gap."
+    },
+    {
+      "id": 17,
+      "q": "What does the presence of granulation tissue indicate?",
+      "a": "A **positive sign of healing**, characterized by firm, red, pebbly, and moist tissue."
+    },
+    {
+      "id": 18,
+      "q": "Why must slough be removed from a wound?",
+      "a": "It is non-viable, yellowish/stringy tissue that can **impede healing and harbor bacteria**."
+    },
+    {
+      "id": 19,
+      "q": "How is necrotic tissue (eschar) described?",
+      "a": "Black, leathery, or hard dead tissue that must be **debrided** as it impedes healing."
+    },
+    {
+      "id": 20,
+      "q": "What are the four types of wound exudate?",
+      "a": "**Serous** (clear/watery), **serosanguineous** (thin/pink-tinged), **sanguineous** (blood-tinged), and **purulent** (thick/opaque/infected)."
+    },
+    {
+      "id": 21,
+      "q": "What is the clinical significance of a foul smell in a wound?",
+      "a": "It often suggests **infection**."
+    },
+    {
+      "id": 22,
+      "q": "What are the signs of infection in the peri-wound skin?",
+      "a": "**Erythema** (redness), **warmth** (increased temperature), and **induration** (hardness/firmness)."
+    },
+    {
+      "id": 23,
+      "q": "What is Maceration in the context of wound care?",
+      "a": "White, wrinkled, overly moist skin caused by **excessive exudate** or poor dressing management."
+    },
+    {
+      "id": 24,
+      "q": "How is Ankle-Brachial Index (ABI) calculated?",
+      "a": "Divide **ankle pressure** by **arm pressure**."
+    },
+    {
+      "id": 25,
+      "q": "What is the normal ABI range?",
+      "a": "**1.0 to 1.4**."
+    },
+    {
+      "id": 26,
+      "q": "What does an ABI <0.9 indicate?",
+      "a": "Suggests **arterial disease**; lower values indicate more severe **ischemia**."
+    },
+    {
+      "id": 27,
+      "q": "What does an ABI >1.4 indicate?",
+      "a": "**Non-compressible vessels**, common in diabetes or renal failure."
+    },
+    {
+      "id": 28,
+      "q": "What is the normal capillary refill time?",
+      "a": "**Less than 3 seconds**."
+    },
+    {
+      "id": 29,
+      "q": "What are the two major pressure ulcer risk assessment tools?",
+      "a": "The **Braden Scale** and the **Norton Scale**."
+    },
+    {
+      "id": 30,
+      "q": "What is the ideal negative pressure for NPWT (VAC therapy)?",
+      "a": "**125 mmHg**."
+    },
+    {
+      "id": 31,
+      "q": "List three contraindications for NPWT.",
+      "a": "Untreated osteomyelitis, **presence of necrotic tissue**, **malignancy in the wound**, **exposed organs/blood vessels**, or non-enteric fistula."
+    },
+    {
+      "id": 32,
+      "q": "What is the wavelength range of UV rays?",
+      "a": "**100 to 400 nm**."
+    },
+    {
+      "id": 33,
+      "q": "Which type of UV is highly antimicrobial for acute wound infections?",
+      "a": "**UVC** (200–280 nm)."
+    },
+    {
+      "id": 34,
+      "q": "List three contraindications for UV therapy.",
+      "a": "Pulmonary tuberculosis, **severe cardiac disturbances**, **severe diabetes**, known photosensitivity, and acute febrile illness."
+    },
+    {
+      "id": 35,
+      "q": "What are the wavelengths used in Polarized Light Therapy (PLT)?",
+      "a": "**480–3400 nm**."
+    },
+    {
+      "id": 36,
+      "q": "What is the primary function of keratinocytes?",
+      "a": "To form a **barrier** against environmental damage (bacteria, fungi, parasites, UV, etc.)."
+    },
+    {
+      "id": 37,
+      "q": "What laser types are used for superficial wound healing?",
+      "a": "**He Ne laser** (5 J/cm2) and **Ga As diode laser** (3 J/cm2)."
+    },
+    {
+      "id": 38,
+      "q": "Define Hyperbaric Oxygen Therapy (HBOT).",
+      "a": "Inhalation of **100% oxygen** within a chamber pressurized to **greater than 1 ATA**."
+    },
+    {
+      "id": 39,
+      "q": "What are the common parameters for High Voltage Pulsed Current (HVPC) wound treatment?",
+      "a": "45 min/day, 3 days/week, **100 Hz frequency**, and use of **cathode** polarity to reduce bacteria."
+    },
+    {
+      "id": 40,
+      "q": "What pressure range do medical compression stockings provide at the ankle?",
+      "a": "**25 mmHg to 32 mmHg**."
+    },
+    {
+      "id": 41,
+      "q": "What is the recommended leg elevation for venous ulcer patients?",
+      "a": "Elevating the leg **above the level of the heart by 10–30°**."
+    },
+    {
+      "id": 42,
+      "q": "What is the most effective element of conservative leg ulcer treatment?",
+      "a": "Physical activity (**walking and exercise**) combined with **compression therapy**."
+    }
+  ]
+}

@@ -1,0 +1,130 @@
+{
+  "meta": {
+    "title": "practical burn & surgery unlocked",
+    "subject": "الطب السريري",
+    "category": "theory",
+    "mode": "comprehensive"
+  },
+  "cards": [
+    {
+      "id": 1,
+      "q": "What is the definition of postural drainage (PD)?",
+      "a": "The **positioning of a patient** with an involved lung segment so that **gravity** facilitates the drainage of broncho-pulmonary secretions from the tracheobronchial tree."
+    },
+    {
+      "id": 2,
+      "q": "What are the primary goals of postural drainage?",
+      "a": "To **prevent the accumulation** of secretions and to **remove/mobilize** retained secretions."
+    },
+    {
+      "id": 3,
+      "q": "What is the sputum production threshold indicating a need for postural drainage in adults?",
+      "a": "Difficulty clearing secretions with expectorated sputum production greater than **25-30 mL/day**."
+    },
+    {
+      "id": 4,
+      "q": "List 5 key contraindications for postural drainage.",
+      "a": "1. **Rib fracture**, 2. **Recent myocardial infarction (MI)**, 3. **Head, spinal, or neck injury**, 4. **Severe hemoptysis**, 5. **Aortic aneurysms**."
+    },
+    {
+      "id": 5,
+      "q": "What hemodynamic and pulmonary conditions contraindicate postural drainage?",
+      "a": "**Cardiac arrhythmias**, **Congestive heart failure (CHF)**, **Pulmonary embolism**, **Pulmonary edema**, **Uncontrolled hyper/hypotension**, and **acute respiratory distress syndrome (ARDS)** or **untreated pneumothorax**."
+    },
+    {
+      "id": 6,
+      "q": "Why is postural drainage generally contraindicated in patients with increased intracranial pressure (ICP)?",
+      "a": "Because the head-down positioning typically used in classical postural drainage can further **increase ICP**."
+    },
+    {
+      "id": 7,
+      "q": "What are the recommended timing windows for postural drainage relative to meals?",
+      "a": "After **2-2.5 hours** from a meal."
+    },
+    {
+      "id": 8,
+      "q": "What is the recommended frequency and duration for a total postural drainage treatment session?",
+      "a": "Total treatment time: **30-45 minutes**; Frequency: **2-4 times/day**; Each position: **5-10 minutes**."
+    },
+    {
+      "id": 9,
+      "q": "How does the time spent per position change if additional techniques (percussion/vibration) are used?",
+      "a": "The time per position is decreased to **3-5 minutes**."
+    },
+    {
+      "id": 10,
+      "q": "How do you assess the efficacy of postural drainage treatment?",
+      "a": "Via **manual chest examination** (symmetrical chest movement), **cough** (color/amount), **auscultations**, **percussion** (resonance vs. dullness), and **X-ray** (resolution of white patches)."
+    },
+    {
+      "id": 11,
+      "q": "What is the key difference between classical and modified postural drainage regarding elderly patients?",
+      "a": "Classical postural drainage is **not suitable for old ages**, while modified postural drainage is **suitable**."
+    },
+    {
+      "id": 12,
+      "q": "Why is modified postural drainage preferred over classical regarding GERD?",
+      "a": "Modified postural drainage avoids the traditional **head-down tilt**, which helps prevent issues like **gastroesophageal reflux (GERD)**."
+    },
+    {
+      "id": 13,
+      "q": "In high supine position, which lung segments are drained and where is percussion applied?",
+      "a": "Drained: **Apical and Anterior segments** of upper lobes; Percussion: **below clavicle**."
+    },
+    {
+      "id": 14,
+      "q": "For side-lying 90-degree position, on which side should the patient lie?",
+      "a": "The patient should lie on the **non-affected side**."
+    },
+    {
+      "id": 15,
+      "q": "How is 'chest percussion' physically performed?",
+      "a": "By using **cupped hands** to trap air between the chest and caregiver's hand, creating an **alternating rhythmic pattern**."
+    },
+    {
+      "id": 16,
+      "q": "During which phase of breathing are percussion and vibration applied?",
+      "a": "During both **inspiratory and expiratory phases** for percussion; **expiration** for vibration."
+    },
+    {
+      "id": 17,
+      "q": "What are 3 alternative tools for percussion in pediatric patients?",
+      "a": "The **bell end of a stethoscope**, a **rubber nipple**, or **overlapping the 3rd finger over the 2nd and 4th fingers**."
+    },
+    {
+      "id": 18,
+      "q": "What is the recommended frequency for vibration?",
+      "a": "**12-20 Hz/sec**."
+    },
+    {
+      "id": 19,
+      "q": "How does 'shaking' differ from 'vibration' in terms of frequency and amplitude?",
+      "a": "Shaking is a **slower form** (2 Hz/sec) with **larger amplitude** and **lower frequency** than vibrations."
+    },
+    {
+      "id": 20,
+      "q": "What are the common contraindications for both percussion and vibration?",
+      "a": "Fractured ribs, recent thoracic/cardiac surgery, **active hemoptysis**, metastatic bone disease, **osteoporosis**, **subcutaneous emphysema**, untreated **pneumothorax**, **bronchospasm** (acute), and **open wounds/burns** on the chest."
+    },
+    {
+      "id": 21,
+      "q": "Why should percussion be avoided over the lower ribs in patients with liver or spleen issues?",
+      "a": "Risk of **trauma to enlarged organs**."
+    },
+    {
+      "id": 22,
+      "q": "What is the sequence for treating multiple lung lobes?",
+      "a": "Start with **upper lobes**, move to **middle lobes**, and finish with **lower lobes**."
+    },
+    {
+      "id": 23,
+      "q": "What is the mechanism of action for vibration?",
+      "a": "It is generated by **isometric contractions** of the upper extremity muscles, applying pressure in the direction of **normal chest movement** (inward and upward) during expiration."
+    },
+    {
+      "id": 24,
+      "q": "What safety check is suggested for patients on anticoagulants during manual techniques?",
+      "a": "Adapt intensity if **pain > 4/10** and monitor **platelet/INR** status."
+    }
+  ]
+}

@@ -1,0 +1,230 @@
+{
+  "meta": {
+    "title": "L5 - Papulosquamous disorders ER 1",
+    "subject": "Clinical Medicine",
+    "category": "theory",
+    "mode": "comprehensive"
+  },
+  "cards": [
+    {
+      "id": 1,
+      "q": "What is the core morphologic definition of papulosquamous disorders?",
+      "a": "They are conditions defined by the presence of **erythematous papules and plaques** topped by **surface scales (squames)**."
+    },
+    {
+      "id": 2,
+      "q": "What are the two principal prototype conditions of the papulosquamous spectrum?",
+      "a": "**Psoriasis** and **Lichen Planus**."
+    },
+    {
+      "id": 3,
+      "q": "What is the clinical definition of psoriasis?",
+      "a": "A **chronic, non-infectious, scaly, erythematous** skin disease."
+    },
+    {
+      "id": 4,
+      "q": "What is the prevalence of psoriasis in the general population?",
+      "a": "Approximately **1-2%**."
+    },
+    {
+      "id": 5,
+      "q": "In which season does psoriasis typically show exacerbations?",
+      "a": "In the **colder winter months**."
+    },
+    {
+      "id": 6,
+      "q": "List the components of Metabolic Syndrome often associated with psoriasis.",
+      "a": "**Visceral Obesity**, **Insulin Resistance**, **Hypertension**, **High Triglycerides**, and **Low HDL-Cholesterol**."
+    },
+    {
+      "id": 7,
+      "q": "What systemic surveillance protocol is mandatory for psoriatic patients?",
+      "a": "Lifelong periodic screening for **hypertension**, **diabetes mellitus**, and complete **fasting lipid profiles**."
+    },
+    {
+      "id": 8,
+      "q": "What is the fundamental cellular defect in psoriasis?",
+      "a": "Accelerated mitotic division (**hyperproliferation**) in the **basal cell layer**."
+    },
+    {
+      "id": 9,
+      "q": "How much does the epidermal turnover time decrease in psoriasis?",
+      "a": "From the normal **28 days** down to **7 days**."
+    },
+    {
+      "id": 10,
+      "q": "Which immune cells are responsible for the immunologic cascade driving psoriatic proliferation?",
+      "a": "Activated **CD4+** and **CD8+ T-lymphocytes**."
+    },
+    {
+      "id": 11,
+      "q": "What role does ultraviolet (UV) radiation play in psoriasis?",
+      "a": "UV radiation induces **immunosuppression** of epidermal T-cells; lack of exposure (e.g., winter) precipitates flares."
+    },
+    {
+      "id": 12,
+      "q": "Which infection is specifically linked to the initiation of guttate psoriasis?",
+      "a": "**Hemolytic Streptococcal infection** (often 1-3 weeks prior to eruption)."
+    },
+    {
+      "id": 13,
+      "q": "Which classes of drugs are known to exacerbate or trigger psoriasis?",
+      "a": "**Antihypertensives** (beta-blockers, Ca channel blockers, ACE inhibitors), **NSAIDs**, and **anti-malarial drugs**."
+    },
+    {
+      "id": 14,
+      "q": "Define the Koebner phenomenon (isomorphic response).",
+      "a": "The development of psoriatic plaques on **previously uninvolved skin** following **trauma** (e.g., friction, incisions, excoriation)."
+    },
+    {
+      "id": 15,
+      "q": "What is the Auspitz sign?",
+      "a": "The appearance of **pinpoint bleeding spots** upon mechanical removal (scraping) of psoriatic scales due to the unroofing of dilated dermal capillaries."
+    },
+    {
+      "id": 16,
+      "q": "How does the Auspitz sign differ from the Carpet-tack sign?",
+      "a": "Auspitz sign is related to **psoriasis**; Carpet-tack sign is related to **follicular plugging** in **Discoid Lupus Erythematosus**."
+    },
+    {
+      "id": 17,
+      "q": "What are the typical clinical features of Psoriasis Vulgaris?",
+      "a": "**Bilateral and symmetrical** scaly erythematous plaques, typically on **extensor surfaces** (elbows, knees), scalp, and lumbosacral area."
+    },
+    {
+      "id": 18,
+      "q": "List four common nail findings in psoriasis.",
+      "a": "**Pitting**, **subungual hyperkeratosis**, **ridges**, and **onycholysis**."
+    },
+    {
+      "id": 19,
+      "q": "What is the clinical significance of nail psoriasis?",
+      "a": "It carries a very strong association with **psoriatic arthritis**; joint screening is mandatory."
+    },
+    {
+      "id": 20,
+      "q": "Why is flexural (inverse) psoriasis often misdiagnosed?",
+      "a": "Because scaling is reduced or absent due to moisture/friction, leading it to be mistaken for **Candidiasis**, **tinea cruris**, or **bacterial intertrigo**."
+    },
+    {
+      "id": 21,
+      "q": "What characterizes guttate psoriasis?",
+      "a": "Abrupt, **2-5 mm** droplet-like scaly papules, typically following **streptococcal infection**."
+    },
+    {
+      "id": 22,
+      "q": "What percentage of body surface area defines erythrodermic psoriasis?",
+      "a": "More than **90%** of the body surface area."
+    },
+    {
+      "id": 23,
+      "q": "Why is erythrodermic psoriasis considered a medical emergency?",
+      "a": "Risk of **hypothermia**, **electrolyte imbalance**, **hypoalbuminemia**, **high-output cardiac failure**, and **sepsis**."
+    },
+    {
+      "id": 24,
+      "q": "What is the histopathologic basis of pustular psoriasis?",
+      "a": "**Sterile intraepidermal** collections of neutrophils (spongiform pustules of Kogoj)."
+    },
+    {
+      "id": 25,
+      "q": "What is a well-known iatrogenic trigger for acute generalized pustular psoriasis?",
+      "a": "Abrupt withdrawal or systemic administration of **corticosteroids**."
+    },
+    {
+      "id": 26,
+      "q": "What is the most common joint involvement in psoriatic arthritis?",
+      "a": "**Distal interphalangeal (DIP) joints**."
+    },
+    {
+      "id": 27,
+      "q": "What is the concern with Coal Tar use in psoriasis?",
+      "a": "Pungent malodor, irritant potential, **black staining**, and it should not be used on face, genitalia, flexures, or in pustular psoriasis."
+    },
+    {
+      "id": 28,
+      "q": "What is the risk of prolonged continuous topical corticosteroid use for psoriasis?",
+      "a": "Triggering **severe rebound flares** or conversion to **acute generalized pustular psoriasis**."
+    },
+    {
+      "id": 29,
+      "q": "What is the mechanism of action of Salicylic acid 5% in psoriasis?",
+      "a": "It acts as a **keratolytic agent** by dissolving intercellular desmosomes to facilitate penetration of other topicals."
+    },
+    {
+      "id": 30,
+      "q": "How does Calcipotriol work?",
+      "a": "It is a **Vitamin D3 analogue** that binds the VDR to halt basal hyperproliferation, induce differentiation, and suppress pro-inflammatory T-cell cytokines."
+    },
+    {
+      "id": 31,
+      "q": "What is the dose and administration rule for Methotrexate in psoriasis?",
+      "a": "**0.2-0.4 mg/kg/week**, administered as a **single weekly dose** (never daily)."
+    },
+    {
+      "id": 32,
+      "q": "What are the major side effects and monitoring requirements for Methotrexate?",
+      "a": "Side effects: **liver/bone marrow toxicity**, **teratogenicity**. Monitoring: **CBC** and **LFTs** monthly."
+    },
+    {
+      "id": 33,
+      "q": "What is the strict timeline for avoiding pregnancy with Acitretin (Retinoids)?",
+      "a": "Pregnancy must be avoided during and for **3 years after** the end of treatment."
+    },
+    {
+      "id": 35,
+      "q": "What is the 'Classic 6 Ps' mnemonic for Lichen Planus?",
+      "a": "**Pruritic**, **Polygonal**, **Planar**, **Purple**, **Polished**, **Papules/Plaques**."
+    },
+    {
+      "id": 36,
+      "q": "What specific viral infection is associated with Lichen Planus?",
+      "a": "**Hepatitis C Virus (HCV)**."
+    },
+    {
+      "id": 37,
+      "q": "What are Wickham striae?",
+      "a": "Reticulate white streaks forming a network, characteristic of **mucosal lichen planus**."
+    },
+    {
+      "id": 38,
+      "q": "What is the characteristic feature of Actinic Lichen Planus?",
+      "a": "Occurs on **sun-exposed areas**, flares in **summer** and remits in **winter** (opposite of psoriasis)."
+    },
+    {
+      "id": 39,
+      "q": "What is the diagnostic significance of Pterygium Unguis in Lichen Planus?",
+      "a": "It is **virtually pathognomonic**; involves fusion of the proximal nail fold with the nail bed, resulting in permanent nail loss."
+    },
+    {
+      "id": 40,
+      "q": "What is the clinical presentation of Pityriasis Rosea?",
+      "a": "Starts with a single **Herald patch**, followed by multiple crops of oval scaly lesions on the trunk/proximal limbs in a **Christmas tree pattern**."
+    },
+    {
+      "id": 41,
+      "q": "Which viruses are linked to the etiology of Pityriasis Rosea?",
+      "a": "**HHV-6** and **HHV-7**."
+    },
+    {
+      "id": 42,
+      "q": "What is the expected resolution time for Pityriasis Rosea?",
+      "a": "Spontaneous healing within **4-8 weeks**."
+    },
+    {
+      "id": 43,
+      "q": "How does the distribution of Pityriasis Rosea compare to psoriasis and lichen planus?",
+      "a": "Pityriasis Rosea follows **Langer's cleavage lines** (Christmas tree pattern) on the trunk/proximal limbs; Psoriasis prefers **extensors**; Lichen Planus prefers **flexors**."
+    },
+    {
+      "id": 44,
+      "q": "Which condition is characterized by pigmentary incontinence and slate-gray to dark-brown macular stains?",
+      "a": "**Lichen Planus**."
+    },
+    {
+      "id": 45,
+      "q": "What is the primary treatment for localized Lichen Planus?",
+      "a": "**High-potency topical corticosteroids**."
+    }
+  ]
+}

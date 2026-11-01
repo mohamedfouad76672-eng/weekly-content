@@ -1,0 +1,245 @@
+{
+  "meta": {
+    "title": "L6 - Cesarean Section",
+    "subject": "الطب السريري",
+    "category": "theory",
+    "mode": "comprehensive"
+  },
+  "cards": [
+    {
+      "id": 1,
+      "q": "What is the precise medical definition of a Cesarean Section (C.S)?",
+      "a": "The delivery of a viable or non-viable fetus through intentional surgical incisions made in both the **anterior abdominal wall** and the **uterine wall**."
+    },
+    {
+      "id": 2,
+      "q": "What is the 'Dual-Incision Principle' in Cesarean Section surgery?",
+      "a": "It emphasizes that delivery requires cutting through two distinct muscular/fascial barriers: first the **anterior abdominal wall**, followed by reflection/displacement of the **urinary bladder**, and then entering through the **uterine wall**."
+    },
+    {
+      "id": 3,
+      "q": "What anatomical roadmap sequence can be used to remember maternal indications for C.S from exterior to interior?",
+      "a": "**Pelvis** → **Uterus** → **Cervix** → **Vagina** → **Intrauterine contents (Placenta & Cord)** → **General Maternal Systemic Diseases**."
+    },
+    {
+      "id": 4,
+      "q": "How is an extreme degree of contracted pelvis defined, and why is it an absolute indication for C.S?",
+      "a": "Defined as a true conjugate (anatomical anteroposterior diameter) **< 6 cm** (normal is **11 cm**). It is an absolute indication regardless of fetal viability (**living or dead**) because a fetal head cannot traverse a **< 6 cm** canal."
+    },
+    {
+      "id": 5,
+      "q": "What is Cephalo-Pelvic Disproportion (CPD)?",
+      "a": "Also called fetopelvic disproportion, it is a structural mismatch where the **fetal head is too large** to engage and navigate the maternal pelvis, frequently encountered with **macrosomic babies**."
+    },
+    {
+      "id": 6,
+      "q": "What defines uterine inertia as a maternal indication for C.S?",
+      "a": "Inefficient uterine contractions lacking adequate **frequency, intensity, or duration** to effect cervical change, resulting in prolonged labor **> 24 hours**."
+    },
+    {
+      "id": 7,
+      "q": "What is the pathophysiological mechanism behind cervical dystocia?",
+      "a": "It is caused by the failure or reversal of the **Phenomenon of Polarity**. Instead of the upper segment contracting actively while the lower segment relaxes passively, the **lower segment contracts actively** or contractility becomes incoordinated, pushing the fetus cephalad."
+    },
+    {
+      "id": 8,
+      "q": "Why does invasive cervical carcinoma mandate a Cesarean Section?",
+      "a": "1. Cervix is **hard and rigid**, preventing dilation.\n2. Extreme vascularity risks **catastrophic hemorrhage** and emergent hysterectomy upon dilation.\n3. Direct passage risks **shedding cancer cells** and seeding episiotomy/perineal lacerations.\n4. Allows a combined **cesarean hysterectomy/tumor resection** in one operative setting."
+    },
+    {
+      "id": 9,
+      "q": "Why does vaginal scarring require a Cesarean Section?",
+      "a": "Inelastic fibrosis resulting from prior gynecological repairs (e.g., **vesicovaginal fistula** or **rectovaginal fistula**) creates a high risk of **severe scar rupture** and extensive tissue avulsion during vaginal delivery."
+    },
+    {
+      "id": 10,
+      "q": "What is Placenta Previa and why does it mandate Elective C.S?",
+      "a": "Low implantation of the placenta in the lower uterine segment covering the **internal os**. Effacement/dilation in the 1st stage causes **severe placental detachment** and **massive hemorrhage** prior to fetal delivery."
+    },
+    {
+      "id": 11,
+      "q": "What is Placental Abruption (Abruptio Placentae) and when is immediate C.S indicated?",
+      "a": "Premature detachment of a normally situated placenta from the endometrium. Immediate C.S is required if vaginal delivery is not expected within **2 hours**."
+    },
+    {
+      "id": 12,
+      "q": "What is the mechanical hazard of Umbilical Cord Prolapse?",
+      "a": "The cord descends below the presenting part, causing direct **arterial/venous compression** ('pinched hose'), which leads to **acute fetal hypoxia** and rapid death."
+    },
+    {
+      "id": 13,
+      "q": "Why does pre-eclampsia warrant delivery via C.S?",
+      "a": "Pre-eclampsia features **hypertension, proteinuria, and generalized edema**. Maternal bearing-down forces cause marked **peripheral vasoconstriction**, risking sudden escalation into eclampsia."
+    },
+    {
+      "id": 14,
+      "q": "Why and when is Elective C.S scheduled in pregnant patients with Diabetes Mellitus?",
+      "a": "Maternal hyperglycemia causes **fetal hyperinsulinemia** and excessive fat deposition (**macrosomia**). Placental insufficiency manifests by week 37; elective C.S is scheduled at **37–38 weeks**."
+    },
+    {
+      "id": 15,
+      "q": "Why is bearing down dangerous in pregnant women with severe cardiac disease?",
+      "a": "Bearing down dramatically increases **cardiac output**, **stroke volume**, and **myocardial load**, which can induce acute decompensation or fatal arrhythmia."
+    },
+    {
+      "id": 16,
+      "q": "What is the time window for performing a post-mortem emergency Cesarean Section?",
+      "a": "Emergency perimortem C.S must be achieved within **10 minutes** of maternal cardiac arrest/death to preserve fetal life."
+    },
+    {
+      "id": 17,
+      "q": "What is the normal fetal position and presentation versus abnormal deviations?",
+      "a": "Normal Position: **Left Occipito-Anterior (LOA)**. (Deviations like ROP, LOP cause malposition).\nNormal Presentation: **Vertex** (fully flexed head). (Extension leads to face/brow; abnormal axes lead to breech/shoulder)."
+    },
+    {
+      "id": 18,
+      "q": "What fetal heart rate (FHR) parameters signal Fetal Distress Syndrome?",
+      "a": "Normal baseline FHR is **120–140 bpm**. Distress is signaled by FHR **< 100 bpm**, **> 160 bpm**, severe irregularity, or delayed recovery following contractions."
+    },
+    {
+      "id": 19,
+      "q": "What is the absolute primary contraindication to Cesarean Section, and what is its main exception?",
+      "a": "Primary Contraindication: A **Dead Fetus**.\nCritical Exception: An **Extreme Degree of Contracted Pelvis (true conjugate < 6 cm)** mandates C.S even if the fetus is dead because vaginal or destructive delivery is anatomically impossible."
+    },
+    {
+      "id": 20,
+      "q": "Compare the timing and infection risk between Elective C.S and Selective (Emergency) C.S.",
+      "a": "Elective C.S: Executed before labor onset (scheduled **37–39 weeks** or **1 week before EDD**); has the **lowest infection rate**.\nSelective C.S: Performed at or immediately after labor onset due to intrapartum emergencies; carries a **higher maternal infection risk**."
+    },
+    {
+      "id": 21,
+      "q": "Compare the prevalence and incision type of Upper Segment (Classical) vs. Lower Segment (LSCS) Cesarean Section.",
+      "a": "Classical C.S: Prevalence **4%**; **Vertical (longitudinal) incision** in upper segment.\nLSCS: Prevalence **95%** (dominant type); **Transverse incision** in lower segment."
+    },
+    {
+      "id": 22,
+      "q": "Compare the surgical technique, blood loss, and uterine rupture risk between Classical C.S and LSCS.",
+      "a": "Classical C.S: Less surgical skill/time required; **more blood loss** (thick/vascular myometrium); **high rupture risk (~2%)** in subsequent labor.\nLSCS: More skill/time required (bladder reflection); **less blood loss** (thin segment); **low rupture risk (~0.2%)**."
+    },
+    {
+      "id": 23,
+      "q": "What are the specific postoperative complications associated with Classical C.S versus LSCS?",
+      "a": "Classical C.S: More liable to **chest infections/pulmonary complications** (incision close to diaphragm) and extensive peritoneal adhesions.\nLSCS: Fewer chest complications and less pain, but increased risk of **urinary bladder injury** during dissection."
+    },
+    {
+      "id": 24,
+      "q": "What are the main indications for performing an Upper Segment (Classical) C.S?",
+      "a": "1. Pathology/access issues in lower segment (e.g., **anterior placenta previa**, extensive adhesions, fibroids, **invasive cervical cancer**).\n2. Constricted lower segment (e.g., **transverse lie**, impacted breech).\n3. Ultra-rapid delivery needed (**acute fetal distress**, post-mortem **< 10 min**, **uterine constriction ring**)."
+    },
+    {
+      "id": 25,
+      "q": "What defines a Cesarean Hysterectomy and what is its prevalence?",
+      "a": "Accounts for **1%** of all C.S procedures. Defined as performing a cesarean delivery followed immediately by **total or subtotal excision of the uterus**."
+    },
+    {
+      "id": 26,
+      "q": "What are the indications for a Cesarean Hysterectomy?",
+      "a": "1. **Uncontrolled uterine bleeding** (intractable PPH resistant to tonics).\n2. **Morbidly Adherent Placenta** (Accreta, Increta, Percreta).\n3. **Multiple large uterine fibroids** in women who have completed childbearing."
+    },
+    {
+      "id": 27,
+      "q": "Differentiate between Placenta Accreta, Placenta Increta, and Placenta Percreta.",
+      "a": "Placenta Accreta: Chorionic villi invade **superficial endometrium**.\nPlacenta Increta: Chorionic villi deeply penetrate **myometrium**.\nPlacenta Percreta: Chorionic villi breach **perimetrium** and invade adjacent organs (**urinary bladder**)."
+    },
+    {
+      "id": 28,
+      "q": "How does Virchow's Triad explain the increased risk of DVT following a Cesarean Section?",
+      "a": "1. Stasis: **IVC compression** by gravid uterus + progesterone/relaxin-induced **venous hypotonia**.\n2. Hypercoagulability: Upregulation of **clotting factors** during pregnancy.\n3. Immobilization: Post-op bed rest halts the **calf muscle pump**."
+    },
+    {
+      "id": 29,
+      "q": "What components are included in Pre-Operative Physical Therapy management for elective C.S?",
+      "a": "1. **Emotional preparation** (reassurance, building rapport).\n2. **Pulmonary function**: Deep breathing, **coughing/huffing with pillow splinting**.\n3. **Circulation**: Active ankle pumps, leg exercises, early ambulation education.\n4. **Bed mobility training**: Rising safely via side-lying."
+    },
+    {
+      "id": 30,
+      "q": "Describe the correct physical therapy bed mobility technique for rising post-C.S.",
+      "a": "Transition from supine to **side-lying with abdominal brace**, flex hips/knees, **swing legs off bed** while pushing up via forearm and hands, pause sitting with **feet flat on floor** for circulatory adjustment before standing."
+    },
+    {
+      "id": 31,
+      "q": "What are the core aims of Post-Operative Physical Therapy after C.S?",
+      "a": "Improve **respiratory function**, prevent DVT, prevent **pelvic floor dysfunction**, correct posture, strengthen abdominals (**prevent diastasis recti**), improve **lactation/prevent breast sagging** via pectoral activation, decrease pain, and promote **wound healing**."
+    },
+    {
+      "id": 32,
+      "q": "What exercises are introduced on Post-Op Day 1 following C.S?",
+      "a": "**Circulatory exercises**, **Respiratory exercises**, **Static abdominal contraction** (transversus abdominis isometric), and **Leg exercises** (replaces prone relaxation used in vaginal delivery)."
+    },
+    {
+      "id": 33,
+      "q": "What exercises are added on Post-Op Day 2, and what is their clinical rationale?",
+      "a": "Added: **Early ambulation** (stimulates peristalsis, prevents DVT) and **Arm exercises** (stimulates **pectoral muscle perfusion**, boosting mammary blood supply for lactation and preventing breast sagging)."
+    },
+    {
+      "id": 34,
+      "q": "When are Pelvic Floor Exercises (Kegels) introduced post-C.S, and why is this timing selected?",
+      "a": "Introduced on **Day 3** (delayed compared to Day 2 in vaginal delivery due to **surgical abdominal pain**). Re-educates levator ani to prevent **stress incontinence** and prolapse."
+    },
+    {
+      "id": 35,
+      "q": "What exercise is added on Post-Op Day 4 and how should it be executed?",
+      "a": "**Pelvic rocking exercises**. Start primarily with a **posterior pelvic tilt** to avoid stretching the fresh anterior abdominal incision while relieving low back ache."
+    },
+    {
+      "id": 36,
+      "q": "What exercises are added on Post-Op Day 5 and Day 6?",
+      "a": "Day 5: **Postural correction exercises** and **Hip shrugging exercises** (initiates lateral pelvic flexion / 1st lateral abdominal activation).\nDay 6: **Pelvic rotation exercises** (recruits internal and external obliques)."
+    },
+    {
+      "id": 37,
+      "q": "What trunk movements are introduced on Post-Op Day 7?",
+      "a": "First step of **trunk rotation**, **trunk flexion**, and **trunk lateral flexion** (initiating tri-planar mobilization in protected positions)."
+    },
+    {
+      "id": 38,
+      "q": "Contrast theoretical curriculum timing for post-C.S ambulation with best modern clinical ward practice.",
+      "a": "Theoretical curriculum states ambulation begins on **Day 2**. Modern clinical ward practice mobilizes the patient within **2 hours postoperatively on Day 1** with wound support and early catheter removal."
+    },
+    {
+      "id": 39,
+      "q": "What is the application regimen and mechanism of Cryotherapy (Ice) for post-C.S pain?",
+      "a": "Applied to painful site for **10–15 minutes every 8 hours for 72 hours** (3 times/day for 3 days). Slows nerve conduction velocity of **Aδ and C fibers**, causes local vasoconstriction, and reduces edema."
+    },
+    {
+      "id": 40,
+      "q": "Where are TENS electrodes placed post-C.S, and what two pain mechanisms are involved?",
+      "a": "Placed **paraincisionally** (parallel along both margins of the wound). Works via **Gate Control Theory** (Aβ nerve fiber stimulation) and **Endogenous Opiate Theory** (endorphin/enkephalin release)."
+    },
+    {
+      "id": 41,
+      "q": "What is the high-yield TENS Dual-Mode Frequency Protocol for post-C.S pain?",
+      "a": "During Pain Spikes/Contractions: **120 Hz** (continuous high-frequency mode, pulse width **200 μs**) for presynaptic pain gating.\nBetween Episodes (Baseline): **2 Hz** (burst low-frequency mode) for endogenous opioid release."
+    },
+    {
+      "id": 42,
+      "q": "What are the specific dosage, distance, wavelength, and preparation parameters for Low-Level Laser Therapy (LLLT) on C.S wounds?",
+      "a": "Prep: Sterile measurement tape adhered **2 cm above incision**, divided into **1 cm** increments.\nDosage: **90 seconds/cm²**.\nDistance: **2 mm** from skin.\nWavelength: **904 nm** (infrared GaAs).\nSchedule: Starts **24 hours post-op**, then **every other day**."
+    },
+    {
+      "id": 43,
+      "q": "What are the main biological mechanisms of LLLT in C.S wound healing?",
+      "a": "Enhances **cellular DNA & RNA synthesis** (protein synthesis), accelerates inflammatory phase, boosts **fibroblast proliferation**, increases immunoglobulins (**IgA and IgG**), and elevates the **phagocytic index** for bactericidal effects."
+    },
+    {
+      "id": 44,
+      "q": "What parameters and modes are used for Ultrasound (US) in post-C.S wound healing?",
+      "a": "Intensity: **1 – 2 W/cm²** for **10 – 15 minutes daily**.\nModes: Initial **Pulsed mode** (non-thermal micro-massage effect for tissue repair) followed by **Continuous mode** (thermal vasodilation recruiting WBCs for debris phagocytosis)."
+    },
+    {
+      "id": 45,
+      "q": "What are the indications and mechanisms of High Voltage Current Stimulation (HVCS) in C.S wound management?",
+      "a": "Indicated for **infected wounds**. Electrodes placed on lateral margins separated by **~1 cm**. Enhances microcirculation via **reflex vasodilation**, promotes cellular migration, and exerts an **electrical bactericidal effect**."
+    },
+    {
+      "id": 46,
+      "q": "What is Paralytic Ileus, what causes it post-C.S, and why is oral feeding contraindicated initially?",
+      "a": "Paralysis of intestinal peristalsis causing **absent bowel sounds, failure to pass flatus/stool, and abdominal distension**. Caused by **general anesthesia** and intra-abdominal manipulation. Early oral feeding risks **bowel necrosis or gangrene**; patient remains **NPO** until flatus is passed."
+    },
+    {
+      "id": 47,
+      "q": "What physical therapy interventions and adjunctive measures help restore bowel motility in paralytic ileus?",
+      "a": "1. **Static Abdominal Contractions** starting Day 1 (intra-abdominal pressure changes stimulate visceral autonomic plexuses).\n2. **Early Ambulation** (activates core muscles and gravity).\n3. **Sham feeding** (gum chewing stimulates vagal cephalic reflexes)."
+    }
+  ]
+}

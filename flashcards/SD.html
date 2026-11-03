@@ -1,0 +1,914 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f7f6f3">
+<title>Dermatology · Exam Review</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f7f6f3; --card:#ffffff; --fg:#22262e; --mut:#6d737d;
+  --line:#e4e2db; --line2:#c9c6bc;
+  --acc:#0e7569; --ink:#23272f; --btnfg:#ffffff;
+  --ok:#217a3c; --no:#bb3646; --warn:#b45309;
+  --shadow:0 1px 2px rgba(22,24,28,.05),0 14px 36px -24px rgba(22,24,28,.28);
+  --serif:'Source Serif 4',Georgia,'Times New Roman',serif;
+  --sans:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',sans-serif;
+}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#13161b; --card:#1a1e25; --fg:#e7e9ec; --mut:#98a0ab;
+  --line:#2a3038; --line2:#414955;
+  --acc:#3fc1a8; --ink:#e7e9ec; --btnfg:#16191e;
+  --ok:#4cc276; --no:#e5697a; --warn:#d99a3d;
+  --shadow:0 1px 2px rgba(0,0,0,.45),0 16px 40px -24px rgba(0,0,0,.7);
+}}
+:root[data-theme="dark"]{
+  --bg:#13161b; --card:#1a1e25; --fg:#e7e9ec; --mut:#98a0ab;
+  --line:#2a3038; --line2:#414955;
+  --acc:#3fc1a8; --ink:#e7e9ec; --btnfg:#16191e;
+  --ok:#4cc276; --no:#e5697a; --warn:#d99a3d;
+  --shadow:0 1px 2px rgba(0,0,0,.45),0 16px 40px -24px rgba(0,0,0,.7);
+}
+*{box-sizing:border-box}
+html{background:var(--bg);-webkit-text-size-adjust:100%}
+body{margin:0;color:var(--fg);font:16px/1.6 var(--sans);min-height:100vh;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px);-webkit-font-smoothing:antialiased}
+::selection{background:color-mix(in srgb,var(--acc) 24%,transparent)}
+#app{max-width:680px;margin:0 auto;padding:42px 20px 90px;position:relative}
+h1,h2,p{margin:0}
+button{font:inherit;color:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:2px solid var(--acc);outline-offset:2px;border-radius:6px}
+.mut{color:var(--mut)}
+.kicker{font-size:.72rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--acc)}
+.hero{font-family:var(--serif);font-size:clamp(1.9rem,5vw,2.4rem);font-weight:700;letter-spacing:-.015em;line-height:1.12;margin:8px 0 10px}
+.hero em{font-style:italic;color:var(--acc)}
+.lead{color:var(--mut);font-size:.98rem;max-width:52ch}
+.center{text-align:center}
+.topbar{position:fixed;top:14px;right:16px;display:flex;gap:8px;z-index:60}
+.icoB{width:34px;height:34px;border-radius:9px;border:1px solid var(--line);background:color-mix(in srgb,var(--card) 88%,transparent);backdrop-filter:blur(8px);display:grid;place-items:center;color:var(--mut);transition:border-color .15s,color .15s;box-shadow:0 1px 2px rgba(0,0,0,.05)}
+.icoB:hover{border-color:var(--line2);color:var(--fg)}
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:24px 0 2px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:13px 10px 11px;text-align:center}
+.tile b{display:block;font-family:var(--serif);font-size:1.45rem;font-weight:600;letter-spacing:-.01em;line-height:1.2}
+.tile span{color:var(--mut);font-size:.68rem;font-weight:600;text-transform:uppercase;letter-spacing:.09em}
+.h{font-size:.95rem;font-weight:600;margin:28px 0 10px;display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.acts{display:flex;gap:10px}
+.acts button{background:none;border:0;padding:2px 2px;font-size:.78rem;font-weight:500;color:var(--mut);transition:color .15s}
+.acts button:hover{color:var(--fg);text-decoration:underline;text-underline-offset:3px}
+.chips{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:8px}
+.chip{display:flex;justify-content:space-between;align-items:center;gap:8px;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:11px 13px;font-size:.9rem;font-weight:500;text-align:left;transition:border-color .15s,background .15s}
+.chip:hover{border-color:var(--line2)}
+.chip:active{transform:scale(.99)}
+.chip .cnt{color:var(--mut);font-weight:600;font-size:.75rem;background:color-mix(in srgb,var(--fg) 6%,transparent);border-radius:999px;padding:2px 9px;flex:none;font-variant-numeric:tabular-nums}
+.chip.on{border-color:color-mix(in srgb,var(--acc) 55%,transparent);background:color-mix(in srgb,var(--acc) 6%,var(--card))}
+.chip.on .cnt{background:color-mix(in srgb,var(--acc) 15%,var(--card));color:var(--acc)}
+.chip.focus{border-color:color-mix(in srgb,var(--warn) 42%,transparent);background:color-mix(in srgb,var(--warn) 6%,var(--card))}
+.chip.focus .cnt{background:color-mix(in srgb,var(--warn) 16%,var(--card));color:var(--warn)}
+.pillrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.pill{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:7px 15px;font-size:.83rem;font-weight:500;color:var(--mut);transition:border-color .15s,color .15s,background .15s}
+.pill:hover{border-color:var(--line2);color:var(--fg)}
+.pill.on{border-color:color-mix(in srgb,var(--acc) 55%,transparent);background:color-mix(in srgb,var(--acc) 6%,var(--card));color:var(--acc)}
+.tgl{position:relative;display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 2px;border-bottom:1px solid var(--line);cursor:pointer;font-size:.93rem}
+.tgl:last-of-type{border-bottom:0}
+.tgl em{color:var(--mut);font-style:normal;font-size:.8rem}
+.tgl input{position:absolute;opacity:0;pointer-events:none}
+.sw{position:relative;flex:none;width:40px;height:22px;border-radius:999px;background:var(--line);transition:background .2s}
+.sw::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:left .2s cubic-bezier(.22,1,.36,1)}
+.tgl input:checked~.sw{background:var(--acc)}
+.tgl input:checked~.sw::after{left:21px}
+.tgl input:focus-visible~.sw{outline:2px solid var(--acc);outline-offset:2px}
+.pri{background:var(--ink);color:var(--btnfg);border:0;border-radius:10px;padding:12px 22px;font-size:.95rem;font-weight:600;letter-spacing:.005em;transition:background .15s,transform .1s}
+.pri:hover{background:color-mix(in srgb,var(--ink) 86%,#000)}
+.pri:active{transform:scale(.985)}
+.pri:disabled{opacity:.65;cursor:default;transform:none}
+.pri svg{vertical-align:-3px;margin-left:3px}
+.sec{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:11px 20px;font-size:.95rem;font-weight:500;transition:border-color .15s,transform .1s}
+.sec:hover{border-color:var(--line2)}
+.sec:active{transform:scale(.985)}
+.mini{border:1px solid var(--line);background:var(--card);border-radius:9px;padding:7px 14px;font-size:.84rem;font-weight:500;transition:border-color .15s}
+.mini:hover{border-color:var(--line2)}
+.mini.on{border-color:color-mix(in srgb,var(--ok) 50%,transparent);color:var(--ok);background:color-mix(in srgb,var(--ok) 6%,var(--card))}
+.cta{display:flex;gap:10px;margin-top:24px;flex-wrap:wrap}
+.cta .pri{flex:1;min-width:190px}
+.inp{width:100%;background:var(--card);border:1px solid var(--line);border-radius:11px;padding:11px 14px;font:400 .95rem/1.5 var(--sans);color:inherit;transition:border-color .15s,box-shadow .15s}
+.inp::placeholder{color:var(--mut);opacity:.75}
+.inp:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 3px color-mix(in srgb,var(--acc) 16%,transparent)}
+.prog{height:4px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:16px}
+.prog i{display:block;height:100%;background:var(--acc);border-radius:99px;transition:width .35s cubic-bezier(.22,1,.36,1)}
+.statrow{display:flex;justify-content:space-between;align-items:center;gap:10px;color:var(--mut);font-size:.86rem;margin:0 0 10px;flex-wrap:wrap}
+.statrow b{color:var(--fg);font-weight:600;font-variant-numeric:tabular-nums}
+.rt{display:flex;gap:6px;align-items:center;flex-wrap:wrap}
+.run{color:var(--acc);font-weight:600;font-size:.84rem;animation:fade .25s both}
+.flagbtn{display:inline-flex;align-items:center;gap:6px;background:none;border:0;color:var(--mut);padding:4px 8px;border-radius:8px;font-size:.84rem;font-weight:500;transition:color .15s,background .15s;font-variant-numeric:tabular-nums}
+.flagbtn:hover{color:var(--fg);background:color-mix(in srgb,var(--fg) 5%,transparent)}
+.flagbtn.on{color:var(--warn)}
+.flagbtn.on svg .banner{fill:currentColor}
+.navstrip{display:flex;flex-wrap:wrap;gap:5px;margin:0 0 14px;padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--card);animation:fade .2s both}
+.navstrip[hidden]{display:none}
+.ndot{width:27px;height:27px;border-radius:8px;border:1px solid var(--line);background:var(--card);font-size:.72rem;font-weight:600;color:var(--mut);display:grid;place-items:center;transition:border-color .15s,color .15s,background .15s;font-variant-numeric:tabular-nums}
+.ndot:hover{border-color:var(--line2);color:var(--fg)}
+.ndot.ok{background:color-mix(in srgb,var(--ok) 12%,var(--card));border-color:color-mix(in srgb,var(--ok) 45%,transparent);color:var(--ok)}
+.ndot.no{background:color-mix(in srgb,var(--no) 12%,var(--card));border-color:color-mix(in srgb,var(--no) 45%,transparent);color:var(--no)}
+.ndot.cur{outline:2px solid var(--acc);outline-offset:1px;border-color:var(--acc);color:var(--fg)}
+.tmr{display:inline-flex;align-items:center;gap:5px;font-weight:600;font-variant-numeric:tabular-nums}
+.tmr[hidden]{display:none}
+.tmr .bg{fill:none;stroke:var(--line);stroke-width:2.6}
+.tmr .fg{fill:none;stroke:var(--acc);stroke-width:2.6;stroke-linecap:round;transition:stroke-dashoffset .25s linear,stroke .3s}
+.tmr.warn .fg{stroke:var(--warn)}
+.tmr.danger .fg{stroke:var(--no)}
+.tmr.danger b{color:var(--no)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:26px 26px 22px;animation:cardIn .3s cubic-bezier(.2,.8,.3,1) both}
+.card.out{animation:cardOut .16s ease-in both;pointer-events:none}
+.qtype{font-size:.68rem;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--acc);margin:0 0 10px}
+h2.q{font-family:var(--serif);font-size:1.22rem;line-height:1.5;font-weight:600;margin:0 0 18px}
+.opts{display:grid;gap:8px}
+.opt{display:flex;align-items:center;gap:12px;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:11px;padding:13px 15px;font-size:.95rem;transition:border-color .15s,background .15s,opacity .25s;animation:optIn .3s ease both}
+.opt:not(:disabled):hover{border-color:color-mix(in srgb,var(--acc) 55%,transparent);background:color-mix(in srgb,var(--acc) 4%,var(--card))}
+.opt:not(:disabled):active{transform:scale(.995)}
+.opt:disabled{cursor:default}
+.opt .key{flex:none;width:26px;height:26px;border-radius:7px;border:1px solid var(--line);display:grid;place-items:center;font-size:.76rem;font-weight:600;color:var(--mut);transition:background .15s,color .15s,border-color .15s}
+.opt:not(:disabled):hover .key{border-color:color-mix(in srgb,var(--acc) 55%,transparent);color:var(--acc)}
+.opt.dim{opacity:.42}
+.opt.ok{border-color:color-mix(in srgb,var(--ok) 55%,transparent);background:color-mix(in srgb,var(--ok) 7%,var(--card))}
+.opt.ok .key{background:var(--ok);border-color:var(--ok);color:#fff}
+.opt.no{border-color:color-mix(in srgb,var(--no) 55%,transparent);background:color-mix(in srgb,var(--no) 6%,var(--card));animation:shake .3s}
+.opt.no .key{background:var(--no);border-color:var(--no);color:#fff}
+.mk{margin-left:auto;flex:none;display:grid;place-items:center}
+.mk.ok{color:var(--ok)}.mk.no{color:var(--no)}
+.mk svg path{stroke-dasharray:34;stroke-dashoffset:34;animation:draw .32s .06s forwards}
+.fb{margin-top:16px;border-radius:12px;border:1px solid var(--line);border-left-width:3px;padding:15px 17px;animation:fadeUp .25s both}
+.fb.ok{background:color-mix(in srgb,var(--ok) 6%,var(--card));border-left-color:var(--ok)}
+.fb.no{background:color-mix(in srgb,var(--no) 6%,var(--card));border-left-color:var(--no)}
+.fb.mid{background:color-mix(in srgb,var(--warn) 7%,var(--card));border-left-color:var(--warn)}
+.fb.wait{background:var(--card);border-left-color:var(--line2)}
+.verdict{font-weight:600;font-size:.98rem;margin:0 0 6px}
+.fb.ok .verdict{color:var(--ok)}.fb.no .verdict{color:var(--no)}.fb.mid .verdict{color:var(--warn)}
+.note{font-size:.9rem;color:var(--mut);margin:2px 0 0;line-height:1.6}
+.mlabel{font-size:.68rem;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--mut);margin:14px 0 6px}
+.ans{border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:.93rem;line-height:1.65;background:color-mix(in srgb,var(--line) 32%,var(--card))}
+.ta{width:100%;min-height:160px;resize:vertical;background:var(--card);border:1px solid var(--line);border-radius:11px;padding:13px 15px;font:400 .96rem/1.65 var(--sans);color:inherit;transition:border-color .15s,box-shadow .15s}
+.ta:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 3px color-mix(in srgb,var(--acc) 16%,transparent)}
+.ta::placeholder{color:var(--mut);opacity:.7}
+.ta:disabled{opacity:.85}
+.tawrap{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px}
+.tawrap .pri{padding:10px 18px;font-size:.9rem}
+.analyze{display:flex;align-items:center;gap:10px;color:var(--mut);font-size:.92rem}
+.dots{display:inline-flex;gap:4px}
+.dots span{width:6px;height:6px;border-radius:50%;background:var(--acc);animation:bnc 1.1s infinite}
+.dots span:nth-child(2){animation-delay:.15s}
+.dots span:nth-child(3){animation-delay:.3s}
+.kbar{height:6px;border-radius:99px;background:var(--line);overflow:hidden;margin:12px 0 2px}
+.kbar i{display:block;height:100%;border-radius:99px;background:var(--acc);transform-origin:left;animation:grow .6s cubic-bezier(.22,1,.36,1) both}
+.fb.ok .kbar i{background:var(--ok)}.fb.mid .kbar i{background:var(--warn)}.fb.no .kbar i{background:var(--no)}
+.kc{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 2px}
+.kchip{display:inline-flex;align-items:center;gap:5px;font-size:.8rem;font-weight:500;padding:4px 10px;border-radius:7px;border:1px solid var(--line);color:var(--mut);animation:fade .3s both}
+.kchip.hit{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 38%,transparent);background:color-mix(in srgb,var(--ok) 6%,var(--card))}
+.kchip.miss{opacity:.85}
+.mdl{margin-top:12px}
+.mdl summary,.rev summary{list-style:none}
+.mdl summary::-webkit-details-marker,.rev summary::-webkit-details-marker{display:none}
+.mdl summary{display:inline-flex;align-items:center;gap:6px;color:var(--fg);font-weight:500;font-size:.88rem;padding:4px 0;cursor:pointer}
+.mdl summary:hover{text-decoration:underline;text-underline-offset:3px}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid color-mix(in srgb,var(--fg) 18%,transparent);border-top-color:var(--acc);border-radius:50%;animation:rot .7s linear infinite;vertical-align:-2px;margin-right:8px}
+.shk{animation:shake .3s}
+.bq{border:1px solid var(--line);border-radius:12px;background:var(--card);padding:15px 17px;margin-bottom:9px;animation:fadeUp .25s both}
+.bqq{font-family:var(--serif);font-size:1rem;font-weight:600;line-height:1.45;margin:0 0 10px}
+.bopts{display:flex;flex-direction:column;gap:5px}
+.bopt{font-size:.88rem;padding:6px 11px;border-radius:8px;border:1px solid var(--line);color:var(--mut);line-height:1.45}
+.bopt.hit{color:var(--ok);border-color:color-mix(in srgb,var(--ok) 45%,transparent);background:color-mix(in srgb,var(--ok) 7%,var(--card));font-weight:600}
+.ring{position:relative;width:168px;height:168px;margin:26px auto 0}
+.ring svg{width:100%;height:100%;display:block}
+.ring .bg{fill:none;stroke:var(--line);stroke-width:9}
+.ring .fg{fill:none;stroke:var(--acc);stroke-width:9;stroke-linecap:round;stroke-dasharray:326.73;stroke-dashoffset:326.73;transform:rotate(-90deg);transform-origin:50% 50%}
+.ring .rc{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--serif);font-size:2.3rem;font-weight:700;letter-spacing:-.02em}
+.grade{text-align:center;font-family:var(--serif);font-weight:600;font-size:1.3rem;margin:16px 0 2px}
+.nbest{display:inline-block;font-family:var(--sans);font-size:.74rem;font-weight:600;color:var(--acc);border:1px solid color-mix(in srgb,var(--acc) 40%,transparent);background:color-mix(in srgb,var(--acc) 8%,var(--card));border-radius:999px;padding:2px 11px;margin-left:8px;vertical-align:3px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(108px,1fr));gap:8px;margin:20px 0}
+.sb{margin:12px 0}
+.sb .t{display:flex;justify-content:space-between;font-size:.86rem;margin-bottom:5px}
+.sb .t .mut{font-variant-numeric:tabular-nums}
+.sb .b{height:6px;border-radius:99px;background:var(--line);overflow:hidden}
+.sb .b i{display:block;height:100%;background:var(--acc);border-radius:99px;transform-origin:left;animation:grow .7s .1s both}
+.rev{border:1px solid var(--line);border-radius:11px;margin:0 0 8px;background:var(--card);overflow:hidden}
+.rev summary{display:flex;gap:10px;align-items:flex-start;padding:13px 15px;cursor:pointer;font-size:.92rem;transition:background .15s}
+.rev summary:hover{background:color-mix(in srgb,var(--line) 40%,transparent)}
+.rev[open] summary{border-bottom:1px solid var(--line)}
+.rev .body{padding:13px 15px}
+.rev .meta{display:block;font-size:.74rem;color:var(--mut);font-style:normal;margin-top:2px}
+.tag{flex:none;width:21px;height:21px;border-radius:50%;display:grid;place-items:center;margin-top:1px}
+.tag.ok{background:color-mix(in srgb,var(--ok) 13%,var(--card));color:var(--ok)}
+.tag.no{background:color-mix(in srgb,var(--no) 13%,var(--card));color:var(--no)}
+.tag svg{width:11px;height:11px}
+.ln{margin:4px 0;font-size:.92rem}
+.g{color:var(--ok);font-weight:600}.r{color:var(--no);font-weight:600}
+.infobox{border:1px solid var(--line);border-left:3px solid var(--acc);border-radius:12px;padding:14px 16px;margin-top:26px;background:color-mix(in srgb,var(--acc) 4%,var(--card))}
+.infobox .mlabel{margin:0 0 5px;color:var(--acc)}
+.infobox .note{margin:0}
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,14px);background:var(--ink);color:var(--btnfg);padding:9px 18px;border-radius:10px;font-size:.88rem;font-weight:500;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:90;box-shadow:var(--shadow);max-width:88vw}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.keys{font-size:.84rem;color:var(--mut);margin-top:30px}
+kbd{font-family:var(--sans);font-size:.76rem;font-weight:600;border:1px solid var(--line);border-bottom-width:2px;border-radius:5px;padding:1px 6px;background:color-mix(in srgb,var(--line) 40%,var(--card))}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:80;overflow:hidden}
+.confetti i{position:absolute;top:-14px;width:8px;height:14px;border-radius:2px;animation:fall linear forwards}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes cardIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes cardOut{to{opacity:0;transform:translateX(-22px)}}
+@keyframes optIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@keyframes shake{20%,60%{transform:translateX(-4px)}40%,80%{transform:translateX(4px)}}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes grow{from{transform:scaleX(0)}}
+@keyframes rot{to{rotate(360deg)}}
+@keyframes bnc{0%,70%,100%{transform:translateY(0);opacity:.35}35%{transform:translateY(-5px);opacity:1}}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg);opacity:.85}}
+@media(max-width:520px){
+  #app{padding:30px 15px 70px}
+  .card{padding:20px 16px 18px}
+  h2.q{font-size:1.12rem}
+  .topbar{top:10px;right:12px}
+  .tiles{grid-template-columns:repeat(3,1fr);gap:6px}
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .ndot{width:25px;height:25px;font-size:.68rem}
+  .rt{gap:2px}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <button class="icoB" id="thB" title="Theme (auto, light, dark)" aria-label="Toggle theme"></button>
+  <button class="icoB" id="sdB" title="Sound on or off" aria-label="Toggle sound"></button>
+</header>
+<main id="app"></main>
+<script>
+"use strict";
+const S=[
+  "L1 · Introduction & Skin Phototypes",
+  "L3 · DLE & SLE",
+  "L4 · Dermatitis",
+  "L5 · Papulosquamous Disorders"
+];
+const T=["True","False"];
+const tf=(s,q,a,n="")=>[s,q,T,a?0:1,n];
+const m=(s,q,o,a,n="")=>[s,q,o,a,n];
+
+const D=[
+// ========== L1 — Introduction & Skin Phototypes (Topic 0) ==========
+m(0,"The outermost structure in the skin is the:",["Dermis","Hypodermis","Epidermis","Basement membrane","Collagen"],2,"The epidermis is the outermost layer of the skin, composed of stratified squamous epithelium."),
+m(0,"Skin appendages include all of the following EXCEPT:",["Sebaceous glands","Melanocytes","Eccrine sweat glands","Apocrine sweat glands","Hair"],1,"Melanocytes are epidermal cells; skin appendages are hair, nails, and glands (sebaceous, eccrine, apocrine)."),
+m(0,"A vesicle can be differentiated from a bulla primarily by:",["Its size","Its location","Having a wall","Its content","Its color"],0,"A vesicle is < 1 cm; a bulla is > 1 cm. Both contain clear fluid."),
+tf(0,"An erosion is a loss of epidermis and dermis that heals with a scar.",0,"Erosion involves only the epidermis and heals without a scar; an ulcer involves deeper layers and heals with a scar."),
+tf(0,"A nodule is defined as a circumscribed solid elevation more than 1 cm in diameter.",1,"A solid elevation > 1 cm with deep dermal/subcutaneous involvement."),
+tf(0,"A plaque is defined as a localized epidermal collection of fluid.",0,"A plaque is a solid palpable lesion > 1 cm; fluid collection defines a vesicle or bulla."),
+tf(0,"A burrow is a tunnel in the epidermis and is a characteristic lesion of scabies.",1,"A linear elevation under the stratum corneum burrowed by the female Sarcoptes scabiei."),
+tf(0,"A bulla is a pus-filled lesion that is less than 0.5 cm in diameter.",0,"A bulla contains clear fluid and is > 1 cm; a pustule contains pus."),
+tf(0,"An erosion occurs after the rupture of vesicles or bullae.",1,"An erosion is a secondary change after blister roof loss."),
+tf(0,"Melanocytes are classified as skin appendages.",0,"Melanocytes are dendritic pigment-producing cells in the basal layer, not appendages."),
+m(0,"A macule is:",["Skin discoloration < 1 cm","Superficial linear lesion of the epidermis","Solid elevation of the skin > 1 cm","Change of skin colour > 1 cm","Fluid-filled cavity > 1 cm"],0,"A macule is a flat, non-palpable discoloration < 1 cm."),
+m(0,"Functions of the skin include all of the following EXCEPT:",["Synthesis of vitamin D","Synthesis of UV","Regulation of body temperature","Sensation of pain and pressure","Protection against sun damage"],1,"The skin protects against UV; it synthesizes vitamin D3 from precursors, not UV."),
+m(0,"Regarding skin phototypes:",["Are classified based on reaction to UV exposure","Were classified according to Langerhans","Type I never burns, always tans","Type V never tans, always burns","Are 8 types"],0,"Skin phototypes are classified based on tanning and sunburn tendencies after UV exposure."),
+m(0,"Skin appendages include:",["Hair, nails and sebaceous glands","Present in the subcutaneous layer","Are not considered as part of the skin","Have no function in the skin","Hair and nails only"],0,"Skin appendages include hair, nails and glands (sebaceous, eccrine, apocrine)."),
+tf(0,"According to Fitzpatrick classification, there are 7 skin phototypes.",0,"The Fitzpatrick scale has 6 skin phototypes: Types I to VI."),
+tf(0,"Sweating is the function of sebaceous glands.",0,"Sweat glands produce sweat; sebaceous glands produce sebum."),
+m(0,"Primary lesion of Acne vulgaris is:",["Burrow","Wheal","Macule","Comedone","Vesicle"],3,"The primary lesion of acne vulgaris is a comedone (open blackhead or closed whitehead)."),
+tf(0,"Skin has immunological function through dendritic Langerhans cells.",1,"Dendritic Langerhans cells mediate epidermal immune defense."),
+tf(0,"Melanocytes are the cells responsible for pigmentation.",1,"Melanocytes synthesize melanin in the basal cell layer."),
+tf(0,"A fissure is a non-linear skin loss of continuity.",0,"A fissure is a linear crack/cleft through the epidermis into the dermis."),
+tf(0,"A nodule is an elevated small circumscribed lesion less than 1 cm.",0,"A nodule is > 1 cm; lesions < 1 cm are papules."),
+m(0,"Wheal, all are correct except:",["Permanent","Due to extravasation of fluid","Disappear in 24 hours","Swelling of the skin"],0,"A wheal is characteristically transient and evanescent, not permanent."),
+m(0,"Regarding erosion, which is incorrect:",["It does not penetrate the dermoepidermal junction","Focal loss of epidermis","Heal with scar","None of the above"],2,"Erosions heal without scar formation."),
+m(0,"Which is not a secondary skin lesion?",["Scar","Papule","Crust","Sinus"],1,"A papule is a primary lesion."),
+m(0,"Which is not a primary skin lesion?",["Crust","Wheal","Cyst","Nodule"],0,"A crust is a secondary lesion formed of dried exudate."),
+m(0,"Those glands are responsible for temperature regulation in skin:",["Eccrine sweat glands","Apocrine sweat glands","Sebaceous glands","Sebocytes"],0,"Eccrine sweat glands mediate evaporative thermoregulation."),
+m(0,"A plaque is:",["An abnormal change of skin texture","An area of depigmentation","The primary lesion of acne vulgaris","A localized epidermal collection of fluid","A deroofed burrow"],0,"A plaque is an elevated, flat-topped solid lesion > 1 cm (abnormal change of skin texture)."),
+
+// ========== L3 — DLE & SLE (Topic 1) ==========
+m(1,"All the following are cutaneous findings of Systemic Lupus Erythematosus (SLE) EXCEPT:",["Discoid LE","Livedo reticularis","Vasculopathy","Subacute LE","Acneiform eruption"],4,"Cutaneous findings include malar rash, discoid lesions, SCLE, livedo reticularis and vasculopathy; acneiform eruption is not typical."),
+tf(1,"Hair loss that occurs with SLE is non-scarring alopecia.",1,"Alopecia in SLE is diffuse and non-cicatricial/reversible; hair follicles remain intact."),
+tf(1,"Gottron's sign is one of the skin manifestations of SLE.",0,"Gottron's sign is pathognomonic for dermatomyositis, not SLE."),
+tf(1,"Antimalarials are one of the treatments used in Discoid LE.",1,"Hydroxychloroquine is first-line systemic therapy providing photoprotection and anti-inflammatory action."),
+tf(1,"Systemic Lupus Erythematosus is an inflammatory autoimmune disease.",1,"A multisystem autoimmune connective tissue disorder with female predominance."),
+m(1,"A 25-year-old female patient presenting with well-defined erythematous plaques on the face with adherent scales, telangiectasia, stippling, and atrophy is suffering from:",["Psoriasis","Discoid lupus erythematosus","Lichen planus","Seborrheic dermatitis","Tinea corporis"],1,"DLE presents with the 5 cardinal signs: erythema, telangiectasia, scaling, stippling, and scarring."),
+m(1,"The \"Stripping sign\" (dilated pilosebaceous orifices) is characteristic of:",["Lichen planus","Psoriasis","Discoid Lupus Erythematosus","Pityriasis rosea","Vitiligo"],2,"Dilated pilosebaceous orifices are visible on the undersurface of peeled adherent scales in DLE."),
+tf(1,"Discoid Lupus Erythematosus (DLE) may cause cicatricial (scarring) alopecia.",1,"Follicular destruction and dermal fibrosis produce permanent cicatricial alopecia."),
+tf(1,"\"Stripping\" refers to the presence of dilated pilosebaceous orifices.",1,"Follicular plugs are revealed beneath adherent scales."),
+tf(1,"Lesions of Discoid Lupus Erythematosus may show telangiectasia (dilated branching vessels).",1,"Dilated branching capillary vessels are prominently visible along plaque borders."),
+m(1,"Cicatricial alopecia is caused by all of the following EXCEPT:",["Kerion","Favus","Burn","Systemic lupus erythematosus","Lichen planus"],3,"SLE causes non-cicatricial alopecia; CDLE, kerion, favus, and burns cause cicatricial alopecia."),
+tf(1,"Discoid Lupus Erythematosus is the acute form of Lupus erythematosus.",0,"Discoid LE is chronic cutaneous LE (CCLE); ACLE is the acute form."),
+tf(1,"At least 4 out of 11 criteria should be identified to diagnose discoid lupus.",0,"The 4/11 criteria rule applies to Systemic Lupus Erythematosus (SLE), not purely cutaneous DLE."),
+tf(1,"Polyarthralgia with night stiffness is a musculoskeletal sign of SLE.",1,"Arthritis and arthralgias are classic constitutional musculoskeletal findings."),
+tf(1,"Systemic lupus affects males 10 times the females.",0,"The female-to-male ratio is 8:1 to 9:1; females are predominantly affected."),
+m(1,"Which is not a symptom of discoid lupus?",["Peripheral neuropathy","Arthritis","Proteinuria","All of the above"],3,"DLE is strictly/predominantly confined to the skin; neuropathy, arthritis and proteinuria indicate systemic SLE."),
+m(1,"Criteria of Systemic lupus include all except:",["Delayed pregnancy","Proteinuria","Malar rash","Arthritis"],0,"Established criteria include malar rash, discoid rash, photosensitivity, arthritis and renal/proteinuria."),
+tf(1,"Discoid Lupus is a multisystemic disease.",0,"Discoid lupus is localized/confined to the skin; SLE is the multisystemic disorder."),
+m(1,"A 45-year-old female suffering from SLE for 2 years and has not been controlled using general non-steroidal anti-inflammatory medications. Which of the following treatments would you recommend for her condition?",["Cyclosporine","Methotrexate","Antimalarials","Isotretinoin"],2,"Hydroxychloroquine 200–400 mg/day is the standard first-line disease-modifying agent."),
+m(1,"All of the following are skin manifestations of SLE except:",["Photosensitivity","Discoid rash","Malar erythema","Gottron's papules"],3,"Gottron's papules are a feature of dermatomyositis."),
+m(1,"First line of therapy in cases of systemic lupus erythematosus is:",["Antimalarials","Methotrexate","Cyclosporine","Isotretinoin"],0,"Antimalarials are the first-line systemic therapy."),
+
+// ========== L4 — Dermatitis (Topic 2) ==========
+m(2,"A 30-year-old female came presenting with severe edema and itching in her arms with an elevated drawing pattern. She reports that she applied black henna 2 days before the appearance of the lesion. What is the diagnosis of this case?",["Irritant allergic dermatitis","Contact allergic dermatitis","Eczema","Atopic dermatitis","Seborrheic dermatitis"],1,"Acute inflammatory eczema reproducing the exact contours of black henna application 2 days prior (Type IV delayed hypersensitivity to PPD additive)."),
+tf(2,"Allergic contact dermatitis is Type I hypersensitivity.",0,"Allergic contact dermatitis is a cell-mediated Type IV delayed hypersensitivity reaction mediated by T-lymphocytes."),
+tf(2,"Atopic dermatitis has infantile, childhood and adulthood pattern.",1,"Atopic dermatitis chronologically follows 3 evolutionary stages: infantile, childhood and adult phases."),
+m(2,"In Atopic Dermatitis, all is true EXCEPT:",["Chronic inflammatory disease","Starts since early childhood","Characterized by severe pruritus","Shows atopic march","In childhood type, starts in the extensor surfaces"],4,"Childhood atopic dermatitis predominantly affects flexural creases (antecubital and popliteal fossae, wrists, ankles), not extensor surfaces."),
+m(2,"A 2-month-old infant with severe facial pruritus, dryness, and a family history of asthma. What is the diagnosis?",["Atopic Dermatitis","Acute allergic irritant dermatitis","Acute allergic contact Dermatitis","Chronic Eczema","IgE dermatitis"],0,"An infant of 2 months with severe facial pruritus, dryness and a family history of asthma fits the onset and presentation of infantile atopic dermatitis."),
+m(2,"All the following can treat atopic dermatitis EXCEPT:",["Corticosteroids","Antihistamines","Moisturizers","Reassurance","Antimalarials"],4,"Atopic dermatitis control relies on moisturizers, topical corticosteroids, antihistamines and patient education. Antimalarials play no role."),
+tf(2,"Repeated rubbing results in skin lichenification with exaggerated skin markings.",1,"Lichenification is skin thickening with exaggerated markings directly induced by repeated mechanical rubbing and scratching."),
+
+// ========== L5 — Papulosquamous Disorders (Topic 3) ==========
+m(3,"The primary lesion of psoriasis is a:",["Red macule covered with non-adherent silvery white scales","Red papule/plaque covered with dry silvery white scales","Red papule/plaque covered with greasy yellow scales","Red macule covered with white adherent scales","Red papule with vesicles, crusts and white scales"],1,"Psoriasis primary lesion: red papule/plaque covered with dry silvery white scales."),
+m(3,"The normal epidermal turnover time is approximately:",["4 days","14 days","28 days","45 days","60 days"],2,"Normal epidermal turnover time is 28 days (reduced to 7 days in psoriasis)."),
+m(3,"Lichen planus is an inflammatory pruritic disease which involves:",["Mucous membranes","Skin","Hair follicles","Nails","All of the above"],4,"Lichen planus involves skin, mucous membranes, hair and nails."),
+tf(3,"In psoriasis, the epidermal turnover time is accelerated (decreased).",1,"Turnover time is accelerated/decreased from 28 to 7 days."),
+tf(3,"Sterile pustules are a characteristic feature of pustular psoriasis.",1,"Pustular psoriasis is characterized by sterile pustules (neutrophils only)."),
+m(3,"In lichen planus, squamous cell carcinoma may complicate:",["Oral ulcerative lesions","Nail lesions","Actinic lesions","Scalp lesions","Erythrodermic type"],0,"Squamous cell carcinoma can complicate oral ulcerative lesions in lichen planus."),
+m(3,"A 20-year-old man came presenting with erythematous plaques covered by silver scales on both elbows and knees. He reports that the lesions are itchy, increase in winter and disappear in summer. The diagnosis of this case is:",["Dermatomyositis","Discoid Lupus erythematosus","Acne vulgaris","Psoriasis Vulgaris","Impetigo"],3,"Symmetrical silver-scaled plaques on extensor elbows/knees worse in winter = psoriasis vulgaris."),
+tf(3,"In Lichen planus there is permanent damage to the nail.",1,"Nail lesions in lichen planus may cause permanent damage of nail plates."),
+m(3,"Lichen planus is characterized by:",["Koebner phenomenon","Grouped flat-topped papules","Wickham striae","All of the above"],3,"LP exhibits flat-topped papules, Koebner phenomenon, and Wickham striae."),
+tf(3,"Psoriasis is an ill-demarcated lesion with silver scales.",0,"Psoriatic plaques are well-defined, not ill-demarcated."),
+m(3,"A sign for psoriasis:",["Papulosquamous disorder","Koebner phenomenon","Auspitz sign","All of the above"],3,"Psoriasis is a papulosquamous disorder showing Koebner and Auspitz signs."),
+m(3,"All are variants of psoriasis except:",["Psoriatic erythroderma","Hypertrophic eczema","Palmo-plantar hyperkeratosis / pustular psoriasis","Guttate psoriasis"],1,"Hypertrophic eczema is not a clinical variant of psoriasis."),
+tf(3,"Psoriatic erythroderma is a mild form of psoriasis.",0,"Erythrodermic psoriasis affects > 90% BSA and is severe."),
+tf(3,"Herald patch is an erythematous macule, a sign for pityriasis rosea.",1,"Herald patch is the hallmark primary lesion in pityriasis rosea."),
+m(3,"Koebner phenomenon is characterized by all the following except:",["Isomorphic response","Evident in vitiligo","Evident in psoriasis","Evident in scabies"],3,"Koebner phenomenon is an isomorphic response in psoriasis/LP, not scabies."),
+m(3,"Pityriasis rosea is characterized by:",["Self-limiting","Reactivation of herpes zoster virus","None of the above","All of the above"],0,"Pityriasis rosea is self-limiting (resolves in 4–8 weeks; HHV-6/7 linked)."),
+tf(3,"Lichen planus is associated with single large spike-topped papules.",0,"Lichen planus papules are planar/flat-topped, never spike-topped."),
+m(3,"Koebner's phenomenon refers to:",["Development of isomorphic lesions at sites of trauma or injury","Development of crusts on skin","Development of rash on the skin","Development of acne vulgaris after steroid use"],0,"Koebner phenomenon refers to isomorphic lesions at sites of trauma."),
+m(3,"Wickham's striae represent a network of fine white lines or puncta, and are seen in many papules of:",["Psoriasis","Pityriasis rosea","Lichen planus","Pityriasis rubra pilaris"],2,"Wickham striae are characteristic reticular white streaks seen in lichen planus."),
+m(3,"Koebner phenomenon is seen in:",["Lupus erythematosus","Syphilis","Lupus vulgaris","Psoriasis"],3,"Koebner phenomenon occurs in psoriasis upon trauma to uninvolved skin."),
+m(3,"The herald patch is seen in 50 to 90 percent of cases of:",["Pityriasis rosea","Pityriasis alba","Pityriasis rubra pilaris","Pityriasis lichenoides"],0,"Herald patch is the primary herald lesion seen in pityriasis rosea."),
+m(3,"The appearance of pinpoint dots of blood at the top of ruptured capillaries when scale is forcibly removed from psoriatic plaques refers to:",["Tzanck test","Bioscopy","Auspitz sign","Darier's sign"],2,"Pinpoint capillary bleeding upon forcibly removing scales is the Auspitz sign."),
+m(3,"The primary lesions of ___ are characteristic, almost pathognomonic, small, purple, planar (flat-topped) polygonal papules:",["Lichen planus","Psoriasis","Pityriasis rosea","Pityriasis rubra pilaris"],0,"Small, purple, flat-topped (planar) polygonal papules = lichen planus."),
+m(3,"Lichen planus can be associated with which of the following conditions:",["HCV (hepatitis C virus)","HIV","Diabetes","Hypertension"],0,"Lichen planus is etiologically associated with hepatitis C virus (HCV)."),
+m(3,"A special form of psoriasis known as guttate psoriasis:",["Most commonly affects intertriginous areas","Plaques usually have diffuse edges","Does not occur before the age of 10","May follow streptococcal infections"],3,"Guttate psoriasis characteristically follows acute streptococcal infection."),
+m(3,"What disorder is characterised by an initial 'herald patch' which is then followed by scaly erythematous plaques usually in a 'Christmas tree' distribution?",["Pityriasis rosea","Herpes","Varicella zoster virus","Erysipelas"],0,"Herald patch followed by Christmas-tree pattern = pityriasis rosea."),
+m(3,"Match the cutaneous clinical sign with its corresponding disease: Herald patch, Auspitz sign, Wickham striae.",["Pityriasis rosea, Psoriasis, Lichen planus","Psoriasis, Lichen planus, Pityriasis rosea","Lichen planus, Pityriasis rosea, Psoriasis","Pityriasis rosea, Lichen planus, Psoriasis"],0,"Herald patch → Pityriasis rosea; Auspitz → Psoriasis; Wickham striae → Lichen planus."),
+tf(3,"Primary lesion of lichen planus is a vesicle.",0,"The primary lesion of LP is an itchy polygonal flat-topped papule, not a vesicle."),
+tf(3,"Lichen planus does not show Koebner's phenomenon.",0,"Lichen planus does demonstrate Koebner's phenomenon."),
+tf(3,"Pityriasis rosea is a self-limited condition.",1,"Pityriasis rosea is self-limited, resolving spontaneously without sequelae."),
+tf(3,"Inverse psoriasis is characterized by huge adherent scales.",0,"In inverse/flexural psoriasis, scaling is reduced or absent due to moisture."),
+tf(3,"Koebner phenomenon is an isomorphic response.",1,"Koebner phenomenon is identical to the isomorphic response."),
+m(3,"Papulosquamous skin disorders include all except:",["Pityriasis rubra / Pityriasis rosea","Psoriasis","Lichen planus","Scabies"],3,"Scabies is an infectious parasitic infestation, not a papulosquamous disorder.")
+];
+
+const $=(s,r=document)=>r.querySelector(s);
+const app=$("#app");
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const RM=matchMedia("(prefers-reduced-motion: reduce)").matches;
+const fmtT=s=>{s=Math.max(0,Math.round(s));return Math.floor(s/60)+":"+String(s%60).padStart(2,"0")};
+function fy(a){for(let k=a.length-1;k>0;k--){const j=Math.random()*(k+1)|0;[a[k],a[j]]=[a[j],a[k]]}return a}
+
+/* persistent state */
+let sel=new Set(S.keys()),shufQ=true,shufA=true,timed=false,tfilter="all",navOpen=true;
+try{
+  const p=JSON.parse(localStorage.getItem("derm_prefs")||"null");
+  if(p){
+    if(Array.isArray(p.sel))sel=new Set(p.sel.filter(k=>Number.isInteger(k)&&k>=0&&k<S.length));
+    if(typeof p.shufQ==="boolean")shufQ=p.shufQ;
+    if(typeof p.shufA==="boolean")shufA=p.shufA;
+    if(typeof p.timed==="boolean")timed=p.timed;
+    if(typeof p.tfilter==="string"&&["all","mcq","essay"].includes(p.tfilter))tfilter=p.tfilter;
+    if(typeof p.navOpen==="boolean")navOpen=p.navOpen;
+  }
+}catch(_){}
+function savePrefs(){try{localStorage.setItem("derm_prefs",JSON.stringify({sel:[...sel],shufQ,shufA,timed,tfilter,navOpen}))}catch(_){}}
+
+let Q=[],i=0,streak=0,bestStreak=0,t0=0,tiv=null,lastTick=99,advT=null;
+function clearAdv(){if(advT){clearTimeout(advT);advT=null}}
+function scheduleAdvance(){
+  clearAdv();
+  advT=setTimeout(()=>{advT=null;if(!$("#card"))return;goNext()},1100);
+}
+
+let flags=new Set(),stats=[];
+try{flags=new Set(JSON.parse(localStorage.getItem("derm_flags")||"[]"))}catch(_){}
+try{stats=JSON.parse(localStorage.getItem("derm_stats")||"[]")}catch(_){}
+let sound=localStorage.getItem("derm_sound")!=="off";
+let theme=localStorage.getItem("derm_theme")||"auto";
+const saveF=()=>{try{localStorage.setItem("derm_flags",JSON.stringify([...flags]))}catch(_){}};
+
+/* tiny synth */
+let AC=null;
+function tone(f,d=.12,type="sine",v=.1,dl=0){
+  if(!sound)return;
+  try{
+    AC=AC||new(window.AudioContext||window.webkitAudioContext)();
+    if(AC.state==="suspended")AC.resume();
+    const o=AC.createOscillator(),g=AC.createGain(),t=AC.currentTime+dl;
+    o.type=type;o.frequency.value=f;o.connect(g);g.connect(AC.destination);
+    g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+.012);
+    g.gain.exponentialRampToValueAtTime(.0008,t+d);
+    o.start(t);o.stop(t+d+.03);
+  }catch(_){}
+}
+const sOK=()=>{tone(659,.09,"sine",.09);tone(880,.14,"sine",.09,.08)};
+const sNO=()=>{tone(233,.16,"sine",.06);tone(196,.2,"sine",.055,.1)};
+const sTick=()=>tone(1250,.04,"square",.025);
+const sFlag=()=>tone(520,.05,"triangle",.05);
+const sMile=()=>{tone(784,.08,"sine",.06);tone(1047,.12,"sine",.06,.07)};
+const sFin=()=>{tone(523,.14,"sine",.07);tone(659,.14,"sine",.07,.1);tone(784,.2,"sine",.07,.2)};
+const buzz=p=>{try{navigator.vibrate&&navigator.vibrate(p)}catch(_){}};
+
+let toastT=null;
+function toast(msg){
+  let t=$(".toast");
+  if(!t){t=document.createElement("div");t.className="toast";t.setAttribute("role","status");document.body.appendChild(t)}
+  t.textContent=msg;requestAnimationFrame(()=>t.classList.add("show"));
+  clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove("show"),2100);
+}
+
+const I={
+  auto:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="8.6"/><path d="M12 3.4a8.6 8.6 0 0 1 0 17.2Z" fill="currentColor" stroke="none"/></svg>',
+  sun:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.1"/><path d="M12 2.6v2.1M12 19.3v2.1M2.6 12h2.1M19.3 12h2.1M5 5l1.5 1.5M17.5 17.5 19 19M19 5l-1.5 1.5M6.5 17.5 5 19"/></svg>',
+  moon:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M20.2 14.5A8.3 8.3 0 0 1 9.5 3.8a8.3 8.3 0 1 0 10.7 10.7Z"/></svg>',
+  volOn:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6.5 8.5H3v7h3.5L11 19V5Z"/><path d="M14.8 9.2a4 4 0 0 1 0 5.6M17.6 6.8a7.6 7.6 0 0 1 0 10.4"/></svg>',
+  volOff:'<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 5 6.5 8.5H3v7h3.5L11 19V5Z"/><path d="m15.5 9.5 5 5M20.5 9.5l-5 5"/></svg>',
+  flag:'<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 21V4"/><path class="banner" d="M5 4.5h11.5L14 8l2.5 3.5H5"/></svg>',
+  grid:'<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.6"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.6"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.6"/></svg>',
+  arrow:'<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 12h15"/><path d="m13.5 6 6 6-6 6"/></svg>',
+};
+const CHECK='<svg viewBox="0 0 24 24" width="19" height="19" aria-hidden="true"><path d="M4 12.5l5 5L20 6.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+const CROSS='<svg viewBox="0 0 24 24" width="17" height="17" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>';
+
+function applyChrome(){
+  const root=document.documentElement;
+  if(theme==="auto")root.removeAttribute("data-theme");else root.dataset.theme=theme;
+  $("#thB").innerHTML=theme==="auto"?I.auto:theme==="light"?I.sun:I.moon;
+  $("#sdB").innerHTML=sound?I.volOn:I.volOff;
+  const mt=document.querySelector('meta[name="theme-color"]');
+  const dark=theme==="dark"||(theme==="auto"&&matchMedia("(prefers-color-scheme: dark)").matches);
+  if(mt)mt.setAttribute("content",dark?"#13161b":"#f7f6f3");
+}
+$("#thB").onclick=()=>{theme=theme==="auto"?"light":theme==="light"?"dark":"auto";try{localStorage.setItem("derm_theme",theme)}catch(_){}applyChrome();toast("Theme: "+theme)};
+$("#sdB").onclick=()=>{sound=!sound;try{localStorage.setItem("derm_sound",sound?"on":"off")}catch(_){}applyChrome();if(sound)sOK();toast(sound?"Sound on":"Sound off")};
+
+const runBadge=()=>streak>=3?`<span class="run">${streak} in a row</span>`:"";
+
+function weakTopics(){
+  const agg={};
+  stats.slice(-5).forEach(s=>{
+    if(!s.topics)return;
+    for(const k in s.topics){agg[k]=agg[k]||{c:0,n:0};agg[k].c+=s.topics[k].c;agg[k].n+=s.topics[k].n}
+  });
+  return Object.entries(agg).map(([k,v])=>({s:+k,c:v.c,n:v.n,p:v.n?Math.round(v.c/v.n*100):0}))
+    .filter(x=>x.n>=3).sort((a,b)=>a.p-b.p);
+}
+
+function startSession(){
+  let pool=D.filter(d=>sel.has(d[0]));
+  if(tfilter==="mcq")pool=pool.filter(d=>d[2]);
+  else if(tfilter==="essay")pool=pool.filter(d=>!d[2]);
+  if(!pool.length){toast("Select at least one lecture set");sNO();return}
+  begin(pool);
+}
+
+function home(){
+  stopTimer();
+  const cnt=k=>D.filter(d=>d[0]===k).length;
+  const best=stats.length?Math.max(...stats.map(s=>s.p)):null;
+  const last=stats.length?stats[stats.length-1]:null;
+  const weak=weakTopics().filter(x=>x.p<85).slice(0,2);
+  function syncChips(){app.querySelectorAll(".chip[data-k]").forEach(b=>{const on=sel.has(+b.dataset.k);b.classList.toggle("on",on);b.setAttribute("aria-checked",on)})}
+  app.innerHTML=`
+  <p class="kicker">Dermatology · Exam review</p>
+  <h1 class="hero">Dermatology <em>&amp;</em> Skin Review</h1>
+  <p class="lead">${D.length} items across four lecture sets — multiple-choice and true/false questions with instant feedback and concept-level explanations.</p>
+  ${stats.length?`<div class="tiles">
+    <div class="tile"><b>${stats.length}</b><span>Sessions</span></div>
+    <div class="tile"><b>${best}%</b><span>Best score</span></div>
+    <div class="tile"><b>${last.p}%</b><span>Last score</span></div>
+  </div>`:""}
+  ${weak.length?`<div class="h"><span>Focus areas</span><span class="mut" style="font-size:.78rem;font-weight:400">Tap to practise</span></div>
+  <div class="chips">${weak.map(x=>`<button type="button" class="chip focus" data-focus="${x.s}"><span class="nm">${S[x.s]}</span><span class="cnt">${x.p}%</span></button>`).join("")}</div>`:""}
+  <div class="h"><span>Lecture sets</span><span class="acts"><button type="button" id="sa">Select all</button><button type="button" id="sn">Clear</button></span></div>
+  <div class="chips">${S.map((s,k)=>`<button type="button" role="checkbox" aria-checked="${sel.has(k)}" class="chip ${sel.has(k)?"on":""}" data-k="${k}"><span class="nm">${s}</span><span class="cnt">${cnt(k)}</span></button>`).join("")}</div>
+  <div class="pillrow" role="radiogroup" aria-label="Question type">
+    <button type="button" class="pill ${tfilter==="all"?"on":""}" data-t="all">All types</button>
+    <button type="button" class="pill ${tfilter==="mcq"?"on":""}" data-t="mcq">MCQ &amp; true/false</button>
+  </div>
+  <div class="h"><span>Session options</span></div>
+  <div>
+    <label class="tgl"><span>Shuffle questions</span><input type="checkbox" id="tq" ${shufQ?"checked":""}><i class="sw"></i></label>
+    <label class="tgl"><span>Shuffle answer order <em>· prevents memorising option positions</em></span><input type="checkbox" id="tA" ${shufA?"checked":""}><i class="sw"></i></label>
+    <label class="tgl"><span>Timed mode <em>· 45 s per item</em></span><input type="checkbox" id="tt" ${timed?"checked":""}><i class="sw"></i></label>
+  </div>
+  <div class="infobox">
+    <p class="mlabel">Instant feedback</p>
+    <p class="note">Every question is followed by the correct answer and a short explanation, so you learn the reasoning behind each choice.</p>
+  </div>
+  <div class="cta">
+    <button class="pri" id="go">Start session ${I.arrow}</button>
+    ${flags.size?`<button class="sec" id="fg">Flagged (${flags.size})</button>`:""}
+    <button class="sec" id="br">Study notes</button>
+  </div>
+  <p class="keys">Shortcuts&ensp;<kbd>A</kbd>–<kbd>E</kbd> answer · <kbd>→</kbd> next · <kbd>←</kbd> previous · <kbd>F</kbd> flag · <kbd>N</kbd> question map</p>`;
+  app.querySelectorAll(".chip[data-k]").forEach(b=>b.onclick=()=>{
+    const k=+b.dataset.k;sel.has(k)?sel.delete(k):sel.add(k);
+    b.classList.toggle("on");b.setAttribute("aria-checked",sel.has(k));
+    savePrefs();tone(sel.has(k)?700:420,.05,"triangle",.05);
+  });
+  app.querySelectorAll("[data-focus]").forEach(b=>b.onclick=()=>{
+    const k=+b.dataset.focus;sel=new Set([k]);savePrefs();
+    toast("Practising: "+S[k]);tone(700,.06,"triangle",.06);
+    startSession();
+  });
+  $("#sa").onclick=()=>{sel=new Set(S.keys());syncChips();savePrefs()};
+  $("#sn").onclick=()=>{sel.clear();syncChips();savePrefs()};
+  app.querySelectorAll("[data-t]").forEach(b=>b.onclick=()=>{
+    tfilter=b.dataset.t;savePrefs();
+    app.querySelectorAll("[data-t]").forEach(x=>x.classList.toggle("on",x===b));
+    tone(600,.05,"triangle",.05);
+  });
+  $("#tq").onchange=ev=>{shufQ=ev.target.checked;savePrefs()};
+  $("#tA").onchange=ev=>{shufA=ev.target.checked;savePrefs()};
+  $("#tt").onchange=ev=>{timed=ev.target.checked;savePrefs()};
+  $("#go").onclick=startSession;
+  const fgb=$("#fg");if(fgb)fgb.onclick=()=>begin([...flags].map(n=>D[n]));
+  $("#br").onclick=browse;
+}
+
+function browseCard(src,n0){
+  const type=src[2]===T?"True / false":"Multiple choice";
+  return `<div class="bq">
+    <p class="qtype">${type} · ${S[src[0]]}${flags.has(n0)?' · flagged':""}</p>
+    <p class="bqq">${esc(src[1])}</p>
+    <div class="bopts">${src[2].map((o,k)=>`<span class="bopt ${k===src[3]?"hit":""}">${esc(o)}</span>`).join("")}</div>
+    ${src[4]?`<p class="note" style="margin-top:8px">${src[4]}</p>`:""}
+  </div>`;
+}
+
+function browse(){
+  stopTimer();
+  let bfilter="all",bq="";
+  window.scrollTo({top:0,behavior:"auto"});
+  app.innerHTML=`
+  <p class="kicker">Reference</p>
+  <h1 class="hero" style="font-size:clamp(1.6rem,4.4vw,2rem)">Study <em>notes</em></h1>
+  <p class="lead">Every question with its answer and explanation — search to filter.</p>
+  <input class="inp" id="bs" style="margin-top:18px" placeholder="Search questions, answers or topics…" aria-label="Search questions" type="search">
+  <div class="pillrow" id="bf" role="radiogroup" aria-label="Filter">
+    <button type="button" class="pill on" data-f="all">All</button>
+    <button type="button" class="pill" data-f="mcq">MCQ &amp; T/F</button>
+    <button type="button" class="pill" data-f="flag">Flagged</button>
+  </div>
+  <div class="cta"><button class="sec" id="bk">Back to overview</button></div>
+  <div id="blist" style="margin-top:22px"></div>`;
+  const list=$("#blist");
+  function draw(){
+    const q=bq.trim().toLowerCase();
+    const items=D.map((src,n0)=>({src,n0})).filter(({src,n0})=>{
+      if(bfilter==="mcq"&&!src[2])return false;
+      if(bfilter==="flag"&&!flags.has(n0))return false;
+      if(!q)return true;
+      const hay=(src[1]+" "+S[src[0]]+" "+(src[2]?src[2].join(" "):"")+" "+(src[4]||"")).toLowerCase();
+      return hay.includes(q);
+    });
+    list.innerHTML=items.length?items.map(({src,n0})=>browseCard(src,n0)).join("")
+      :`<p class="mut" style="text-align:center;padding:34px 0">No matching questions.</p>`;
+  }
+  $("#bs").addEventListener("input",ev=>{bq=ev.target.value;draw()});
+  app.querySelectorAll("[data-f]").forEach(b=>b.onclick=()=>{
+    bfilter=b.dataset.f;
+    app.querySelectorAll("[data-f]").forEach(x=>x.classList.toggle("on",x===b));
+    tone(600,.05,"triangle",.05);draw();
+  });
+  $("#bk").onclick=home;
+  draw();
+}
+
+function begin(list){
+  let qs=list.slice();
+  if(shufQ)fy(qs);
+  Q=qs.map(src=>{
+    if(src[2]){
+      const order=src[2].map((_,k)=>k);
+      if(shufA&&src[2].length>2)fy(order);
+      return{src,opts:order.map(k=>src[2][k]),a:order.indexOf(src[3]),pick:null,user:null,ok:null};
+    }
+    return{src,opts:null,a:src[3],pick:null,user:null,ok:null};
+  });
+  i=0;streak=0;bestStreak=0;t0=Date.now();
+  renderQ();
+}
+
+function navStripHTML(){
+  return Q.map((qq,k)=>{
+    const st=qq.ok===true?"ok":qq.ok===false?"no":"";
+    const lab=qq.ok===true?", correct":qq.ok===false?", incorrect":", unanswered";
+    return `<button type="button" class="ndot ${st} ${k===i?"cur":""}" data-j="${k}" aria-label="Question ${k+1}${lab}" ${k===i?'aria-current="step"':""}>${k+1}</button>`;
+  }).join("");
+}
+
+function renderQ(){
+  clearAdv();
+  const q=Q[i],n0=D.indexOf(q.src);
+  lastTick=99;
+  const answered=q.ok!==null;
+  const done=Q.filter(x=>x.ok!==null).length;
+  const type=q.src[2]===T?"True or false":"Multiple choice";
+  window.scrollTo({top:0,behavior:RM?"auto":"smooth"});
+  app.innerHTML=`
+  <div class="prog"><i style="width:${(i/Q.length*100).toFixed(1)}%"></i></div>
+  <div class="statrow">
+    <span><b>${i+1}</b> / ${Q.length} <span class="mut">· ${S[q.src[0]]}</span></span>
+    <span class="rt">
+      <button type="button" class="flagbtn" id="nvBtn" aria-expanded="${navOpen}" aria-controls="navstrip" title="Question overview">${I.grid}<span>${done}/${Q.length}</span></button>
+      <span id="stkZone">${runBadge()}</span>
+      <span class="tmr" id="tmr" hidden></span>
+      <button type="button" class="flagbtn ${flags.has(n0)?"on":""}" id="fl">${I.flag}<span>${flags.has(n0)?"Flagged":"Flag"}</span></button>
+    </span>
+  </div>
+  <div class="navstrip" id="navstrip" ${navOpen?"":"hidden"}>${navStripHTML()}</div>
+  <div class="card" id="card">
+    <p class="qtype">${type}${answered?" · answered":""}</p>
+    <h2 class="q">${q.src[1]}</h2>
+    <div class="opts">${q.opts.map((t,k)=>`<button type="button" class="opt" data-k="${k}" style="animation-delay:${40+k*45}ms"><span class="key">${"ABCDE"[k]}</span><span class="tx">${t}</span></button>`).join("")}</div>
+    <div id="fb" aria-live="polite"></div>
+  </div>`;
+
+  $("#nvBtn").onclick=()=>{navOpen=!navOpen;savePrefs();$("#navstrip").hidden=!navOpen;$("#nvBtn").setAttribute("aria-expanded",navOpen)};
+  app.querySelectorAll("#navstrip [data-j]").forEach(b=>b.onclick=()=>goTo(+b.dataset.j));
+  $("#fl").onclick=ev=>{
+    const has=flags.has(n0);has?flags.delete(n0):flags.add(n0);saveF();
+    ev.currentTarget.classList.toggle("on",!has);
+    ev.currentTarget.querySelector("span").textContent=flags.has(n0)?"Flagged":"Flag";
+    sFlag();
+  };
+
+  if(answered){
+    const btns=[...app.querySelectorAll(".opt")];
+    btns.forEach(b=>{
+      b.disabled=true;
+      const k=+b.dataset.k;
+      if(k===q.a)markOpt(b,"ok");
+      else if(k===q.pick)markOpt(b,"no");
+      else b.classList.add("dim");
+    });
+    showFB(q,q.ok,q.ok?"Correct.":"Incorrect.");
+    nextBtn();
+  }else{
+    app.querySelectorAll(".opt").forEach(b=>b.onclick=()=>answerMCQ(+b.dataset.k));
+    if(timed)startTimer(45);
+  }
+}
+
+function goTo(j){
+  if(j===i||j<0||j>=Q.length)return;
+  clearAdv();stopTimer();i=j;renderQ();
+}
+function goPrev(){goTo(i-1)}
+
+function markOpt(b,cls){
+  b.classList.add(cls);
+  const mk=document.createElement("span");
+  mk.className="mk "+cls;mk.innerHTML=cls==="ok"?CHECK:CROSS;
+  b.appendChild(mk);
+}
+
+function answerMCQ(k){
+  const q=Q[i];stopTimer();
+  if(q.ok!==null)return;
+  const btns=[...app.querySelectorAll(".opt")];
+  btns.forEach(b=>{
+    b.disabled=true;
+    if(+b.dataset.k===q.a)markOpt(b,"ok");
+    else if(+b.dataset.k!==k)b.classList.add("dim");
+  });
+  const mine=btns.find(b=>+b.dataset.k===k);
+  const ok=k===q.a;
+  q.pick=k;q.user=q.opts[k];q.ok=ok;
+  if(ok){
+    streak++;bestStreak=Math.max(bestStreak,streak);
+    sOK();buzz(18);
+  }else{
+    markOpt(mine,"no");streak=0;sNO();buzz([40,40,40]);
+  }
+  const z=$("#stkZone");if(z)z.innerHTML=runBadge();
+  if(ok&&streak>=5&&streak%5===0)sMile();
+  showFB(q,ok,ok?"Correct — moving on…":"Incorrect — review the answer, then continue.");
+  nextBtn();
+  syncDot(q);
+  if(ok)scheduleAdvance();else clearAdv();
+}
+
+function syncDot(q){
+  const idx=Q.indexOf(q);
+  const dot=app.querySelector(`.ndot[data-j="${idx}"]`);
+  if(!dot)return;
+  dot.classList.toggle("ok",q.ok===true);
+  dot.classList.toggle("no",q.ok===false);
+  const b=$("#nvBtn");if(b)b.querySelector("span").textContent=Q.filter(x=>x.ok!==null).length+"/"+Q.length;
+}
+
+function showFB(q,ok,head){
+  $("#fb").innerHTML=`<div class="fb ${ok?"ok":"no"}"><p class="verdict">${head}</p>${q.src[4]?`<p class="note">${q.src[4]}</p>`:""}</div>`;
+}
+
+function nextBtn(){
+  const fb=$("#fb");
+  if(!fb||$("#nx"))return;
+  fb.insertAdjacentHTML("beforeend",`<button class="pri" id="nx" style="margin-top:14px">${i+1<Q.length?"Next question":"View results"} ${I.arrow}</button>`);
+  $("#nx").onclick=goNext;
+}
+
+function goNext(){
+  clearAdv();stopTimer();
+  if(i+1>=Q.length&&Q.every(x=>x.ok!==null)){end();return}
+  if(i+1>=Q.length){
+    const un=Q.filter(x=>x.ok===null).length;
+    toast(un?`${un} question${un>1?"s":""} still unanswered`:"Finishing…");
+    const first=Q.findIndex(x=>x.ok===null);
+    i=first>=0?first:Q.length-1;
+    renderQ();
+    return;
+  }
+  const c=$("#card");
+  const adv=()=>{i++;renderQ()};
+  if(c&&!RM){c.classList.add("out");setTimeout(adv,160)}else adv();
+}
+
+function startTimer(lim){
+  stopTimer();
+  const el=$("#tmr");if(!el)return;
+  el.hidden=false;el.classList.remove("warn","danger");
+  const C=+(2*Math.PI*11).toFixed(2);
+  el.innerHTML=`<svg width="25" height="25" viewBox="0 0 26 26" aria-hidden="true"><circle class="bg" cx="13" cy="13" r="11"></circle><circle class="fg" cx="13" cy="13" r="11" stroke-dasharray="${C}" stroke-dashoffset="0"></circle></svg><b id="tn">${lim}</b>`;
+  const fg=el.querySelector(".fg"),tn=$("#tn"),t00=Date.now();
+  tiv=setInterval(()=>{
+    const left=lim-(Date.now()-t00)/1000;
+    if(left<=0){stopTimer();expire();return}
+    tn.textContent=Math.ceil(left);
+    fg.style.strokeDashoffset=(C*(1-left/lim)).toFixed(2);
+    el.classList.toggle("warn",left<=lim*.35&&left>10);
+    el.classList.toggle("danger",left<=10);
+    const s=Math.ceil(left);
+    if(left<=5.5&&s!==lastTick){lastTick=s;sTick()}
+  },200);
+}
+function stopTimer(){if(tiv){clearInterval(tiv);tiv=null}}
+
+function expire(){
+  const q=Q[i];
+  if(q.ok!==null)return;
+  buzz([50,45,50]);sNO();
+  app.querySelectorAll(".opt").forEach(b=>{
+    b.disabled=true;
+    if(+b.dataset.k===q.a)markOpt(b,"ok");
+    else b.classList.add("dim");
+  });
+  q.pick=null;q.ok=false;q.user=null;
+  showFB(q,false,"Time expired.");
+  nextBtn();syncDot(q);
+}
+
+function confetti(){
+  if(RM)return;
+  const c=document.createElement("div");c.className="confetti";c.setAttribute("aria-hidden","true");
+  const cols=["#0e7569","#3fc1a8","#e0b34a","#bb3646","#4cc276","#6aa9ff"];
+  for(let k=0;k<46;k++){
+    const p=document.createElement("i");
+    p.style.left=(Math.random()*100).toFixed(1)+"vw";
+    p.style.background=cols[k%cols.length];
+    p.style.animationDuration=(1.8+Math.random()*1.6).toFixed(2)+"s";
+    p.style.animationDelay=(Math.random()*.55).toFixed(2)+"s";
+    p.style.opacity=".92";
+    c.appendChild(p);
+  }
+  document.body.appendChild(c);
+  setTimeout(()=>c.remove(),4200);
+}
+
+function revRow(q,k){
+  const correct=q.opts[q.a];
+  const you=q.user==null?"<i>— no answer —</i>":esc(q.user);
+  return `<details class="rev" ${q.ok?"":"open"}>
+    <summary><span class="tag ${q.ok?"ok":"no"}">${q.ok?CHECK:CROSS}</span><span>${esc(q.src[1])}<em class="meta">${S[q.src[0]]}</em></span></summary>
+    <div class="body">
+      <p class="ln">Your answer: <b class="${q.ok?"g":"r"}">${you}</b></p>
+      <p class="ln">Correct answer: <b class="g">${esc(correct)}</b></p>
+      ${q.src[4]?`<p class="note" style="margin-top:8px">${q.src[4]}</p>`:""}
+    </div>
+  </details>`;
+}
+
+const gradeFor=p=>p>=90?"Outstanding":p>=80?"Very good":p>=70?"Good":p>=60?"Pass":p>=50?"Borderline":"Needs review";
+
+function end(){
+  stopTimer();
+  const n=Q.length||1;
+  const correct=Q.filter(q=>q.ok===true).length;
+  const pct=Math.round(correct/n*100);
+  const prevBest=stats.length?Math.max(...stats.map(s=>s.p)):null;
+  const isBest=prevBest===null||pct>prevBest;
+
+  const topics={};
+  Q.forEach(q=>{
+    const t=q.src[0];
+    topics[t]=topics[t]||{c:0,n:0};
+    topics[t].n++;
+    if(q.ok===true)topics[t].c++;
+  });
+  stats.push({t:Date.now(),p:pct,topics});
+  if(stats.length>50)stats=stats.slice(-50);
+  try{localStorage.setItem("derm_stats",JSON.stringify(stats))}catch(_){}
+
+  const topicRows=Object.entries(topics)
+    .sort((a,b)=>(a[1].c/a[1].n)-(b[1].c/b[1].n))
+    .map(([k,v])=>{
+      const p=Math.round(v.c/v.n*100);
+      return `<div class="sb"><div class="t"><span>${S[k]}</span><span class="mut">${v.c}/${v.n} · ${p}%</span></div><div class="b"><i style="width:${p}%"></i></div></div>`;
+    }).join("");
+
+  const missed=Q.filter(q=>q.ok!==true).length;
+
+  app.innerHTML=`
+  <p class="kicker">Session complete</p>
+  <h1 class="hero" style="font-size:clamp(1.6rem,4.4vw,2rem)">Your <em>results</em></h1>
+  <div class="ring">
+    <svg viewBox="0 0 120 120" aria-hidden="true"><circle class="bg" cx="60" cy="60" r="52"></circle><circle class="fg" id="rf" cx="60" cy="60" r="52"></circle></svg>
+    <div class="rc">${pct}%</div>
+  </div>
+  <p class="grade">${gradeFor(pct)}${isBest?'<span class="nbest">Best yet</span>':""}</p>
+  <p class="center mut" style="font-size:.9rem">${correct} of ${n} correct · best streak ${bestStreak}</p>
+  <div class="grid">
+    <div class="tile"><b>${correct}</b><span>Correct</span></div>
+    <div class="tile"><b>${missed}</b><span>Missed</span></div>
+    <div class="tile"><b>${bestStreak}</b><span>Best streak</span></div>
+  </div>
+  <div class="h"><span>By topic</span><span class="mut" style="font-size:.78rem;font-weight:400">Weakest first</span></div>
+  ${topicRows}
+  <div class="h"><span>Review answers</span><span class="mut" style="font-size:.78rem;font-weight:400">${missed?missed+" to revisit":"All correct"}</span></div>
+  ${Q.map((q,k)=>revRow(q,k)).join("")}
+  <div class="cta">
+    <button class="pri" id="rt">Retake this set ${I.arrow}</button>
+    <button class="sec" id="hm">Back to overview</button>
+  </div>
+  <p class="keys">Answers are saved in your browser only. Open <b>Study notes</b> from the overview for the full answer key.</p>`;
+
+  requestAnimationFrame(()=>{
+    const fg=$("#rf");
+    if(fg){
+      fg.style.transition="stroke-dashoffset .95s cubic-bezier(.22,1,.36,1)";
+      fg.style.strokeDashoffset=(326.73*(1-pct/100)).toFixed(2);
+    }
+  });
+
+  $("#rt").onclick=()=>begin(Q.map(q=>q.src));
+  $("#hm").onclick=home;
+
+  if(pct>=80){confetti();sFin()}else if(pct>=60)sOK();else sNO();
+  window.scrollTo({top:0,behavior:RM?"auto":"smooth"});
+}
+
+document.addEventListener("keydown",ev=>{
+  if(ev.defaultPrevented)return;
+  const tag=(ev.target.tagName||"").toLowerCase();
+  if(tag==="input"||tag==="textarea"||tag==="select"||ev.target.isContentEditable)return;
+  if(ev.metaKey||ev.ctrlKey||ev.altKey)return;
+  if(!$("#card"))return;
+
+  const k=ev.key.toLowerCase();
+
+  if(ev.key==="ArrowRight"){
+    ev.preventDefault();
+    const nx=$("#nx");
+    if(nx)nx.click();else goNext();
+    return;
+  }
+  if(ev.key==="ArrowLeft"){
+    ev.preventDefault();
+    goPrev();
+    return;
+  }
+  if(k==="f"){
+    ev.preventDefault();
+    const fl=$("#fl");
+    if(fl)fl.click();
+    return;
+  }
+  if(k==="n"){
+    ev.preventDefault();
+    navOpen=!navOpen;savePrefs();
+    const strip=$("#navstrip"),btn=$("#nvBtn");
+    if(strip)strip.hidden=!navOpen;
+    if(btn)btn.setAttribute("aria-expanded",navOpen);
+    return;
+  }
+  const map={a:0,b:1,c:2,d:3,e:4};
+  if(k in map){
+    const btn=app.querySelector(`#card .opt[data-k="${map[k]}"]`);
+    if(btn&&!btn.disabled){ev.preventDefault();btn.click()}
+  }
+});
+
+applyChrome();
+try{
+  const mq=matchMedia("(prefers-color-scheme: dark)");
+  if(mq.addEventListener)mq.addEventListener("change",()=>{if(theme==="auto")applyChrome()});
+}catch(_){}
+home();
+</script>
+</body>
+</html>
